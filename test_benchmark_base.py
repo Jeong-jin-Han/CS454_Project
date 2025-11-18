@@ -3,7 +3,8 @@ import random
 
 from hill_climb_multiD import hill_climb_simple_nd_code
 
-file_path = "./benchmark/collatz_step.py"
+# file_path = "./benchmark/collatz_step.py"
+file_path = "./benchmark/HJJ/rugged_case.py" # path to target
 
 source = open(file_path).read()
 namespace, traveler, record, instrumented_tree = instrument_and_load(source)

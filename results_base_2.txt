@@ -1,0 +1,7 @@
+ '_scramble' test 
+ 'rugged' test 
+Target function: _scramble
+Function _scramble with 1 arg(s): ['x']
+Branches (by lineno): []
+
+===== GLOBAL SUMMARY OVER ALL BRANCHES & TRIALS =====
