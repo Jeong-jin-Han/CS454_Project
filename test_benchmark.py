@@ -4,7 +4,8 @@ import random
 
 from hill_climb_multiD import hill_climb_with_compression_nd_code
 
-file_path = "./benchmark/ex2.py" # path to target
+# file_path = "./benchmark/ex2.py" # path to target
+file_path = "./benchmark/collatz_step.py" # path to target
 
 source = open(file_path).read()
 namespace, traveler, record, instrumented_tree = instrument_and_load(source)
@@ -47,7 +48,7 @@ for lineno, branch_info in branches.items():
     target_outcome = True
 
     # 1) 랜덤 초기 해
-    initial = [random.randint(-20, 20) for _ in func_args]
+    initial = [random.randint(-100000, 10000) for _ in func_args]
 
     init_fit = fitness_calc.fitness_for_candidate(
         func_obj, initial,
