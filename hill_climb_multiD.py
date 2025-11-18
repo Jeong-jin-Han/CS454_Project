@@ -559,6 +559,7 @@ def hill_climb_with_compression_nd_code(
     basin_max_search=100,
     global_min_threshold=1e-6,
     verbose = False,
+    cm = None,  # Optional: reuse compression manager across trials
 ):
     """
     N-D hill climbing with axis-aligned 1D compressions.
@@ -577,6 +578,8 @@ def hill_climb_with_compression_nd_code(
         Maximum basin search distance per dimension
     global_min_threshold : float
         Threshold for global minimum detection
+    cm : CompressionManagerND or None
+        Optional compression manager to reuse metadata across trials
     
     Returns:
     --------
@@ -588,7 +591,12 @@ def hill_climb_with_compression_nd_code(
 
 
     traj = []
-    cm = CompressionManagerND(dim, steepness=5.0)
+    # Reuse existing compression manager if provided, otherwise create new one
+    if cm is None:
+        cm = CompressionManagerND(dim, steepness=5.0)
+        print("📦 Created NEW CompressionManagerND for this search")
+    else:
+        print("♻️ REUSING existing CompressionManagerND with accumulated metadata")
 
     # Initialize point
     point = tuple(int(x) for x in start_point)
@@ -597,13 +605,34 @@ def hill_climb_with_compression_nd_code(
 
     print(f"\n🚀 {dim}D hill climbing start at {point}, f={f:.4f}\n")
 
+    # ✅ Early success check: if already at goal, return immediately
+    if abs(f) < global_min_threshold:
+        print("🎉 INITIAL POINT IS ALREADY AT GOAL! Returning immediately.")
+        print("\n" + "="*80)
+        print(f"🏁 FINAL {dim}D RESULTS")
+        print("="*80)
+        print(f"  Final position: {point}")
+        print(f"  Final fitness: {f:.6g}")
+        print(f"  Total steps:   {len(traj)}")
+        total_compressions = sum(len(cm.dim_compressions[d]) for d in range(dim))
+        print(f"  Total compressions: {total_compressions}")
+        print("="*80 + "\n")
+        return traj, cm
+
     for it in range(max_iterations):
         print("="*80)
         print(f"🔄 Iteration {it+1}/{max_iterations}")
         print("="*80)
+        
+        # ✅ Check if already at goal before starting this iteration
+        if abs(f) < global_min_threshold:
+            print("🎉 SUCCESS: Already at goal at start of iteration!")
+            break
 
         step_count = 0
-        while True:
+        max_steps_per_iteration = 10000  # Safety limit to prevent infinite loops
+        
+        while step_count < max_steps_per_iteration:
             # ----- Propose neighbors in all 2*dim directions -----
             candidates = []
             
@@ -646,6 +675,10 @@ def hill_climb_with_compression_nd_code(
             else:
                 print(f"  📍 Climbed {step_count} steps, now at {point}, f={f:.6g}")
                 break
+        
+        # Safety check: warn if hit the step limit
+        if step_count >= max_steps_per_iteration:
+            print(f"  ⚠️ WARNING: Hit maximum step limit ({max_steps_per_iteration}) in iteration {it+1}")
 
         # Check convergence / global min
         if abs(f) < global_min_threshold:
@@ -692,6 +725,11 @@ def hill_climb_with_compression_nd_code(
             print(f"\n  ➡️ Restarting from {restart_point}, f={restart_f:.4f}")
             point, f = restart_point, restart_f
             traj.append((point, f, True))
+            
+            # ✅ Check if restart point already reached the goal
+            if abs(f) < global_min_threshold:
+                print("🎉 RESTART POINT IS ALREADY AT GOAL! Stopping iterations.")
+                break
         else:
             print("\n  ⚠️ No valid restart candidate. Stopping.")
             break
@@ -707,3 +745,55 @@ def hill_climb_with_compression_nd_code(
     print("="*80 + "\n")
 
     return traj, cm
+
+
+
+def hill_climb_simple_nd_code(
+    # fitness_func_nd_code,
+    fitness_calc, func_obj, target_branch_node, target_outcome, subject_node, parent_map,
+    start_point,
+    dim,
+    max_steps=2000
+):
+    """
+    Simple N-D hill climbing WITHOUT compression (for comparison).
+    
+    Returns:
+    --------
+    traj : list of (point, fitness)
+    """
+    point = tuple(int(x) for x in start_point)
+
+    def fitness_func_nd_code(x):
+        return fitness_calc.fitness_for_candidate(func_obj, x, target_branch_node, target_outcome, subject_node, parent_map)
+
+    f = fitness_func_nd_code(point)
+    traj = [(point, f)]
+
+    for _ in range(max_steps):
+        # Try 2*dim neighbors (±1 in each dimension)
+        candidates = []
+        for d in range(dim):
+            # -1 in dimension d
+            neighbor = list(point)
+            neighbor[d] -= 1
+            candidates.append((tuple(neighbor), fitness_func_nd_code(tuple(neighbor))))
+            
+            # +1 in dimension d
+            neighbor = list(point)
+            neighbor[d] += 1
+            candidates.append((tuple(neighbor), fitness_func_nd_code(tuple(neighbor))))
+
+        # Pick best
+        best_point, best_f = point, f
+        for cand_point, cand_f in candidates:
+            if cand_f < best_f:
+                best_point, best_f = cand_point, cand_f
+
+        if best_f < f:
+            point, f = best_point, best_f
+            traj.append((point, f))
+        else:
+            break  # Stuck at local minimum
+
+    return traj
