@@ -3,21 +3,35 @@
 SX = 2000
 SY = -500
 
-def plateau(x: int, y: int) -> int:
+def plateau_case(x: int, y: int) -> int:
     """
-    예: target branch
+    타깃 브랜치:
         if x == SX and y == SY:
             # TARGET
-    로 가정.
-    branch distance는 아래 cost를 그대로 써도 되고, 변형해서 써도 됩니다.
+    라고 가정.
+
+    순수 hill climb이 쉽게 TARGET까지 못 가도록,
+    고리 모양 plateau(local minimum)를 만든 버전입니다.
     """
     dx = abs(x - SX)
     dy = abs(y - SY)
-    d = dx + dy
+    d = dx + dy  # Manhattan 거리
 
-    # 멀리서는 완전 flat: fitness = 300
-    if d > 300:
-        return 300
+    # 1) 아주 멀리서는 완전 flat: cost = 1000
+    if d > 5000:
+        return 1000
 
-    # target 근처에서만 slope가 생김
-    return d
+    # 2) 중간 범위: 약간 더 좋은 plateau: cost = 500
+    if d > 50:
+        return 500
+
+    # 3) d ∈ [10, 20] 구간: "함정 plateau" (local minimum ring)
+    if 10 <= d <= 20:
+        return 100
+
+    # 4) d ∈ [1, 9] 구간: 오히려 더 나빠짐 (wall 구간)
+    if 1 <= d < 10:
+        return 400
+
+    # 5) d == 0 : 진짜 TARGET
+    return 0
