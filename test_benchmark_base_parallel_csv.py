@@ -9,6 +9,8 @@ import os
 import time
 import random
 import csv
+import glob
+from pathlib import Path
 from multiprocessing import Pool, cpu_count
 from module.sbst_core import instrument_and_load, FitnessCalculator
 from hill_climb_multiD import hill_climb_simple_nd_code
@@ -262,6 +264,66 @@ def run_parallel_test_baseline_with_csv(
     return branch_results, output_csv
 
 
+def run_directory_test_baseline(
+    source_dir,
+    output_dir="benchmark_log",
+    max_trials_per_branch=20,
+    success_threshold=0.0,
+    initial_low=-100000,
+    initial_high=10000,
+    max_steps=2000,
+    num_workers=None
+):
+    """
+    Test all .py files in source_dir and save results to output_dir with mirrored structure.
+    
+    Example:
+        benchmark/arbitrary1.py -> benchmark_log/arbitrary1.csv
+        benchmark/HJJ/mixed_case.py -> benchmark_log/HJJ/mixed_case.csv
+    """
+    
+    source_path = Path(source_dir)
+    output_path = Path(output_dir)
+    
+    # Find all .py files
+    py_files = list(source_path.rglob("*.py"))
+    
+    print("\n" + "="*80)
+    print(f"🔍 Found {len(py_files)} Python files in {source_dir}")
+    print("="*80)
+    
+    for py_file in py_files:
+        # Compute relative path and output CSV path
+        rel_path = py_file.relative_to(source_path)
+        csv_file = output_path / rel_path.with_suffix('.csv')
+        
+        # Create output directory if needed
+        csv_file.parent.mkdir(parents=True, exist_ok=True)
+        
+        print(f"\n📝 Testing: {py_file}")
+        print(f"📊 Output: {csv_file}")
+        
+        # Run test on this file
+        try:
+            results, _ = run_parallel_test_baseline_with_csv(
+                file_path=str(py_file),
+                output_csv=str(csv_file),
+                max_trials_per_branch=max_trials_per_branch,
+                success_threshold=success_threshold,
+                initial_low=initial_low,
+                initial_high=initial_high,
+                max_steps=max_steps,
+                num_workers=num_workers
+            )
+        except Exception as e:
+            print(f"❌ Error testing {py_file}: {e}")
+            continue
+    
+    print("\n" + "="*80)
+    print(f"✅ ALL FILES TESTED! Results saved to {output_dir}/")
+    print("="*80)
+
+
 # ============================================================================
 # Main execution
 # ============================================================================
@@ -274,18 +336,13 @@ if __name__ == "__main__":
     else:
         multiprocessing.set_start_method('spawn', force=True)
     
-    # Configuration
-    file_path = "./benchmark/count_divisor_2.py"
-    output_csv = "results_baseline_parallel.csv"
-    
-    results, csv_path = run_parallel_test_baseline_with_csv(
-        file_path=file_path,
-        output_csv=output_csv,
+    # Configuration: Test entire directory
+    run_directory_test_baseline(
+        source_dir="./benchmark_small",
+        output_dir="benchmark_log",
         max_trials_per_branch=20,
         success_threshold=0.0,
         max_steps=2000,
-        num_workers=None
+        num_workers=None  # Use all CPU cores
     )
-    
-    print(f"\n🏁 BASELINE TESTING COMPLETE! Results saved to: {csv_path}\n")
 

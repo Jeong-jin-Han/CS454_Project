@@ -1,0 +1,804 @@
+ '_scramble_y' test 
+ 'mixed' test 
+
+================================================================================
+📝 Testing function: _scramble_y
+Function _scramble_y with 1 arg(s): ['y']
+Branches (by lineno): []
+⏭️  Skipping _scramble_y (no branches to test)
+
+================================================================================
+📝 Testing function: mixed
+Function mixed with 3 arg(s): ['x', 'y', 'z']
+Branches (by lineno): [32, 34, 36, 38, 56, 58]
+
+================================================================================
+🔎 Branch at lineno=32
+Branch If at lineno=32
+
+------------------------------------------------------------
+[lineno=32] Trial 1/20
+[lineno=32][trial=0] initial fitness: 0.0 for [-16190, -85408, -96722]
+===== WITHOUT COMPRESSION (lineno=32, trial=0) =====
+End:   (-16190, -85408, -96722), f=0
+Trajectory length: 1
+=============================================
+🎉 Branch lineno=32 succeeded at trial 0 with f=0
+
+================================================================================
+>>> SUMMARY for branch lineno=32: success=True, best_f=0, best_x=[-16190, -85408, -96722]
+================================================================================
+
+================================================================================
+🔎 Branch at lineno=34
+Branch If at lineno=34
+
+------------------------------------------------------------
+[lineno=34] Trial 1/20
+[lineno=34][trial=0] initial fitness: 4.000999000999001 for [-2804, -63952, -67902]
+===== WITHOUT COMPRESSION (lineno=34, trial=0) =====
+End:   (-2804, -63952, -67902), f=4.001
+Trajectory length: 1
+=============================================
+
+------------------------------------------------------------
+[lineno=34] Trial 2/20
+[lineno=34][trial=1] initial fitness: 4.000999000999001 for [-70744, -81711, -3470]
+===== WITHOUT COMPRESSION (lineno=34, trial=1) =====
+End:   (-70744, -81711, -3470), f=4.001
+Trajectory length: 1
+=============================================
+
+------------------------------------------------------------
+[lineno=34] Trial 3/20
+[lineno=34][trial=2] initial fitness: 4.000999000999001 for [-86566, -11304, -2920]
+===== WITHOUT COMPRESSION (lineno=34, trial=2) =====
+End:   (-86566, -11304, -2920), f=4.001
+Trajectory length: 1
+=============================================
+
+------------------------------------------------------------
+[lineno=34] Trial 4/20
+[lineno=34][trial=3] initial fitness: 4.000999000999001 for [-28518, -88605, -22603]
+===== WITHOUT COMPRESSION (lineno=34, trial=3) =====
+End:   (-28518, -88605, -22603), f=4.001
+Trajectory length: 1
+=============================================
+
+------------------------------------------------------------
+[lineno=34] Trial 5/20
+[lineno=34][trial=4] initial fitness: 4.000999000999001 for [-44698, -95835, -96095]
+===== WITHOUT COMPRESSION (lineno=34, trial=4) =====
+End:   (-44698, -95835, -96095), f=4.001
+Trajectory length: 1
+=============================================
+
+------------------------------------------------------------
+[lineno=34] Trial 6/20
+[lineno=34][trial=5] initial fitness: 4.000999000999001 for [-87720, -71343, -69505]
+===== WITHOUT COMPRESSION (lineno=34, trial=5) =====
+End:   (-87720, -71343, -69505), f=4.001
+Trajectory length: 1
+=============================================
+
+------------------------------------------------------------
+[lineno=34] Trial 7/20
+[lineno=34][trial=6] initial fitness: 4.000999000999001 for [-33763, -21093, -96522]
+===== WITHOUT COMPRESSION (lineno=34, trial=6) =====
+End:   (-33763, -21093, -96522), f=4.001
+Trajectory length: 1
+=============================================
+
+------------------------------------------------------------
+[lineno=34] Trial 8/20
+[lineno=34][trial=7] initial fitness: 4.000999000999001 for [-26437, -73938, -6150]
+===== WITHOUT COMPRESSION (lineno=34, trial=7) =====
+End:   (-26437, -73938, -6150), f=4.001
+Trajectory length: 1
+=============================================
+
+------------------------------------------------------------
+[lineno=34] Trial 9/20
+[lineno=34][trial=8] initial fitness: 4.000999000999001 for [-14819, -8076, -28574]
+===== WITHOUT COMPRESSION (lineno=34, trial=8) =====
+End:   (-14819, -8076, -28574), f=4.001
+Trajectory length: 1
+=============================================
+
+------------------------------------------------------------
+[lineno=34] Trial 10/20
+[lineno=34][trial=9] initial fitness: 4.000999000999001 for [-45013, -71107, -41122]
+===== WITHOUT COMPRESSION (lineno=34, trial=9) =====
+End:   (-45013, -71107, -41122), f=4.001
+Trajectory length: 1
+=============================================
+
+------------------------------------------------------------
+[lineno=34] Trial 11/20
+[lineno=34][trial=10] initial fitness: 4.000999000999001 for [-22764, -63537, 6093]
+===== WITHOUT COMPRESSION (lineno=34, trial=10) =====
+End:   (-22764, -63537, 6093), f=4.001
+Trajectory length: 1
+=============================================
+
+------------------------------------------------------------
+[lineno=34] Trial 12/20
+[lineno=34][trial=11] initial fitness: 4.000999000999001 for [-99149, -542, 5620]
+===== WITHOUT COMPRESSION (lineno=34, trial=11) =====
+End:   (-99149, -542, 5620), f=4.001
+Trajectory length: 1
+=============================================
+
+------------------------------------------------------------
+[lineno=34] Trial 13/20
+[lineno=34][trial=12] initial fitness: 4.000999000999001 for [-79074, -8494, -44608]
+===== WITHOUT COMPRESSION (lineno=34, trial=12) =====
+End:   (-79074, -8494, -44608), f=4.001
+Trajectory length: 1
+=============================================
+
+------------------------------------------------------------
+[lineno=34] Trial 14/20
+[lineno=34][trial=13] initial fitness: 4.000999000999001 for [-55403, -63579, -79621]
+===== WITHOUT COMPRESSION (lineno=34, trial=13) =====
+End:   (-55403, -63579, -79621), f=4.001
+Trajectory length: 1
+=============================================
+
+------------------------------------------------------------
+[lineno=34] Trial 15/20
+[lineno=34][trial=14] initial fitness: 4.000999000999001 for [-71779, 72, -55882]
+===== WITHOUT COMPRESSION (lineno=34, trial=14) =====
+End:   (-71779, 72, -55882), f=4.001
+Trajectory length: 1
+=============================================
+
+------------------------------------------------------------
+[lineno=34] Trial 16/20
+[lineno=34][trial=15] initial fitness: 4.000999000999001 for [-86604, -87844, -50203]
+===== WITHOUT COMPRESSION (lineno=34, trial=15) =====
+End:   (-86604, -87844, -50203), f=4.001
+Trajectory length: 1
+=============================================
+
+------------------------------------------------------------
+[lineno=34] Trial 17/20
+[lineno=34][trial=16] initial fitness: 4.000999000999001 for [-87324, -52948, -54918]
+===== WITHOUT COMPRESSION (lineno=34, trial=16) =====
+End:   (-87324, -52948, -54918), f=4.001
+Trajectory length: 1
+=============================================
+
+------------------------------------------------------------
+[lineno=34] Trial 18/20
+[lineno=34][trial=17] initial fitness: 4.000999000999001 for [-20869, -65329, 5791]
+===== WITHOUT COMPRESSION (lineno=34, trial=17) =====
+End:   (-20869, -65329, 5791), f=4.001
+Trajectory length: 1
+=============================================
+
+------------------------------------------------------------
+[lineno=34] Trial 19/20
+[lineno=34][trial=18] initial fitness: 4.000999000999001 for [-94305, -4353, -39783]
+===== WITHOUT COMPRESSION (lineno=34, trial=18) =====
+End:   (-94305, -4353, -39783), f=4.001
+Trajectory length: 1
+=============================================
+
+------------------------------------------------------------
+[lineno=34] Trial 20/20
+[lineno=34][trial=19] initial fitness: 4.000999000999001 for [-29716, -83639, -50385]
+===== WITHOUT COMPRESSION (lineno=34, trial=19) =====
+End:   (-29716, -83639, -50385), f=4.001
+Trajectory length: 1
+=============================================
+
+================================================================================
+>>> SUMMARY for branch lineno=34: success=False, best_f=4.001, best_x=[-2804, -63952, -67902]
+================================================================================
+
+================================================================================
+🔎 Branch at lineno=36
+Branch If at lineno=36
+
+------------------------------------------------------------
+[lineno=36] Trial 1/20
+[lineno=36][trial=0] initial fitness: 5.000999000999001 for [-89672, -27643, -61573]
+===== WITHOUT COMPRESSION (lineno=36, trial=0) =====
+End:   (-89672, -27643, -61573), f=5.001
+Trajectory length: 1
+=============================================
+
+------------------------------------------------------------
+[lineno=36] Trial 2/20
+[lineno=36][trial=1] initial fitness: 5.000999000999001 for [8711, -17603, -18930]
+===== WITHOUT COMPRESSION (lineno=36, trial=1) =====
+End:   (8711, -17603, -18930), f=5.001
+Trajectory length: 1
+=============================================
+
+------------------------------------------------------------
+[lineno=36] Trial 3/20
+[lineno=36][trial=2] initial fitness: 5.000999000999001 for [-52600, -24326, -74797]
+===== WITHOUT COMPRESSION (lineno=36, trial=2) =====
+End:   (-52600, -24326, -74797), f=5.001
+Trajectory length: 1
+=============================================
+
+------------------------------------------------------------
+[lineno=36] Trial 4/20
+[lineno=36][trial=3] initial fitness: 5.000999000999001 for [-7651, -90884, -93994]
+===== WITHOUT COMPRESSION (lineno=36, trial=3) =====
+End:   (-7651, -90884, -93994), f=5.001
+Trajectory length: 1
+=============================================
+
+------------------------------------------------------------
+[lineno=36] Trial 5/20
+[lineno=36][trial=4] initial fitness: 5.000999000999001 for [-13327, -70129, 1327]
+===== WITHOUT COMPRESSION (lineno=36, trial=4) =====
+End:   (-13327, -70129, 1327), f=5.001
+Trajectory length: 1
+=============================================
+
+------------------------------------------------------------
+[lineno=36] Trial 6/20
+[lineno=36][trial=5] initial fitness: 5.000999000999001 for [-62070, -89542, -69488]
+===== WITHOUT COMPRESSION (lineno=36, trial=5) =====
+End:   (-62070, -89542, -69488), f=5.001
+Trajectory length: 1
+=============================================
+
+------------------------------------------------------------
+[lineno=36] Trial 7/20
+[lineno=36][trial=6] initial fitness: 5.000999000999001 for [-86762, -50177, -63566]
+===== WITHOUT COMPRESSION (lineno=36, trial=6) =====
+End:   (-86762, -50177, -63566), f=5.001
+Trajectory length: 1
+=============================================
+
+------------------------------------------------------------
+[lineno=36] Trial 8/20
+[lineno=36][trial=7] initial fitness: 5.000999000999001 for [-40571, -16680, 9328]
+===== WITHOUT COMPRESSION (lineno=36, trial=7) =====
+End:   (-40571, -16680, 9328), f=5.001
+Trajectory length: 1
+=============================================
+
+------------------------------------------------------------
+[lineno=36] Trial 9/20
+[lineno=36][trial=8] initial fitness: 5.000999000999001 for [-52181, -78681, -51480]
+===== WITHOUT COMPRESSION (lineno=36, trial=8) =====
+End:   (-52181, -78681, -51480), f=5.001
+Trajectory length: 1
+=============================================
+
+------------------------------------------------------------
+[lineno=36] Trial 10/20
+[lineno=36][trial=9] initial fitness: 5.000999000999001 for [-53434, -72540, -12159]
+===== WITHOUT COMPRESSION (lineno=36, trial=9) =====
+End:   (-53434, -72540, -12159), f=5.001
+Trajectory length: 1
+=============================================
+
+------------------------------------------------------------
+[lineno=36] Trial 11/20
+[lineno=36][trial=10] initial fitness: 5.000999000999001 for [-65007, -8012, -10407]
+===== WITHOUT COMPRESSION (lineno=36, trial=10) =====
+End:   (-65007, -8012, -10407), f=5.001
+Trajectory length: 1
+=============================================
+
+------------------------------------------------------------
+[lineno=36] Trial 12/20
+[lineno=36][trial=11] initial fitness: 5.000999000999001 for [-15061, -90642, -20160]
+===== WITHOUT COMPRESSION (lineno=36, trial=11) =====
+End:   (-15061, -90642, -20160), f=5.001
+Trajectory length: 1
+=============================================
+
+------------------------------------------------------------
+[lineno=36] Trial 13/20
+[lineno=36][trial=12] initial fitness: 5.000999000999001 for [-16773, -77569, -29990]
+===== WITHOUT COMPRESSION (lineno=36, trial=12) =====
+End:   (-16773, -77569, -29990), f=5.001
+Trajectory length: 1
+=============================================
+
+------------------------------------------------------------
+[lineno=36] Trial 14/20
+[lineno=36][trial=13] initial fitness: 5.000999000999001 for [-4432, -67913, -78583]
+===== WITHOUT COMPRESSION (lineno=36, trial=13) =====
+End:   (-4432, -67913, -78583), f=5.001
+Trajectory length: 1
+=============================================
+
+------------------------------------------------------------
+[lineno=36] Trial 15/20
+[lineno=36][trial=14] initial fitness: 5.000999000999001 for [-39411, -50265, -64618]
+===== WITHOUT COMPRESSION (lineno=36, trial=14) =====
+End:   (-39411, -50265, -64618), f=5.001
+Trajectory length: 1
+=============================================
+
+------------------------------------------------------------
+[lineno=36] Trial 16/20
+[lineno=36][trial=15] initial fitness: 5.000999000999001 for [-16114, -9802, -27000]
+===== WITHOUT COMPRESSION (lineno=36, trial=15) =====
+End:   (-16114, -9802, -27000), f=5.001
+Trajectory length: 1
+=============================================
+
+------------------------------------------------------------
+[lineno=36] Trial 17/20
+[lineno=36][trial=16] initial fitness: 5.000999000999001 for [-71215, -10267, -57496]
+===== WITHOUT COMPRESSION (lineno=36, trial=16) =====
+End:   (-71215, -10267, -57496), f=5.001
+Trajectory length: 1
+=============================================
+
+------------------------------------------------------------
+[lineno=36] Trial 18/20
+[lineno=36][trial=17] initial fitness: 5.000999000999001 for [704, 1711, -92669]
+===== WITHOUT COMPRESSION (lineno=36, trial=17) =====
+End:   (704, 1711, -92669), f=5.001
+Trajectory length: 1
+=============================================
+
+------------------------------------------------------------
+[lineno=36] Trial 19/20
+[lineno=36][trial=18] initial fitness: 5.000999000999001 for [-69979, 7715, -95793]
+===== WITHOUT COMPRESSION (lineno=36, trial=18) =====
+End:   (-69979, 7715, -95793), f=5.001
+Trajectory length: 1
+=============================================
+
+------------------------------------------------------------
+[lineno=36] Trial 20/20
+[lineno=36][trial=19] initial fitness: 5.000999000999001 for [5518, -58653, -47419]
+===== WITHOUT COMPRESSION (lineno=36, trial=19) =====
+End:   (5518, -58653, -47419), f=5.001
+Trajectory length: 1
+=============================================
+
+================================================================================
+>>> SUMMARY for branch lineno=36: success=False, best_f=5.001, best_x=[-89672, -27643, -61573]
+================================================================================
+
+================================================================================
+🔎 Branch at lineno=38
+Branch If at lineno=38
+
+------------------------------------------------------------
+[lineno=38] Trial 1/20
+[lineno=38][trial=0] initial fitness: 6.000999000999001 for [-64907, -91325, -72347]
+===== WITHOUT COMPRESSION (lineno=38, trial=0) =====
+End:   (-64907, -91325, -72347), f=6.001
+Trajectory length: 1
+=============================================
+
+------------------------------------------------------------
+[lineno=38] Trial 2/20
+[lineno=38][trial=1] initial fitness: 6.000999000999001 for [-25659, -5902, -58755]
+===== WITHOUT COMPRESSION (lineno=38, trial=1) =====
+End:   (-25659, -5902, -58755), f=6.001
+Trajectory length: 1
+=============================================
+
+------------------------------------------------------------
+[lineno=38] Trial 3/20
+[lineno=38][trial=2] initial fitness: 6.000999000999001 for [-72131, -14091, -34565]
+===== WITHOUT COMPRESSION (lineno=38, trial=2) =====
+End:   (-72131, -14091, -34565), f=6.001
+Trajectory length: 1
+=============================================
+
+------------------------------------------------------------
+[lineno=38] Trial 4/20
+[lineno=38][trial=3] initial fitness: 6.000999000999001 for [-48144, -15741, -39858]
+===== WITHOUT COMPRESSION (lineno=38, trial=3) =====
+End:   (-48144, -15741, -39858), f=6.001
+Trajectory length: 1
+=============================================
+
+------------------------------------------------------------
+[lineno=38] Trial 5/20
+[lineno=38][trial=4] initial fitness: 6.000999000999001 for [-81274, -65282, -81699]
+===== WITHOUT COMPRESSION (lineno=38, trial=4) =====
+End:   (-81274, -65282, -81699), f=6.001
+Trajectory length: 1
+=============================================
+
+------------------------------------------------------------
+[lineno=38] Trial 6/20
+[lineno=38][trial=5] initial fitness: 6.000999000999001 for [-67675, -2353, -26421]
+===== WITHOUT COMPRESSION (lineno=38, trial=5) =====
+End:   (-67675, -2353, -26421), f=6.001
+Trajectory length: 1
+=============================================
+
+------------------------------------------------------------
+[lineno=38] Trial 7/20
+[lineno=38][trial=6] initial fitness: 6.000999000999001 for [-29356, -65562, -2088]
+===== WITHOUT COMPRESSION (lineno=38, trial=6) =====
+End:   (-29356, -65562, -2088), f=6.001
+Trajectory length: 1
+=============================================
+
+------------------------------------------------------------
+[lineno=38] Trial 8/20
+[lineno=38][trial=7] initial fitness: 6.000999000999001 for [-23378, -43845, -23516]
+===== WITHOUT COMPRESSION (lineno=38, trial=7) =====
+End:   (-23378, -43845, -23516), f=6.001
+Trajectory length: 1
+=============================================
+
+------------------------------------------------------------
+[lineno=38] Trial 9/20
+[lineno=38][trial=8] initial fitness: 6.000999000999001 for [-47650, -52553, -71254]
+===== WITHOUT COMPRESSION (lineno=38, trial=8) =====
+End:   (-47650, -52553, -71254), f=6.001
+Trajectory length: 1
+=============================================
+
+------------------------------------------------------------
+[lineno=38] Trial 10/20
+[lineno=38][trial=9] initial fitness: 6.000999000999001 for [-81869, -33216, -35314]
+===== WITHOUT COMPRESSION (lineno=38, trial=9) =====
+End:   (-81869, -33216, -35314), f=6.001
+Trajectory length: 1
+=============================================
+
+------------------------------------------------------------
+[lineno=38] Trial 11/20
+[lineno=38][trial=10] initial fitness: 6.000999000999001 for [-88085, -939, -93825]
+===== WITHOUT COMPRESSION (lineno=38, trial=10) =====
+End:   (-88085, -939, -93825), f=6.001
+Trajectory length: 1
+=============================================
+
+------------------------------------------------------------
+[lineno=38] Trial 12/20
+[lineno=38][trial=11] initial fitness: 6.000999000999001 for [-85629, -79967, -17760]
+===== WITHOUT COMPRESSION (lineno=38, trial=11) =====
+End:   (-85629, -79967, -17760), f=6.001
+Trajectory length: 1
+=============================================
+
+------------------------------------------------------------
+[lineno=38] Trial 13/20
+[lineno=38][trial=12] initial fitness: 6.000999000999001 for [-79031, 3819, -10808]
+===== WITHOUT COMPRESSION (lineno=38, trial=12) =====
+End:   (-79031, 3819, -10808), f=6.001
+Trajectory length: 1
+=============================================
+
+------------------------------------------------------------
+[lineno=38] Trial 14/20
+[lineno=38][trial=13] initial fitness: 6.000999000999001 for [-44667, -21828, -91674]
+===== WITHOUT COMPRESSION (lineno=38, trial=13) =====
+End:   (-44667, -21828, -91674), f=6.001
+Trajectory length: 1
+=============================================
+
+------------------------------------------------------------
+[lineno=38] Trial 15/20
+[lineno=38][trial=14] initial fitness: 6.000999000999001 for [-49568, -49981, -21896]
+===== WITHOUT COMPRESSION (lineno=38, trial=14) =====
+End:   (-49568, -49981, -21896), f=6.001
+Trajectory length: 1
+=============================================
+
+------------------------------------------------------------
+[lineno=38] Trial 16/20
+[lineno=38][trial=15] initial fitness: 6.000999000999001 for [-38652, -30648, -67047]
+===== WITHOUT COMPRESSION (lineno=38, trial=15) =====
+End:   (-38652, -30648, -67047), f=6.001
+Trajectory length: 1
+=============================================
+
+------------------------------------------------------------
+[lineno=38] Trial 17/20
+[lineno=38][trial=16] initial fitness: 6.000999000999001 for [-27488, -98496, -10834]
+===== WITHOUT COMPRESSION (lineno=38, trial=16) =====
+End:   (-27488, -98496, -10834), f=6.001
+Trajectory length: 1
+=============================================
+
+------------------------------------------------------------
+[lineno=38] Trial 18/20
+[lineno=38][trial=17] initial fitness: 6.000999000999001 for [-5534, -84986, -10647]
+===== WITHOUT COMPRESSION (lineno=38, trial=17) =====
+End:   (-5534, -84986, -10647), f=6.001
+Trajectory length: 1
+=============================================
+
+------------------------------------------------------------
+[lineno=38] Trial 19/20
+[lineno=38][trial=18] initial fitness: 6.000999000999001 for [-29619, -1581, -65027]
+===== WITHOUT COMPRESSION (lineno=38, trial=18) =====
+End:   (-29619, -1581, -65027), f=6.001
+Trajectory length: 1
+=============================================
+
+------------------------------------------------------------
+[lineno=38] Trial 20/20
+[lineno=38][trial=19] initial fitness: 6.000999000999001 for [741, -15988, -55413]
+===== WITHOUT COMPRESSION (lineno=38, trial=19) =====
+End:   (741, -15988, -55413), f=6.001
+Trajectory length: 1
+=============================================
+
+================================================================================
+>>> SUMMARY for branch lineno=38: success=False, best_f=6.001, best_x=[-64907, -91325, -72347]
+================================================================================
+
+================================================================================
+🔎 Branch at lineno=56
+Branch If at lineno=56
+
+------------------------------------------------------------
+[lineno=56] Trial 1/20
+[lineno=56][trial=0] initial fitness: 1.0 for [-85379, -61531, -43015]
+===== WITHOUT COMPRESSION (lineno=56, trial=0) =====
+End:   (-85379, -61531, -43015), f=1
+Trajectory length: 1
+=============================================
+
+------------------------------------------------------------
+[lineno=56] Trial 2/20
+[lineno=56][trial=1] initial fitness: 1.0 for [-79270, -40530, -99575]
+===== WITHOUT COMPRESSION (lineno=56, trial=1) =====
+End:   (-79270, -40530, -99575), f=1
+Trajectory length: 1
+=============================================
+
+------------------------------------------------------------
+[lineno=56] Trial 3/20
+[lineno=56][trial=2] initial fitness: 1.0 for [-5354, -5671, -65478]
+===== WITHOUT COMPRESSION (lineno=56, trial=2) =====
+End:   (-5354, -5671, -65478), f=1
+Trajectory length: 1
+=============================================
+
+------------------------------------------------------------
+[lineno=56] Trial 4/20
+[lineno=56][trial=3] initial fitness: 1.0 for [-34388, -129, -76584]
+===== WITHOUT COMPRESSION (lineno=56, trial=3) =====
+End:   (-34388, -129, -76584), f=1
+Trajectory length: 1
+=============================================
+
+------------------------------------------------------------
+[lineno=56] Trial 5/20
+[lineno=56][trial=4] initial fitness: 0.9999999858558472 for [-33458, -86053, -18041]
+===== WITHOUT COMPRESSION (lineno=56, trial=4) =====
+End:   (-33458, -86053, -16041), f=1
+Trajectory length: 2001
+=============================================
+
+------------------------------------------------------------
+[lineno=56] Trial 6/20
+[lineno=56][trial=5] initial fitness: 0.9999999999999971 for [-60883, -16252, -33460]
+===== WITHOUT COMPRESSION (lineno=56, trial=5) =====
+End:   (-60883, -16252, -33460), f=1
+Trajectory length: 1
+=============================================
+
+------------------------------------------------------------
+[lineno=56] Trial 7/20
+[lineno=56][trial=6] initial fitness: 1.0 for [-20182, -73929, -79968]
+===== WITHOUT COMPRESSION (lineno=56, trial=6) =====
+End:   (-20182, -73929, -79968), f=1
+Trajectory length: 1
+=============================================
+
+------------------------------------------------------------
+[lineno=56] Trial 8/20
+[lineno=56][trial=7] initial fitness: 1.0 for [-50991, -57, -78826]
+===== WITHOUT COMPRESSION (lineno=56, trial=7) =====
+End:   (-50991, -57, -78826), f=1
+Trajectory length: 1
+=============================================
+
+------------------------------------------------------------
+[lineno=56] Trial 9/20
+[lineno=56][trial=8] initial fitness: 0.9999999999999439 for [-29303, 2056, -30486]
+===== WITHOUT COMPRESSION (lineno=56, trial=8) =====
+End:   (-29303, 2056, -30486), f=1
+Trajectory length: 1
+=============================================
+
+------------------------------------------------------------
+[lineno=56] Trial 10/20
+[lineno=56][trial=9] initial fitness: 1.0 for [-99926, -21496, -57513]
+===== WITHOUT COMPRESSION (lineno=56, trial=9) =====
+End:   (-99926, -21496, -57513), f=1
+Trajectory length: 1
+=============================================
+
+------------------------------------------------------------
+[lineno=56] Trial 11/20
+[lineno=56][trial=10] initial fitness: 1.0 for [-35958, -97448, -85338]
+===== WITHOUT COMPRESSION (lineno=56, trial=10) =====
+End:   (-35958, -97448, -85338), f=1
+Trajectory length: 1
+=============================================
+
+------------------------------------------------------------
+[lineno=56] Trial 12/20
+[lineno=56][trial=11] initial fitness: 0.9966545377364697 for [-52424, 9008, 5745]
+===== WITHOUT COMPRESSION (lineno=56, trial=11) =====
+End:   (-52424, 9008, 3745), f=0.975305
+Trajectory length: 2001
+=============================================
+
+------------------------------------------------------------
+[lineno=56] Trial 13/20
+[lineno=56][trial=12] initial fitness: 1.0 for [-59694, -68615, -92408]
+===== WITHOUT COMPRESSION (lineno=56, trial=12) =====
+End:   (-59694, -68615, -92408), f=1
+Trajectory length: 1
+=============================================
+
+------------------------------------------------------------
+[lineno=56] Trial 14/20
+[lineno=56][trial=13] initial fitness: 1.0 for [-68429, -25636, -89678]
+===== WITHOUT COMPRESSION (lineno=56, trial=13) =====
+End:   (-68429, -25636, -89678), f=1
+Trajectory length: 1
+=============================================
+
+------------------------------------------------------------
+[lineno=56] Trial 15/20
+[lineno=56][trial=14] initial fitness: 0.9999999999999998 for [-88774, -4068, -36301]
+===== WITHOUT COMPRESSION (lineno=56, trial=14) =====
+End:   (-88774, -4068, -36301), f=1
+Trajectory length: 1
+=============================================
+
+------------------------------------------------------------
+[lineno=56] Trial 16/20
+[lineno=56][trial=15] initial fitness: 0.29448384990200627 for [6957, -90929, -307]
+===== WITHOUT COMPRESSION (lineno=56, trial=15) =====
+End:   (6957, -90929, 42), f=0
+Trajectory length: 350
+=============================================
+🎉 Branch lineno=56 succeeded at trial 15 with f=0
+
+================================================================================
+>>> SUMMARY for branch lineno=56: success=True, best_f=0, best_x=[6957, -90929, 42]
+================================================================================
+
+================================================================================
+🔎 Branch at lineno=58
+Branch If at lineno=58
+
+------------------------------------------------------------
+[lineno=58] Trial 1/20
+[lineno=58][trial=0] initial fitness: 1.0 for [-30178, 379, -83517]
+===== WITHOUT COMPRESSION (lineno=58, trial=0) =====
+End:   (-30178, 379, -83517), f=1
+Trajectory length: 1
+=============================================
+
+------------------------------------------------------------
+[lineno=58] Trial 2/20
+[lineno=58][trial=1] initial fitness: 1.0 for [-83172, -13526, -37704]
+===== WITHOUT COMPRESSION (lineno=58, trial=1) =====
+End:   (-83172, -13526, -37704), f=1
+Trajectory length: 1
+=============================================
+
+------------------------------------------------------------
+[lineno=58] Trial 3/20
+[lineno=58][trial=2] initial fitness: 1.0 for [-27937, -78357, -65259]
+===== WITHOUT COMPRESSION (lineno=58, trial=2) =====
+End:   (-27937, -78357, -65259), f=1
+Trajectory length: 1
+=============================================
+
+------------------------------------------------------------
+[lineno=58] Trial 4/20
+[lineno=58][trial=3] initial fitness: 1.0 for [-30837, -20493, -44539]
+===== WITHOUT COMPRESSION (lineno=58, trial=3) =====
+End:   (-30837, -20493, -44539), f=1
+Trajectory length: 1
+=============================================
+
+------------------------------------------------------------
+[lineno=58] Trial 5/20
+[lineno=58][trial=4] initial fitness: 0.6481244961090075 for [-72240, -29314, -1006]
+===== WITHOUT COMPRESSION (lineno=58, trial=4) =====
+End:   (-72240, -29314, 39), f=0
+Trajectory length: 1046
+=============================================
+🎉 Branch lineno=58 succeeded at trial 4 with f=0
+
+================================================================================
+>>> SUMMARY for branch lineno=58: success=True, best_f=0, best_x=[-72240, -29314, 39]
+================================================================================
+
+===== GLOBAL SUMMARY OVER ALL BRANCHES & TRIALS =====
+func=mixed, line=32, trial=0, outcome=True: init_f=0, final_f=0, steps=1, final_x=[-16190, -85408, -96722]
+func=mixed, line=34, trial=0, outcome=True: init_f=4, final_f=4, steps=1, final_x=[-2804, -63952, -67902]
+func=mixed, line=34, trial=1, outcome=True: init_f=4, final_f=4, steps=1, final_x=[-70744, -81711, -3470]
+func=mixed, line=34, trial=2, outcome=True: init_f=4, final_f=4, steps=1, final_x=[-86566, -11304, -2920]
+func=mixed, line=34, trial=3, outcome=True: init_f=4, final_f=4, steps=1, final_x=[-28518, -88605, -22603]
+func=mixed, line=34, trial=4, outcome=True: init_f=4, final_f=4, steps=1, final_x=[-44698, -95835, -96095]
+func=mixed, line=34, trial=5, outcome=True: init_f=4, final_f=4, steps=1, final_x=[-87720, -71343, -69505]
+func=mixed, line=34, trial=6, outcome=True: init_f=4, final_f=4, steps=1, final_x=[-33763, -21093, -96522]
+func=mixed, line=34, trial=7, outcome=True: init_f=4, final_f=4, steps=1, final_x=[-26437, -73938, -6150]
+func=mixed, line=34, trial=8, outcome=True: init_f=4, final_f=4, steps=1, final_x=[-14819, -8076, -28574]
+func=mixed, line=34, trial=9, outcome=True: init_f=4, final_f=4, steps=1, final_x=[-45013, -71107, -41122]
+func=mixed, line=34, trial=10, outcome=True: init_f=4, final_f=4, steps=1, final_x=[-22764, -63537, 6093]
+func=mixed, line=34, trial=11, outcome=True: init_f=4, final_f=4, steps=1, final_x=[-99149, -542, 5620]
+func=mixed, line=34, trial=12, outcome=True: init_f=4, final_f=4, steps=1, final_x=[-79074, -8494, -44608]
+func=mixed, line=34, trial=13, outcome=True: init_f=4, final_f=4, steps=1, final_x=[-55403, -63579, -79621]
+func=mixed, line=34, trial=14, outcome=True: init_f=4, final_f=4, steps=1, final_x=[-71779, 72, -55882]
+func=mixed, line=34, trial=15, outcome=True: init_f=4, final_f=4, steps=1, final_x=[-86604, -87844, -50203]
+func=mixed, line=34, trial=16, outcome=True: init_f=4, final_f=4, steps=1, final_x=[-87324, -52948, -54918]
+func=mixed, line=34, trial=17, outcome=True: init_f=4, final_f=4, steps=1, final_x=[-20869, -65329, 5791]
+func=mixed, line=34, trial=18, outcome=True: init_f=4, final_f=4, steps=1, final_x=[-94305, -4353, -39783]
+func=mixed, line=34, trial=19, outcome=True: init_f=4, final_f=4, steps=1, final_x=[-29716, -83639, -50385]
+func=mixed, line=36, trial=0, outcome=True: init_f=5, final_f=5, steps=1, final_x=[-89672, -27643, -61573]
+func=mixed, line=36, trial=1, outcome=True: init_f=5, final_f=5, steps=1, final_x=[8711, -17603, -18930]
+func=mixed, line=36, trial=2, outcome=True: init_f=5, final_f=5, steps=1, final_x=[-52600, -24326, -74797]
+func=mixed, line=36, trial=3, outcome=True: init_f=5, final_f=5, steps=1, final_x=[-7651, -90884, -93994]
+func=mixed, line=36, trial=4, outcome=True: init_f=5, final_f=5, steps=1, final_x=[-13327, -70129, 1327]
+func=mixed, line=36, trial=5, outcome=True: init_f=5, final_f=5, steps=1, final_x=[-62070, -89542, -69488]
+func=mixed, line=36, trial=6, outcome=True: init_f=5, final_f=5, steps=1, final_x=[-86762, -50177, -63566]
+func=mixed, line=36, trial=7, outcome=True: init_f=5, final_f=5, steps=1, final_x=[-40571, -16680, 9328]
+func=mixed, line=36, trial=8, outcome=True: init_f=5, final_f=5, steps=1, final_x=[-52181, -78681, -51480]
+func=mixed, line=36, trial=9, outcome=True: init_f=5, final_f=5, steps=1, final_x=[-53434, -72540, -12159]
+func=mixed, line=36, trial=10, outcome=True: init_f=5, final_f=5, steps=1, final_x=[-65007, -8012, -10407]
+func=mixed, line=36, trial=11, outcome=True: init_f=5, final_f=5, steps=1, final_x=[-15061, -90642, -20160]
+func=mixed, line=36, trial=12, outcome=True: init_f=5, final_f=5, steps=1, final_x=[-16773, -77569, -29990]
+func=mixed, line=36, trial=13, outcome=True: init_f=5, final_f=5, steps=1, final_x=[-4432, -67913, -78583]
+func=mixed, line=36, trial=14, outcome=True: init_f=5, final_f=5, steps=1, final_x=[-39411, -50265, -64618]
+func=mixed, line=36, trial=15, outcome=True: init_f=5, final_f=5, steps=1, final_x=[-16114, -9802, -27000]
+func=mixed, line=36, trial=16, outcome=True: init_f=5, final_f=5, steps=1, final_x=[-71215, -10267, -57496]
+func=mixed, line=36, trial=17, outcome=True: init_f=5, final_f=5, steps=1, final_x=[704, 1711, -92669]
+func=mixed, line=36, trial=18, outcome=True: init_f=5, final_f=5, steps=1, final_x=[-69979, 7715, -95793]
+func=mixed, line=36, trial=19, outcome=True: init_f=5, final_f=5, steps=1, final_x=[5518, -58653, -47419]
+func=mixed, line=38, trial=0, outcome=True: init_f=6, final_f=6, steps=1, final_x=[-64907, -91325, -72347]
+func=mixed, line=38, trial=1, outcome=True: init_f=6, final_f=6, steps=1, final_x=[-25659, -5902, -58755]
+func=mixed, line=38, trial=2, outcome=True: init_f=6, final_f=6, steps=1, final_x=[-72131, -14091, -34565]
+func=mixed, line=38, trial=3, outcome=True: init_f=6, final_f=6, steps=1, final_x=[-48144, -15741, -39858]
+func=mixed, line=38, trial=4, outcome=True: init_f=6, final_f=6, steps=1, final_x=[-81274, -65282, -81699]
+func=mixed, line=38, trial=5, outcome=True: init_f=6, final_f=6, steps=1, final_x=[-67675, -2353, -26421]
+func=mixed, line=38, trial=6, outcome=True: init_f=6, final_f=6, steps=1, final_x=[-29356, -65562, -2088]
+func=mixed, line=38, trial=7, outcome=True: init_f=6, final_f=6, steps=1, final_x=[-23378, -43845, -23516]
+func=mixed, line=38, trial=8, outcome=True: init_f=6, final_f=6, steps=1, final_x=[-47650, -52553, -71254]
+func=mixed, line=38, trial=9, outcome=True: init_f=6, final_f=6, steps=1, final_x=[-81869, -33216, -35314]
+func=mixed, line=38, trial=10, outcome=True: init_f=6, final_f=6, steps=1, final_x=[-88085, -939, -93825]
+func=mixed, line=38, trial=11, outcome=True: init_f=6, final_f=6, steps=1, final_x=[-85629, -79967, -17760]
+func=mixed, line=38, trial=12, outcome=True: init_f=6, final_f=6, steps=1, final_x=[-79031, 3819, -10808]
+func=mixed, line=38, trial=13, outcome=True: init_f=6, final_f=6, steps=1, final_x=[-44667, -21828, -91674]
+func=mixed, line=38, trial=14, outcome=True: init_f=6, final_f=6, steps=1, final_x=[-49568, -49981, -21896]
+func=mixed, line=38, trial=15, outcome=True: init_f=6, final_f=6, steps=1, final_x=[-38652, -30648, -67047]
+func=mixed, line=38, trial=16, outcome=True: init_f=6, final_f=6, steps=1, final_x=[-27488, -98496, -10834]
+func=mixed, line=38, trial=17, outcome=True: init_f=6, final_f=6, steps=1, final_x=[-5534, -84986, -10647]
+func=mixed, line=38, trial=18, outcome=True: init_f=6, final_f=6, steps=1, final_x=[-29619, -1581, -65027]
+func=mixed, line=38, trial=19, outcome=True: init_f=6, final_f=6, steps=1, final_x=[741, -15988, -55413]
+func=mixed, line=56, trial=0, outcome=True: init_f=1, final_f=1, steps=1, final_x=[-85379, -61531, -43015]
+func=mixed, line=56, trial=1, outcome=True: init_f=1, final_f=1, steps=1, final_x=[-79270, -40530, -99575]
+func=mixed, line=56, trial=2, outcome=True: init_f=1, final_f=1, steps=1, final_x=[-5354, -5671, -65478]
+func=mixed, line=56, trial=3, outcome=True: init_f=1, final_f=1, steps=1, final_x=[-34388, -129, -76584]
+func=mixed, line=56, trial=4, outcome=True: init_f=1, final_f=1, steps=2001, final_x=[-33458, -86053, -16041]
+func=mixed, line=56, trial=5, outcome=True: init_f=1, final_f=1, steps=1, final_x=[-60883, -16252, -33460]
+func=mixed, line=56, trial=6, outcome=True: init_f=1, final_f=1, steps=1, final_x=[-20182, -73929, -79968]
+func=mixed, line=56, trial=7, outcome=True: init_f=1, final_f=1, steps=1, final_x=[-50991, -57, -78826]
+func=mixed, line=56, trial=8, outcome=True: init_f=1, final_f=1, steps=1, final_x=[-29303, 2056, -30486]
+func=mixed, line=56, trial=9, outcome=True: init_f=1, final_f=1, steps=1, final_x=[-99926, -21496, -57513]
+func=mixed, line=56, trial=10, outcome=True: init_f=1, final_f=1, steps=1, final_x=[-35958, -97448, -85338]
+func=mixed, line=56, trial=11, outcome=True: init_f=0.997, final_f=0.975, steps=2001, final_x=[-52424, 9008, 3745]
+func=mixed, line=56, trial=12, outcome=True: init_f=1, final_f=1, steps=1, final_x=[-59694, -68615, -92408]
+func=mixed, line=56, trial=13, outcome=True: init_f=1, final_f=1, steps=1, final_x=[-68429, -25636, -89678]
+func=mixed, line=56, trial=14, outcome=True: init_f=1, final_f=1, steps=1, final_x=[-88774, -4068, -36301]
+func=mixed, line=56, trial=15, outcome=True: init_f=0.294, final_f=0, steps=350, final_x=[6957, -90929, 42]
+func=mixed, line=58, trial=0, outcome=True: init_f=1, final_f=1, steps=1, final_x=[-30178, 379, -83517]
+func=mixed, line=58, trial=1, outcome=True: init_f=1, final_f=1, steps=1, final_x=[-83172, -13526, -37704]
+func=mixed, line=58, trial=2, outcome=True: init_f=1, final_f=1, steps=1, final_x=[-27937, -78357, -65259]
+func=mixed, line=58, trial=3, outcome=True: init_f=1, final_f=1, steps=1, final_x=[-30837, -20493, -44539]
+func=mixed, line=58, trial=4, outcome=True: init_f=0.648, final_f=0, steps=1046, final_x=[-72240, -29314, 39]
