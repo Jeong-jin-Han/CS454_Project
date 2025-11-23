@@ -54,15 +54,23 @@ class SigmoidWarping:
             else:
                 s = np.clip(pos - self.node_start, 0.0, 1.0)
                 if s <= 0.01:
-                    node[i] = self.node_start
+                    node[i] = int(self.node_start)
                 elif s >= 0.99:
-                    node[i] = self.node_end
+                    node[i] = int(self.node_end)
                 else:
                     x = logit(s)
                     t = x / self.steepness + 0.5
                     node_f = self.node_start + t * self.length
                     node[i] = int(round(node_f))
-        return node[0] if len(position) == 1 else node
+
+        # Always return plain Python ints to avoid NumPy scalar types leaking
+        # into the SBST fitness calculator (which compares `is True` / `is False`
+        # and is sensitive to NumPy's bool_/int64 types).
+        if len(position) == 1:
+            return int(node[0])
+        else:
+            # For multi-D, keep the array shape but convert elements to Python int
+            return np.vectorize(int)(node)
 
 class MetadataCompressionOriginalSpace:
     """Metadata ALWAYS in ORIGINAL X-space."""
