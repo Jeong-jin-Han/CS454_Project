@@ -1,0 +1,3 @@
+Test Name,Dim,Algorithm,Success,Final Fitness,Steps,Time(s),Start Point
+test1.py,2,Compression,True,0.0,16,0.0022,"(10, 20)"
+test1.py,2,Baseline,False,30.0,1,0.0003,"(10, 20)"
