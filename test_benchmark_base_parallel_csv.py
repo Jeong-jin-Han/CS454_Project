@@ -170,8 +170,17 @@ def run_parallel_test_baseline_with_csv(
         print(f"📝 Function: {func_name}")
         print(f"   Branches: {list(branches.keys())}")
         
-        func_initial_low = func_info.min_const
-        func_initial_high = func_info.max_const
+        # Use function's range if it's wide enough (difference >= 10)
+        # Otherwise use the provided initial_low/initial_high
+        func_range = func_info.max_const - func_info.min_const
+        if func_range >= 10:
+            func_initial_low = func_info.min_const
+            func_initial_high = func_info.max_const
+            print(f"   Using function range: [{func_initial_low}, {func_initial_high}]")
+        else:
+            func_initial_low = initial_low
+            func_initial_high = initial_high
+            print(f"   Function range too narrow ({func_range}), using default: [{initial_low}, {initial_high}]")
         
         for lineno, branch_info in branches.items():
             task = (
@@ -285,8 +294,9 @@ def run_directory_test_baseline(
     source_path = Path(source_dir)
     output_path = Path(output_dir)
     
-    # Find all .py files
-    py_files = list(source_path.rglob("*.py"))
+    # Find all .py files (excluding __pycache__ and other non-test files)
+    py_files = [f for f in source_path.rglob("*.py") 
+                if "__pycache__" not in str(f)]
     
     print("\n" + "="*80)
     print(f"🔍 Found {len(py_files)} Python files in {source_dir}")
@@ -342,6 +352,8 @@ if __name__ == "__main__":
         output_dir="benchmark_log",
         max_trials_per_branch=20,
         success_threshold=0.0,
+        initial_low=-1000,      # Reduced from -100000
+        initial_high=1000,      # Reduced from 10000
         max_steps=2000,
         num_workers=None  # Use all CPU cores
     )
