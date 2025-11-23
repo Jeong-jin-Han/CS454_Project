@@ -9,15 +9,20 @@ import copy
 # Data structure
 # ------------------------------
 class FunctionInfo:
-    def __init__(self, name: str, args: list[str], node: ast.FunctionDef):
+    def __init__(self, name: str, args: list[str], node: ast.FunctionDef, module_tree=None):
         self.name = name
         self.args = args
         self.args_dim = len(args)
         self.node = node
 
-        # Set max/min const
+        # Set max/min const - scan both function AND module for constants
         extractor = ConstantExtractor()
-        extractor.visit(node)
+        extractor.visit(node)  # Scan function
+        
+        # Also scan module-level for global constants (like SECRET = 123456)
+        if module_tree:
+            extractor.visit(module_tree)
+        
         self.min_const = min(extractor.total_constants)-10 if extractor.total_constants else -300
         self.max_const = max(extractor.total_constants)+10 if extractor.total_constants else 300
 
@@ -46,14 +51,21 @@ class Traveler(ast.NodeVisitor):
         self.current_function_branches = None
         self.parent_map = {}
         self.parent_stack = []
+        self.module_tree = None  # Store module tree for constant extraction
 
+    def visit_Module(self, node):
+        # Store module tree for global constant extraction
+        self.module_tree = node
+        self.generic_visit(node)
+    
     def visit_FunctionDef(self, node):
         self.current_function = node.name
         self.current_function_branches = {}
         self.generic_visit(node)
 
         args = [arg.arg for arg in node.args.args]
-        self.functions.append(FunctionInfo(name=node.name, args=args, node=node))
+        # Pass module_tree to FunctionInfo for better constant extraction
+        self.functions.append(FunctionInfo(name=node.name, args=args, node=node, module_tree=self.module_tree))
         self.branches[self.current_function] = self.current_function_branches
         self.current_function = None
         self.current_function_branches = None
@@ -229,6 +241,20 @@ class ConstantExtractor(ast.NodeVisitor):
     def visit_MatchValue(self, node):
         if isinstance(node.value, ast.Constant) and isinstance(node.value.value, int):
             self.total_constants.add(node.value.value)
+        self.generic_visit(node)
+    
+    def visit_Assign(self, node):
+        # Extract module-level assignments like SECRET = 123456
+        for target in node.targets:
+            if isinstance(target, ast.Name):
+                if isinstance(node.value, ast.Constant) and isinstance(node.value.value, int):
+                    self.total_constants.add(node.value.value)
+        self.generic_visit(node)
+    
+    def visit_Constant(self, node):
+        # Catch any integer constant anywhere in the code
+        if isinstance(node.value, int):
+            self.total_constants.add(node.value)
         self.generic_visit(node)
 
 # ------------------------------
