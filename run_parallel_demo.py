@@ -20,7 +20,7 @@ def demo_version_1():
         max_trials_per_branch=5,  # Small number for demo
         success_threshold=0.0,
         num_workers=4,  # Limit workers for demo
-        filter_lineno={28}
+        filter_lineno={3}
     )
     elapsed = time.time() - start
     
@@ -40,7 +40,7 @@ def demo_version_2():
         max_trials_per_branch=5,  # Small number for demo
         success_threshold=0.0,
         num_workers=4,  # Limit workers for demo
-        filter_lineno={28}
+        filter_lineno={3}
     )
     elapsed = time.time() - start
     
