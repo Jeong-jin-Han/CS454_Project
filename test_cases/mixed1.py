@@ -1,16 +1,12 @@
 # test_ultimate_doomsday.py
 
-# ==========================================
-# CONSTANTS
-# ==========================================
 VOLTAGE_MIN = 2000
 VOLTAGE_MAX = 2100
 TARGET_FREQ = 0xCAFE
 MAGIC_KEY = 777
-HASH_TARGET_MOD = 128  # 확률 1/128의 해시 충돌을 찾아야 함
+HASH_MOD = 128
 
-def _custom_hash(val: int) -> int:
-    """재현 가능한 간단한 비트 믹싱 해시 함수"""
+def _hash(val: int) -> int:
     val = (val ^ 61) ^ (val >> 16)
     val = (val + (val << 3)) 
     val = (val ^ (val >> 4)) 
@@ -18,113 +14,77 @@ def _custom_hash(val: int) -> int:
     val = (val ^ (val >> 15)) 
     return val & 0xFFFFFFFF
 
-def ultimate_doomsday(point: tuple) -> int:
-    """
-    [Inputs]
-    w: Voltage (Plateau)
-    x: Frequency (Rugged)
-    y: Security Key (Chained Needle)
-    z: Nonce (Hash Mining)
-    """
+# 1. [Target Code] 둠스데이 프로토콜
+def disarm_doomsday(point: tuple) -> bool:
     w, x, y, z = point
-    total_cost = 0
     
-    # ---------------------------------------------------------
-    # 1. Level 1: Voltage Check (Plateau Case)
-    # ---------------------------------------------------------
-    # 전압이 2000~2100 사이여야 함.
-    # 하지만 센서는 100 단위로만 측정됨 (Quantization).
-    # 즉, 1000~1099는 모두 같은 값, 1100~1199도 같은 값.
-    # 계단형 평지(Staircase Plateau) 형성.
-    
-    # 거리 계산: 범위 밖이면 페널티, 범위 안이면 0
-    if VOLTAGE_MIN <= w <= VOLTAGE_MAX:
-        dist_w = 0
-    else:
-        # 중앙값(2050)과의 거리를 100으로 나눈 몫 -> 계단 형성
-        raw_dist = abs(w - 2050)
-        dist_w = (raw_dist // 100) * 1000  # 계단 높이 1000
-    
-    # 만약 전압 구간을 못 맞추면, 뒤의 단계들은 의미가 없음 (Blocking)
-    # 하지만 탐색 유도를 위해 뒤의 비용을 약하게 더해줄 순 있으나,
-    # 여기서는 '순차적 해결'을 강제하기 위해 w가 틀리면 매우 큰 값을 기본으로 깔아줌.
-    if dist_w > 0:
-        return dist_w + 500000 
-
-    # ---------------------------------------------------------
-    # 2. Level 2: Frequency Sync (Rugged Case)
-    # ---------------------------------------------------------
-    # w가 해결되었다고 가정하고 x를 평가.
-    # x는 비트 연산 노이즈가 섞인 Rugged Landscape.
-    
-    # 목표: (x ^ (x >> 3)) 값이 TARGET_FREQ와 가까워야 함
-    scrambled_x = (x ^ (x >> 3)) & 0xFFFF
-    dist_x = abs(scrambled_x - TARGET_FREQ)
-    
-    # Rugged함에 소소한 노이즈 추가 (홀짝성에 따른 떨림)
-    noise = (x & 0b111) * 10 
-    dist_x += noise
-    
-    total_cost += dist_x
-
-    # ---------------------------------------------------------
-    # 3. Level 3: Security Key (Coupled Needle)
-    # ---------------------------------------------------------
-    # x까지 어느 정도 맞아야(거리 < 500) 힌트가 열림.
-    # 목표: w + x + y == Magic Number 가 되어야 함 (변수 의존성)
-    
-    target_sum = MAGIC_KEY + w + x  # 동적 목표
-    if dist_x < 500:
-        dist_y = abs(y - target_sum)
-        # Needle 특성: 정확하지 않으면 페널티가 급격함
-        if dist_y > 0:
-            dist_y = dist_y + 10000 # 바늘 구멍 밖은 고원
-    else:
-        dist_y = 50000 # 아직 x가 불안정해서 y를 평가할 수 없음
-
-    total_cost += dist_y
-
-    # ---------------------------------------------------------
-    # 4. Level 4: Proof of Work (Hash Mining)
-    # ---------------------------------------------------------
-    # w, x, y가 모두 안정권(오차 0)에 들어왔을 때만 z(Nonce)를 채굴 가능.
-    
-    if dist_w == 0 and dist_x == 0 and dist_y == 0:
-        # 모든 변수를 섞어서 해시 생성
-        # z(Nonce)를 바꿔가며 해시값의 나머지가 0이 되는 경우를 찾아야 함
-        combined_seed = w + x + y + z
-        hash_val = _custom_hash(combined_seed)
+    # Level 1: Voltage (Range Check via Quantization)
+    # 계측기가 100단위로만 동작한다고 가정 (Integer Division)
+    if 20 <= (w // 100) <= 21:
         
-        # Modulo 연산으로 Target Hit 여부 판별 (Mining)
-        remainder = hash_val % HASH_TARGET_MOD
-        
-        if remainder == 0:
-            return 0 # SUCCESS!
-        else:
-            # Hash Mining은 Gradient가 없음.
-            # 나머지가 1이든 127이든 정답과의 거리는 알 수 없음.
-            # 랜덤 서치(Basin Restart) 능력을 극한으로 시험.
-            return 1000 + remainder # 약간의 힌트(remainder)를 주긴 하지만 사실상 노이즈
+        # Level 2: Frequency (Bitwise Logic)
+        scrambled = (x ^ (x >> 3)) & 0xFFFF
+        if scrambled == TARGET_FREQ:
             
-    else:
-        total_cost += 100000 # 아직 채굴 단계 아님
+            # Level 3: Security Key (Coupled Logic)
+            # w, x값이 확정된 상태에서 y가 맞아야 함
+            if w + x + y == MAGIC_KEY:
+                
+                # Level 4: Proof of Work (Hash)
+                h_val = _hash(w + x + y + z)
+                if h_val % HASH_MOD == 0:
+                    return True # Disarmed!
+                    
+    return False
 
-    return float(total_cost)
+# 2. [Fitness Function] Approach Level + Branch Distance
+def fitness_doomsday(point: tuple) -> float:
+    w, x, y, z = point
+    
+    # --- Level 1 Check ---
+    # w // 100 이 20~21 사이여야 함 (2000~2199)
+    w_val = w // 100
+    if not (20 <= w_val <= 21):
+        # Approach Level 4 (가장 바깥)
+        # Distance: 범위 밖 거리
+        dist = min(abs(w_val - 20), abs(w_val - 21))
+        return 400000 + dist * 1000 # Huge Penalty
+        
+    # --- Level 2 Check ---
+    scrambled = (x ^ (x >> 3)) & 0xFFFF
+    if scrambled != TARGET_FREQ:
+        # Approach Level 3
+        # Rugged distance added
+        dist = abs(scrambled - TARGET_FREQ)
+        # Add some noise to simulate ruggedness
+        noise = (x & 0b111) * 10
+        return 300000 + dist + noise
+        
+    # --- Level 3 Check ---
+    target_y = MAGIC_KEY - (w + x)
+    if y != target_y:
+        # Approach Level 2
+        # Coupled Needle distance
+        return 200000 + abs(y - target_y)
+        
+    # --- Level 4 Check ---
+    h_val = _hash(w + x + y + z)
+    remainder = h_val % HASH_MOD
+    if remainder != 0:
+        # Approach Level 1
+        # Hash Mining (No Gradient)
+        return 100000 + remainder # Remainder is just random noise, effectively
+        
+    # Success
+    return 0.0
 
-FITNESS_FUNC = ultimate_doomsday
+FITNESS_FUNC = fitness_doomsday
 TEST_CONFIG = {
     'dim': 4,
     'start_point': (0, 0, 0, 0),
     'optimal_val': 0.0,
     'threshold': 1e-1,
-    
-    # [전략 포인트]
-    # 1. Plateau(w)를 넘기 위해 iteration 필요
-    # 2. Rugged(x)를 안정화하기 위해 Gradient Descent 필요
-    # 3. Needle(y)을 찾기 위해 정밀 탐색 필요
-    # 4. Hash(z)를 찾기 위해 아주 넓은 범위의 Random Restart(Basin Search) 필요
-    
     'max_iterations': 200, 
-    'basin_max_search': 500, # Hash Mining 확률(1/128)을 뚫으려면 최소 128 이상 탐색해야 함
+    'basin_max_search': 500,
     'max_steps_baseline': 20000
 }

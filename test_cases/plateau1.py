@@ -1,38 +1,43 @@
 # test_plateau_lock.py
 
-# 4자리 비밀번호 (각 자리는 0~9 사이 정수라고 가정하지 않고 넓은 범위 허용)
 SECRET_CODE = [10, 20, 30, 40]
 
-def digital_lock(inputs: tuple) -> int:
-    # inputs: 4개의 정수 (예: (10, 20, 99, 99))
+# 1. [Target Code] 실제 테스트 대상 로직
+def unlock_door(inputs: tuple) -> bool:
     if len(inputs) != 4:
-        return 10000
+        return False
     
-    unmatched_count = 0
-    
-    # 각 자릿수를 확인
-    for i in range(4):
-        # [Plateau 원인]
-        # 값이 "얼마나 가까운가(Distance)"는 무시하고, "맞았나 틀렸나(Boolean)"만 봄.
-        # 즉, 10을 맞춰야 하는데 11을 넣든 100을 넣든 똑같이 "틀림(1점)" 처리.
-        # 따라서 정답을 제외한 모든 공간이 평평한 고원(Plateau)임.
-        if inputs[i] != SECRET_CODE[i]:
-            unmatched_count += 1
-            
-    # 다 맞으면 0, 하나 틀릴 때마다 1000점씩 페널티
-    # 예: 3개 틀리면 3000점. 
-    # 3000점에서 2000점으로 내려가려면 우연히 숫자 하나를 정확히 맞춰야 함.
-    return unmatched_count * 1000
+    # 각 자릿수가 정확히 일치해야만 열림
+    if inputs[0] == SECRET_CODE[0]:
+        if inputs[1] == SECRET_CODE[1]:
+            if inputs[2] == SECRET_CODE[2]:
+                if inputs[3] == SECRET_CODE[3]:
+                    return True # Target Branch
+    return False
 
-FITNESS_FUNC = digital_lock
+# 2. [Fitness Function] SBSE 관점의 거리 계산
+def fitness_digital_lock(inputs: tuple) -> int:
+    # Branch Distance Strategy: Hamming Distance
+    # 값이 "얼마나 가까운가(abs)"는 무시하고 "맞았나(0)/틀렸나(1)"만 계산하여
+    # 의도적으로 Plateau 지형을 형성함 (Gradient 소실 시뮬레이션)
+    
+    cost = 0
+    
+    # 4개의 중첩된 if문을 통과해야 함 (Approach Level)
+    # 여기서는 순서 상관없이 틀린 개수 당 1000점 페널티로 단순화
+    for i in range(4):
+        if inputs[i] != SECRET_CODE[i]:
+            cost += 1000
+            
+    return cost
+
+FITNESS_FUNC = fitness_digital_lock
 TEST_CONFIG = {
     'dim': 4,
     'start_point': (0, 0, 0, 0),
     'optimal_val': 0,
     'threshold': 0,
     'max_iterations': 100,
-    # 정답을 찾기 위해 매우 넓은 범위를 훑어야 함
-    # 압축 알고리즘이 "주변을 아무리 봐도 점수가 안 변하네?" 하고 크게 점프해야 함
-    'basin_max_search': 500, 
+    'basin_max_search': 500,
     'max_steps_baseline': 10000
 }
