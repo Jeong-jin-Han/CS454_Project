@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import time
 from typing import List, Tuple, Optional
 from dataclasses import dataclass
+import itertools
 
 # print("✅ Imports loaded!")
 # print("📍 Focus: Hill climbing with adaptive compression")
@@ -395,14 +396,15 @@ def hill_climb_with_compression_nd(
 
         step_count = 0
         while True:
-            # ----- Propose neighbors in all 2*dim directions -----
+            # ----- Propose neighbors in all directions -----
             candidates = []
-            
+
+            # 1) Axis-aligned neighbors (O(D))
             for d in range(dim):
                 # Get compression system for this dimension
                 fixed_coords = tuple(point[i] for i in range(dim) if i != d)
                 comp_sys = cm.get_system(d, fixed_coords)
-                
+
                 if comp_sys is not None:
                     # Use compressed space
                     z = comp_sys.forward(point[d])
@@ -412,16 +414,48 @@ def hill_climb_with_compression_nd(
                     # No compression, use regular neighbors
                     neighbor_minus = point[d] - 1
                     neighbor_plus = point[d] + 1
-                
+
                 # Create neighbor points
                 point_minus = list(point)
                 point_minus[d] = neighbor_minus
-                candidates.append((tuple(point_minus), fitness_func_nd(tuple(point_minus))))
-                
+                cand_minus = tuple(point_minus)
+                candidates.append((cand_minus, fitness_func_nd(cand_minus)))
+
                 point_plus = list(point)
                 point_plus[d] = neighbor_plus
-                candidates.append((tuple(point_plus), fitness_func_nd(tuple(point_plus))))
-            
+                cand_plus = tuple(point_plus)
+                candidates.append((cand_plus, fitness_func_nd(cand_plus)))
+
+            # 2) Diagonal neighbors (O(D^2))
+            if dim >= 2:
+                for d1, d2 in itertools.combinations(range(dim), 2):
+                    # Compression system for d1
+                    fixed1 = tuple(point[i] for i in range(dim) if i != d1)
+                    comp1 = cm.get_system(d1, fixed1)
+                    if comp1 is not None:
+                        z1 = comp1.forward(point[d1])
+                        n1_vals = [comp1.inverse(z1 - 1), comp1.inverse(z1 + 1)]
+                    else:
+                        n1_vals = [point[d1] - 1, point[d1] + 1]
+
+                    # Compression system for d2
+                    fixed2 = tuple(point[i] for i in range(dim) if i != d2)
+                    comp2 = cm.get_system(d2, fixed2)
+                    if comp2 is not None:
+                        z2 = comp2.forward(point[d2])
+                        n2_vals = [comp2.inverse(z2 - 1), comp2.inverse(z2 + 1)]
+                    else:
+                        n2_vals = [point[d2] - 1, point[d2] + 1]
+
+                    # Combine offsets in both dimensions
+                    for v1 in n1_vals:
+                        for v2 in n2_vals:
+                            diag_point = list(point)
+                            diag_point[d1] = v1
+                            diag_point[d2] = v2
+                            cand = tuple(diag_point)
+                            candidates.append((cand, fitness_func_nd(cand)))
+
             # Pick best neighbor (steepest descent)
             best_point, best_f = point, f
             for cand_point, cand_f in candidates:
@@ -641,14 +675,15 @@ def hill_climb_with_compression_nd_code(
         max_steps_per_iteration = 10000  # Safety limit to prevent infinite loops
         
         while step_count < max_steps_per_iteration:
-            # ----- Propose neighbors in all 2*dim directions -----
+            # ----- Propose neighbors in all directions -----
             candidates = []
-            
+
+            # 1) Axis-aligned neighbors (O(D))
             for d in range(dim):
                 # Get compression system for this dimension
                 fixed_coords = tuple(point[i] for i in range(dim) if i != d)
                 comp_sys = cm.get_system(d, fixed_coords)
-                
+
                 if comp_sys is not None:
                     # Use compressed space
                     z = comp_sys.forward(point[d])
@@ -658,16 +693,48 @@ def hill_climb_with_compression_nd_code(
                     # No compression, use regular neighbors
                     neighbor_minus = point[d] - 1
                     neighbor_plus = point[d] + 1
-                
+
                 # Create neighbor points
                 point_minus = list(point)
                 point_minus[d] = neighbor_minus
-                candidates.append((tuple(point_minus), fitness_func_nd_code(tuple(point_minus))))
-                
+                cand_minus = tuple(point_minus)
+                candidates.append((cand_minus, fitness_func_nd_code(cand_minus)))
+
                 point_plus = list(point)
                 point_plus[d] = neighbor_plus
-                candidates.append((tuple(point_plus), fitness_func_nd_code(tuple(point_plus))))
-            
+                cand_plus = tuple(point_plus)
+                candidates.append((cand_plus, fitness_func_nd_code(cand_plus)))
+
+            # 2) Diagonal neighbors (O(D^2))
+            if dim >= 2:
+                for d1, d2 in itertools.combinations(range(dim), 2):
+                    # Compression system for d1
+                    fixed1 = tuple(point[i] for i in range(dim) if i != d1)
+                    comp1 = cm.get_system(d1, fixed1)
+                    if comp1 is not None:
+                        z1 = comp1.forward(point[d1])
+                        n1_vals = [comp1.inverse(z1 - 1), comp1.inverse(z1 + 1)]
+                    else:
+                        n1_vals = [point[d1] - 1, point[d1] + 1]
+
+                    # Compression system for d2
+                    fixed2 = tuple(point[i] for i in range(dim) if i != d2)
+                    comp2 = cm.get_system(d2, fixed2)
+                    if comp2 is not None:
+                        z2 = comp2.forward(point[d2])
+                        n2_vals = [comp2.inverse(z2 - 1), comp2.inverse(z2 + 1)]
+                    else:
+                        n2_vals = [point[d2] - 1, point[d2] + 1]
+
+                    # Combine offsets in both dimensions
+                    for v1 in n1_vals:
+                        for v2 in n2_vals:
+                            diag_point = list(point)
+                            diag_point[d1] = v1
+                            diag_point[d2] = v2
+                            cand = tuple(diag_point)
+                            candidates.append((cand, fitness_func_nd_code(cand)))
+
             # Pick best neighbor (steepest descent)
             best_point, best_f = point, f
             for cand_point, cand_f in candidates:
