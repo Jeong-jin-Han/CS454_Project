@@ -1,6 +1,7 @@
 # needle_case.py
 
-SECRET = 123456
+SECRET1 = 123456
+SECRET = 103456
 
 def needle(x: int) -> int:
     """
@@ -9,7 +10,7 @@ def needle(x: int) -> int:
             # TARGET
     쪽이라고 가정하고 fitness를 distance 기반으로 만들 수 있습니다.
     """
-    if x == SECRET and (x % 97) == 13:
+    if x == SECRET and (x % 97) == (SECRET % 97):
         # TARGET BRANCH
         flag = 0
     else:

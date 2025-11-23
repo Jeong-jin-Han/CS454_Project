@@ -4,10 +4,11 @@ import random
 
 from hill_climb_multiD import hill_climb_with_compression_nd_code, CompressionManagerND
 
-# file_path = "./benchmark/ex2.py" # path to target
-# file_path = "./benchmark/collatz_step.py" # path to target
+# file_path = "./benchmark/ex5.py" # path to target
+file_path = "./benchmark/collatz_step.py" # path to target
 # file_path = "./benchmark/HJJ/rugged_case.py" # path to target
-file_path = "./benchmark/count_divisor_2.py" # path to target
+# file_path = "./benchmark/count_divisor_2.py" # path to target
+# file_path = "./benchmark/HJJ/needle_case.py" # path to target
 
 source = open(file_path).read()
 namespace, traveler, record, instrumented_tree = instrument_and_load(source)
@@ -29,6 +30,7 @@ for func_info in traveler.functions:
     func_name = func_info.name
     func_args = func_info.args
     func_dims = func_info.args_dim
+
     INITIAL_LOW, INITIAL_HIGH = func_info.min_const, func_info.max_const
     func_obj = namespace[func_name]
     

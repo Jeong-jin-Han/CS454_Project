@@ -381,8 +381,8 @@ if __name__ == "__main__":
     
     # Configuration: Test entire directory
     run_directory_test(
-        source_dir="./benchmark_small",
-        output_dir="benchmark_log",
+        source_dir="./benchmark_small_1",
+        output_dir="benchmark_log_1",
         max_trials_per_branch=20,
         success_threshold=0.0,
         initial_low=-1000,      # Reduced from -100000
