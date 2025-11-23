@@ -1,0 +1,900 @@
+
+================================================================================
+🚀 PARALLEL BRANCH TESTING WITH CSV OUTPUT
+================================================================================
+File: ./benchmark/HJJ/parallel_test.py
+Output CSV: results_parallel.csv
+Workers: 8
+================================================================================
+
+📝 Function: parallel
+   Branches: [12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36]
+
+📊 Total branches to test: 13
+
+🔧 Starting 8 worker processes...
+================================================================================
+
+
+[Worker PID 716580] Starting branch parallel::18
+[Worker 716580] Branch 18, Trial 1/20: init_f=0.0363
+♻️ REUSING existing CompressionManagerND with accumulated metadata
+
+🚀 1D hill climbing start at (57,), f=0.0363
+
+================================================================================
+🔄 Iteration 1/100
+================================================================================
+  📍 Climbed 37 steps, now at (20,), f=0
+
+🎉 SUCCESS: reached near-global minimum
+
+================================================================================
+🏁 FINAL 1D RESULTS
+================================================================================
+  Final position: (20,)
+  Final fitness: 0
+  Total steps:   38
+  Total compressions: 0
+================================================================================
+
+[Worker 716580] 🎉 Branch 18 succeeded at trial 0
+[Worker 716580] Branch 18 succeeded, skipping remaining trials
+
+[Worker 716580] ✅ Branch 18 completed:
+  Convergence speed (total steps): 38
+  Total NFE: 78
+  Best fitness: 0
+  Best solution: [20]
+
+[Worker PID 716580] Starting branch parallel::36
+[Worker 716580] Branch 36, Trial 1/20: init_f=0.0363
+♻️ REUSING existing CompressionManagerND with accumulated metadata
+
+🚀 1D hill climbing start at (28,), f=0.0363
+
+================================================================================
+🔄 Iteration 1/100
+================================================================================
+  📍 Climbed 1 steps, now at (29,), f=0.0353424
+
+⚠️ STUCK at local minimum (29,), f=0.0353424
+  🔍 Detecting basins along all 1 dimensions...
+  ✅ Dim 0 basin: (-99971, 100002)
+
+================================================================================
+📦 METADATA (Original X-space): [(-99971, 100002)]
+================================================================================
+  Compression #1:
+    Original X[-99971, 31] → Z[-99971, 31]
+    Saves 100001 nodes
+✅ Built 1 compressions
+================================================================================
+
+
+  ➡️ Restarting from (31,), f=0.0334
+================================================================================
+🔄 Iteration 2/100
+================================================================================
+  📍 Climbed 3 steps, now at (np.int64(34),), f=0.0305094
+
+⚠️ STUCK at local minimum (np.int64(34),), f=0.0305094
+  🔍 Detecting basins along all 1 dimensions...
+  ✅ Dim 0 basin: (-99966, 100002)
+  🔄 Merged: (-99966,100002) + (-99971,100002) → (-99971,100007)
+
+================================================================================
+📦 METADATA (Original X-space): [(-99971, 100007)]
+================================================================================
+  Compression #1:
+    Original X[-99971, 36] → Z[-99971, 36]
+    Saves 100006 nodes
+✅ Built 1 compressions
+================================================================================
+
+
+  ➡️ Restarting from (36,), f=0.0286
+================================================================================
+🔄 Iteration 3/100
+================================================================================
+  📍 Climbed 3 steps, now at (np.int64(39),), f=0.0256523
+
+⚠️ STUCK at local minimum (np.int64(39),), f=0.0256523
+  🔍 Detecting basins along all 1 dimensions...
+  ✅ Dim 0 basin: (-99961, 100002)
+  🔄 Merged: (-99961,100002) + (-99971,100007) → (-99971,100012)
+
+================================================================================
+📦 METADATA (Original X-space): [(-99971, 100012)]
+================================================================================
+  Compression #1:
+    Original X[-99971, 41] → Z[-99971, 41]
+    Saves 100011 nodes
+✅ Built 1 compressions
+================================================================================
+
+
+  ➡️ Restarting from (41,), f=0.0237
+================================================================================
+🔄 Iteration 4/100
+================================================================================
+  📍 Climbed 3 steps, now at (np.int64(44),), f=0.0207708
+
+⚠️ STUCK at local minimum (np.int64(44),), f=0.0207708
+  🔍 Detecting basins along all 1 dimensions...
+  ✅ Dim 0 basin: (-99956, 100002)
+  🔄 Merged: (-99956,100002) + (-99971,100012) → (-99971,100017)
+
+================================================================================
+📦 METADATA (Original X-space): [(-99971, 100017)]
+================================================================================
+  Compression #1:
+    Original X[-99971, 46] → Z[-99971, 46]
+    Saves 100016 nodes
+✅ Built 1 compressions
+================================================================================
+
+
+  ➡️ Restarting from (46,), f=0.0188
+================================================================================
+🔄 Iteration 5/100
+================================================================================
+  📍 Climbed 3 steps, now at (np.int64(49),), f=0.0158648
+
+⚠️ STUCK at local minimum (np.int64(49),), f=0.0158648
+  🔍 Detecting basins along all 1 dimensions...
+  ✅ Dim 0 basin: (-99951, 100002)
+  🔄 Merged: (-99951,100002) + (-99971,100017) → (-99971,100022)
+
+================================================================================
+📦 METADATA (Original X-space): [(-99971, 100022)]
+================================================================================
+  Compression #1:
+    Original X[-99971, 51] → Z[-99971, 51]
+    Saves 100021 nodes
+✅ Built 1 compressions
+================================================================================
+
+
+  ➡️ Restarting from (51,), f=0.0139
+================================================================================
+🔄 Iteration 6/100
+================================================================================
+  📍 Climbed 3 steps, now at (np.int64(54),), f=0.0109343
+
+⚠️ STUCK at local minimum (np.int64(54),), f=0.0109343
+  🔍 Detecting basins along all 1 dimensions...
+  ✅ Dim 0 basin: (-99946, 100002)
+  🔄 Merged: (-99946,100002) + (-99971,100022) → (-99971,100027)
+
+================================================================================
+📦 METADATA (Original X-space): [(-99971, 100027)]
+================================================================================
+  Compression #1:
+    Original X[-99971, 56] → Z[-99971, 56]
+    Saves 100026 nodes
+✅ Built 1 compressions
+================================================================================
+
+
+  ➡️ Restarting from (56,), f=0.0090
+================================================================================
+🔄 Iteration 7/100
+================================================================================
+  📍 Climbed 3 steps, now at (np.int64(59),), f=0.00597906
+
+⚠️ STUCK at local minimum (np.int64(59),), f=0.00597906
+  🔍 Detecting basins along all 1 dimensions...
+  ✅ Dim 0 basin: (-99941, 100002)
+  🔄 Merged: (-99941,100002) + (-99971,100027) → (-99971,100032)
+
+================================================================================
+📦 METADATA (Original X-space): [(-99971, 100032)]
+================================================================================
+  Compression #1:
+    Original X[-99971, 61] → Z[-99971, 61]
+    Saves 100031 nodes
+✅ Built 1 compressions
+================================================================================
+
+
+  ➡️ Restarting from (61,), f=0.0040
+================================================================================
+🔄 Iteration 8/100
+================================================================================
+  📍 Climbed 4 steps, now at (np.int64(65),), f=0
+
+🎉 SUCCESS: reached near-global minimum
+
+================================================================================
+🏁 FINAL 1D RESULTS
+================================================================================
+  Final position: (np.int64(65),)
+  Final fitness: 0
+  Total steps:   31
+  Total compressions: 1
+
+[Worker PID 716579] Starting branch parallel::16
+[Worker 716579] Branch 16, Trial 1/20: init_f=0.0344
+♻️ REUSING existing CompressionManagerND with accumulated metadata
+
+🚀 1D hill climbing start at (50,), f=0.0344
+
+================================================================================
+🔄 Iteration 1/100
+================================================================================
+  📍 Climbed 35 steps, now at (15,), f=0
+
+🎉 SUCCESS: reached near-global minimum
+
+================================================================================
+🏁 FINAL 1D RESULTS
+================================================================================
+  Final position: (15,)
+  Final fitness: 0
+  Total steps:   36
+  Total compressions: 0
+================================================================================
+
+[Worker 716579] 🎉 Branch 16 succeeded at trial 0
+[Worker 716579] Branch 16 succeeded, skipping remaining trials
+
+[Worker 716579] ✅ Branch 16 completed:
+  Convergence speed (total steps): 36
+  Total NFE: 74
+  Best fitness: 0
+  Best solution: [15]
+
+[Worker PID 716579] Starting branch parallel::28
+[Worker 716579] Branch 28, Trial 1/20: init_f=0.0257
+♻️ REUSING existing CompressionManagerND with accumulated metadata
+
+🚀 1D hill climbing start at (71,), f=0.0257
+
+================================================================================
+🔄 Iteration 1/100
+================================================================================
+  📍 Climbed 26 steps, now at (45,), f=0
+
+🎉 SUCCESS: reached near-global minimum
+
+================================================================================
+🏁 FINAL 1D RESULTS
+================================================================================
+  Final position: (45,)
+  Final fitness: 0
+  Total steps:   27
+  Total compressions: 0
+================================================================================
+
+[Worker 716579] 🎉 Branch 28 succeeded at trial 0
+[Worker 716579] Branch 28 succeeded, skipping remaining trials
+
+[Worker 716579] ✅ Branch 28 completed:
+  Convergence speed (total steps): 27
+  Total NFE: 56
+  Best fitness: 0
+  Best solution: [45]
+
+[Worker PID 716577] Starting branch parallel::12
+[Worker 716577] Branch 12, Trial 1/20: init_f=0.0099
+♻️ REUSING existing CompressionManagerND with accumulated metadata
+
+🚀 1D hill climbing start at (15,), f=0.0099
+
+================================================================================
+🔄 Iteration 1/100
+================================================================================
+  📍 Climbed 10 steps, now at (5,), f=0
+
+🎉 SUCCESS: reached near-global minimum
+
+================================================================================
+🏁 FINAL 1D RESULTS
+================================================================================
+  Final position: (5,)
+  Final fitness: 0
+  Total steps:   11
+  Total compressions: 0
+================================================================================
+
+[Worker 716577] 🎉 Branch 12 succeeded at trial 0
+[Worker 716577] Branch 12 succeeded, skipping remaining trials
+
+[Worker 716577] ✅ Branch 12 completed:
+  Convergence speed (total steps): 11
+  Total NFE: 24
+  Best fitness: 0
+  Best solution: [5]
+
+[Worker PID 716577] Starting branch parallel::30
+[Worker 716577] Branch 30, Trial 1/20: init_f=0.0119
+♻️ REUSING existing CompressionManagerND with accumulated metadata
+
+🚀 1D hill climbing start at (62,), f=0.0119
+
+================================================================================
+🔄 Iteration 1/100
+================================================================================
+  📍 Climbed 12 steps, now at (50,), f=0
+
+🎉 SUCCESS: reached near-global minimum
+
+================================================================================
+🏁 FINAL 1D RESULTS
+================================================================================
+  Final position: (50,)
+  Final fitness: 0
+  Total steps:   13
+  Total compressions: 0
+================================================================================
+
+[Worker 716577] 🎉 Branch 30 succeeded at trial 0
+[Worker 716577] Branch 30 succeeded, skipping remaining trials
+
+[Worker 716577] ✅ Branch 30 completed:
+  Convergence speed (total steps): 13
+  Total NFE: 28
+  Best fitness: 0
+  Best solution: [50]
+
+[Worker PID 716583] Starting branch parallel::24
+[Worker 716583] Branch 24, Trial 1/20: init_f=0.0266
+♻️ REUSING existing CompressionManagerND with accumulated metadata
+
+🚀 1D hill climbing start at (62,), f=0.0266
+
+================================================================================
+🔄 Iteration 1/100
+================================================================================
+  📍 Climbed 27 steps, now at (35,), f=0
+
+🎉 SUCCESS: reached near-global minimum
+
+================================================================================
+🏁 FINAL 1D RESULTS
+================================================================================
+  Final position: (35,)
+  Final fitness: 0
+  Total steps:   28
+  Total compressions: 0
+================================================================================
+
+[Worker 716583] 🎉 Branch 24 succeeded at trial 0
+[Worker 716583] Branch 24 succeeded, skipping remaining trials
+
+[Worker 716583] ✅ Branch 24 completed:
+  Convergence speed (total steps): 28
+  Total NFE: 58
+  Best fitness: 0
+  Best solution: [35]
+
+[Worker PID 716583] Starting branch parallel::32
+[Worker 716583] Branch 32, Trial 1/20: init_f=0.0040
+♻️ REUSING existing CompressionManagerND with accumulated metadata
+
+🚀 1D hill climbing start at (51,), f=0.0040
+
+================================================================================
+🔄 Iteration 1/100
+================================================================================
+  📍 Climbed 4 steps, now at (55,), f=0
+
+🎉 SUCCESS: reached near-global minimum
+
+================================================================================
+🏁 FINAL 1D RESULTS
+================================================================================
+  Final position: (55,)
+  Final fitness: 0
+  Total steps:   5
+  Total compressions: 0
+================================================================================
+
+[Worker 716583] 🎉 Branch 32 succeeded at trial 0
+[Worker 716583] Branch 32 succeeded, skipping remaining trials
+
+[Worker 716583] ✅ Branch 32 completed:
+  Convergence speed (total steps): 5
+  Total NFE: 12
+  Best fitness: 0
+  Best solution: [55]
+
+[Worker PID 716578] Starting branch parallel::14
+[Worker 716578] Branch 14, Trial 1/20: init_f=0.0247
+♻️ REUSING existing CompressionManagerND with accumulated metadata
+
+🚀 1D hill climbing start at (35,), f=0.0247
+
+================================================================================
+🔄 Iteration 1/100
+================================================================================
+  📍 Climbed 25 steps, now at (10,), f=0
+
+🎉 SUCCESS: reached near-global minimum
+
+================================================================================
+🏁 FINAL 1D RESULTS
+================================================================================
+  Final position: (10,)
+  Final fitness: 0
+  Total steps:   26
+  Total compressions: 0
+================================================================================
+
+[Worker 716578] 🎉 Branch 14 succeeded at trial 0
+[Worker 716578] Branch 14 succeeded, skipping remaining trials
+
+[Worker 716578] ✅ Branch 14 completed:
+  Convergence speed (total steps): 26
+  Total NFE: 54
+  Best fitness: 0
+  Best solution: [10]
+
+[Worker PID 716578] Starting branch parallel::34
+[Worker 716578] Branch 34, Trial 1/20: init_f=1.0010
+♻️ REUSING existing CompressionManagerND with accumulated metadata
+
+🚀 1D hill climbing start at (55,), f=1.0010
+
+================================================================================
+🔄 Iteration 1/100
+================================================================================
+  📍 Climbed 5 steps, now at (60,), f=0
+
+🎉 SUCCESS: reached near-global minimum
+
+================================================================================
+🏁 FINAL 1D RESULTS
+================================================================================
+  Final position: (60,)
+  Final fitness: 0
+  Total steps:   6
+  Total compressions: 0
+================================================================================
+
+[Worker 716578] 🎉 Branch 34 succeeded at trial 0
+[Worker 716578] Branch 34 succeeded, skipping remaining trials
+
+[Worker 716578] ✅ Branch 34 completed:
+  Convergence speed (total steps): 6
+  Total NFE: 14
+  Best fitness: 0
+  Best solution: [60]
+
+[Worker PID 716581] Starting branch parallel::20
+[Worker 716581] Branch 20, Trial 1/20: init_f=0.0295
+♻️ REUSING existing CompressionManagerND with accumulated metadata
+
+🚀 1D hill climbing start at (-5,), f=0.0295
+
+================================================================================
+🔄 Iteration 1/100
+================================================================================
+  📍 Climbed 9 steps, now at (4,), f=0.0207708
+
+⚠️ STUCK at local minimum (4,), f=0.0207708
+  🔍 Detecting basins along all 1 dimensions...
+  ✅ Dim 0 basin: (-99996, 100002)
+
+================================================================================
+📦 METADATA (Original X-space): [(-99996, 100002)]
+================================================================================
+  Compression #1:
+    Original X[-99996, 6] → Z[-99996, 6]
+    Saves 100001 nodes
+✅ Built 1 compressions
+================================================================================
+
+
+  ➡️ Restarting from (6,), f=0.0188
+================================================================================
+🔄 Iteration 2/100
+================================================================================
+  📍 Climbed 3 steps, now at (np.int64(9),), f=0.0158648
+
+⚠️ STUCK at local minimum (np.int64(9),), f=0.0158648
+  🔍 Detecting basins along all 1 dimensions...
+  ✅ Dim 0 basin: (-99991, 100002)
+  🔄 Merged: (-99991,100002) + (-99996,100002) → (-99996,100007)
+
+================================================================================
+📦 METADATA (Original X-space): [(-99996, 100007)]
+================================================================================
+  Compression #1:
+    Original X[-99996, 11] → Z[-99996, 11]
+    Saves 100006 nodes
+✅ Built 1 compressions
+================================================================================
+
+
+  ➡️ Restarting from (11,), f=0.0139
+================================================================================
+🔄 Iteration 3/100
+================================================================================
+  📍 Climbed 3 steps, now at (np.int64(14),), f=0.0109343
+
+⚠️ STUCK at local minimum (np.int64(14),), f=0.0109343
+  🔍 Detecting basins along all 1 dimensions...
+  ✅ Dim 0 basin: (-99986, 100002)
+  🔄 Merged: (-99986,100002) + (-99996,100007) → (-99996,100012)
+
+================================================================================
+📦 METADATA (Original X-space): [(-99996, 100012)]
+================================================================================
+  Compression #1:
+    Original X[-99996, 16] → Z[-99996, 16]
+    Saves 100011 nodes
+✅ Built 1 compressions
+================================================================================
+
+
+  ➡️ Restarting from (16,), f=0.0090
+================================================================================
+🔄 Iteration 4/100
+================================================================================
+  📍 Climbed 3 steps, now at (np.int64(19),), f=0.00597906
+
+⚠️ STUCK at local minimum (np.int64(19),), f=0.00597906
+  🔍 Detecting basins along all 1 dimensions...
+  ✅ Dim 0 basin: (-99981, 100002)
+  🔄 Merged: (-99981,100002) + (-99996,100012) → (-99996,100017)
+
+================================================================================
+📦 METADATA (Original X-space): [(-99996, 100017)]
+================================================================================
+  Compression #1:
+    Original X[-99996, 21] → Z[-99996, 21]
+    Saves 100016 nodes
+✅ Built 1 compressions
+================================================================================
+
+
+  ➡️ Restarting from (21,), f=0.0040
+================================================================================
+🔄 Iteration 5/100
+================================================================================
+  📍 Climbed 4 steps, now at (np.int64(25),), f=0
+
+🎉 SUCCESS: reached near-global minimum
+
+================================================================================
+🏁 FINAL 1D RESULTS
+================================================================================
+  Final position: (np.int64(25),)
+  Final fitness: 0
+  Total steps:   27
+  Total compressions: 1
+================================================================================
+
+[Worker 716581] 🎉 Branch 20 succeeded at trial 0
+[Worker 716581] Branch 20 succeeded, skipping remaining trials
+
+[Worker 716581] ✅ Branch 20 completed:
+  Convergence speed (total steps): 27
+  Total NFE: 400076
+  Best fitness: 0
+  Best solution: [np.int64(25)]
+
+[Worker PID 716582] Starting branch parallel::22
+[Worker 716582] Branch 22, Trial 1/20: init_f=0.0344
+♻️ REUSING existing CompressionManagerND with accumulated metadata
+
+🚀 1D hill climbing start at (-5,), f=0.0344
+
+================================================================================
+🔄 Iteration 1/100
+================================================================================
+  📍 Climbed 9 steps, now at (4,), f=0.0256523
+
+⚠️ STUCK at local minimum (4,), f=0.0256523
+  🔍 Detecting basins along all 1 dimensions...
+  ✅ Dim 0 basin: (-99996, 100002)
+
+================================================================================
+📦 METADATA (Original X-space): [(-99996, 100002)]
+================================================================================
+  Compression #1:
+    Original X[-99996, 6] → Z[-99996, 6]
+    Saves 100001 nodes
+✅ Built 1 compressions
+================================================================================
+
+
+  ➡️ Restarting from (6,), f=0.0237
+================================================================================
+🔄 Iteration 2/100
+================================================================================
+  📍 Climbed 3 steps, now at (np.int64(9),), f=0.0207708
+
+⚠️ STUCK at local minimum (np.int64(9),), f=0.0207708
+  🔍 Detecting basins along all 1 dimensions...
+  ✅ Dim 0 basin: (-99991, 100002)
+  🔄 Merged: (-99991,100002) + (-99996,100002) → (-99996,100007)
+
+================================================================================
+📦 METADATA (Original X-space): [(-99996, 100007)]
+================================================================================
+  Compression #1:
+    Original X[-99996, 11] → Z[-99996, 11]
+    Saves 100006 nodes
+✅ Built 1 compressions
+================================================================================
+
+
+  ➡️ Restarting from (11,), f=0.0188
+================================================================================
+🔄 Iteration 3/100
+================================================================================
+  📍 Climbed 3 steps, now at (np.int64(14),), f=0.0158648
+
+⚠️ STUCK at local minimum (np.int64(14),), f=0.0158648
+  🔍 Detecting basins along all 1 dimensions...
+  ✅ Dim 0 basin: (-99986, 100002)
+  🔄 Merged: (-99986,100002) + (-99996,100007) → (-99996,100012)
+
+================================================================================
+📦 METADATA (Original X-space): [(-99996, 100012)]
+================================================================================
+  Compression #1:
+    Original X[-99996, 16] → Z[-99996, 16]
+    Saves 100011 nodes
+✅ Built 1 compressions
+================================================================================
+
+
+  ➡️ Restarting from (16,), f=0.0139
+================================================================================
+🔄 Iteration 4/100
+================================================================================
+  📍 Climbed 3 steps, now at (np.int64(19),), f=0.0109343
+
+⚠️ STUCK at local minimum (np.int64(19),), f=0.0109343
+  🔍 Detecting basins along all 1 dimensions...
+  ✅ Dim 0 basin: (-99981, 100002)
+  🔄 Merged: (-99981,100002) + (-99996,100012) → (-99996,100017)
+
+================================================================================
+📦 METADATA (Original X-space): [(-99996, 100017)]
+================================================================================
+  Compression #1:
+    Original X[-99996, 21] → Z[-99996, 21]
+    Saves 100016 nodes
+✅ Built 1 compressions
+================================================================================
+
+
+  ➡️ Restarting from (21,), f=0.0090
+================================================================================
+🔄 Iteration 5/100
+================================================================================
+  📍 Climbed 3 steps, now at (np.int64(24),), f=0.00597906
+
+⚠️ STUCK at local minimum (np.int64(24),), f=0.00597906
+  🔍 Detecting basins along all 1 dimensions...
+  ✅ Dim 0 basin: (-99976, 100002)
+  🔄 Merged: (-99976,100002) + (-99996,100017) → (-99996,100022)
+
+================================================================================
+📦 METADATA (Original X-space): [(-99996, 100022)]
+================================================================================
+  Compression #1:
+    Original X[-99996, 26] → Z[-99996, 26]
+    Saves 100021 nodes
+✅ Built 1 compressions
+================================================================================
+
+
+  ➡️ Restarting from (26,), f=0.0040
+================================================================================
+🔄 Iteration 6/100
+================================================================================
+  📍 Climbed 4 steps, now at (np.int64(30),), f=0
+
+🎉 SUCCESS: reached near-global minimum
+
+================================================================================
+🏁 FINAL 1D RESULTS
+================================================================================
+  Final position: (np.int64(30),)
+  Final fitness: 0
+  Total steps:   31
+  Total compressions: 1
+================================================================================
+
+[Worker 716582] 🎉 Branch 22 succeeded at trial 0
+[Worker 716582] Branch 22 succeeded, skipping remaining trials
+
+[Worker 716582] ✅ Branch 22 completed:
+  Convergence speed (total steps): 31
+  Total NFE: 500089
+  Best fitness: 0
+  Best solution: [np.int64(30)]
+
+[Worker PID 716584] Starting branch parallel::26
+[Worker 716584] Branch 26, Trial 1/20: init_f=0.0266
+♻️ REUSING existing CompressionManagerND with accumulated metadata
+
+🚀 1D hill climbing start at (13,), f=0.0266
+
+================================================================================
+🔄 Iteration 1/100
+================================================================================
+  📍 Climbed 1 steps, now at (14,), f=0.0256523
+
+⚠️ STUCK at local minimum (14,), f=0.0256523
+  🔍 Detecting basins along all 1 dimensions...
+  ✅ Dim 0 basin: (-99986, 100002)
+
+================================================================================
+📦 METADATA (Original X-space): [(-99986, 100002)]
+================================================================================
+  Compression #1:
+    Original X[-99986, 16] → Z[-99986, 16]
+    Saves 100001 nodes
+✅ Built 1 compressions
+================================================================================
+
+
+  ➡️ Restarting from (16,), f=0.0237
+================================================================================
+🔄 Iteration 2/100
+================================================================================
+  📍 Climbed 3 steps, now at (np.int64(19),), f=0.0207708
+
+⚠️ STUCK at local minimum (np.int64(19),), f=0.0207708
+  🔍 Detecting basins along all 1 dimensions...
+  ✅ Dim 0 basin: (-99981, 100002)
+  🔄 Merged: (-99981,100002) + (-99986,100002) → (-99986,100007)
+
+================================================================================
+📦 METADATA (Original X-space): [(-99986, 100007)]
+================================================================================
+  Compression #1:
+    Original X[-99986, 21] → Z[-99986, 21]
+    Saves 100006 nodes
+✅ Built 1 compressions
+================================================================================
+
+
+  ➡️ Restarting from (21,), f=0.0188
+================================================================================
+🔄 Iteration 3/100
+================================================================================
+  📍 Climbed 3 steps, now at (np.int64(24),), f=0.0158648
+
+⚠️ STUCK at local minimum (np.int64(24),), f=0.0158648
+  🔍 Detecting basins along all 1 dimensions...
+  ✅ Dim 0 basin: (-99976, 100002)
+  🔄 Merged: (-99976,100002) + (-99986,100007) → (-99986,100012)
+
+================================================================================
+📦 METADATA (Original X-space): [(-99986, 100012)]
+================================================================================
+  Compression #1:
+    Original X[-99986, 26] → Z[-99986, 26]
+    Saves 100011 nodes
+✅ Built 1 compressions
+================================================================================
+
+
+  ➡️ Restarting from (26,), f=0.0139
+================================================================================
+🔄 Iteration 4/100
+================================================================================
+  📍 Climbed 3 steps, now at (np.int64(29),), f=0.0109343
+
+⚠️ STUCK at local minimum (np.int64(29),), f=0.0109343
+  🔍 Detecting basins along all 1 dimensions...
+  ✅ Dim 0 basin: (-99971, 100002)
+  🔄 Merged: (-99971,100002) + (-99986,100012) → (-99986,100017)
+
+================================================================================
+📦 METADATA (Original X-space): [(-99986, 100017)]
+================================================================================
+  Compression #1:
+    Original X[-99986, 31] → Z[-99986, 31]
+    Saves 100016 nodes
+✅ Built 1 compressions
+================================================================================
+
+
+  ➡️ Restarting from (31,), f=0.0090
+================================================================================
+🔄 Iteration 5/100
+================================================================================
+  📍 Climbed 3 steps, now at (np.int64(34),), f=0.00597906
+
+⚠️ STUCK at local minimum (np.int64(34),), f=0.00597906
+  🔍 Detecting basins along all 1 dimensions...
+  ✅ Dim 0 basin: (-99966, 100002)
+  🔄 Merged: (-99966,100002) + (-99986,100017) → (-99986,100022)
+
+================================================================================
+📦 METADATA (Original X-space): [(-99986, 100022)]
+================================================================================
+  Compression #1:
+    Original X[-99986, 36] → Z[-99986, 36]
+    Saves 100021 nodes
+✅ Built 1 compressions
+================================================================================
+
+
+  ➡️ Restarting from (36,), f=0.0040
+================================================================================
+🔄 Iteration 6/100
+================================================================================
+  📍 Climbed 4 steps, now at (np.int64(40),), f=0
+
+🎉 SUCCESS: reached near-global minimum
+
+================================================================================
+🏁 FINAL 1D RESULTS
+================================================================================
+  Final position: (np.int64(40),)
+  Final fitness: 0
+  Total steps:   23
+  Total compressions: 1
+================================================================================
+
+[Worker 716584] 🎉 Branch 26 succeeded at trial 0
+[Worker 716584] Branch 26 succeeded, skipping remaining trials
+
+[Worker 716584] ✅ Branch 26 completed:
+  Convergence speed (total steps): 23
+  Total NFE: 500073
+  Best fitness: 0
+  Best solution: [np.int64(40)]
+================================================================================
+
+[Worker 716580] 🎉 Branch 36 succeeded at trial 0
+[Worker 716580] Branch 36 succeeded, skipping remaining trials
+
+[Worker 716580] ✅ Branch 36 completed:
+  Convergence speed (total steps): 31
+  Total NFE: 700099
+  Best fitness: 0
+  Best solution: [np.int64(65)]
+
+================================================================================
+✅ ALL BRANCHES COMPLETED
+================================================================================
+⏱️  Total time: 15.03 seconds (0.25 minutes)
+📊 Total branches: 13
+================================================================================
+
+📝 Writing results to results_parallel.csv...
+✅ Results written to results_parallel.csv
+
+================================================================================
+📈 RESULTS SUMMARY
+================================================================================
+Function             Line   Conv.Speed   NFE        Best Fitness    Success
+--------------------------------------------------------------------------------
+parallel             12     11           24         0               ✅
+parallel             14     26           54         0               ✅
+parallel             16     36           74         0               ✅
+parallel             18     38           78         0               ✅
+parallel             20     27           400076     0               ✅
+parallel             22     31           500089     0               ✅
+parallel             24     28           58         0               ✅
+parallel             26     23           500073     0               ✅
+parallel             28     27           56         0               ✅
+parallel             30     13           28         0               ✅
+parallel             32     5            12         0               ✅
+parallel             34     6            14         0               ✅
+parallel             36     31           700099     0               ✅
+================================================================================
+
+📊 OVERALL STATISTICS
+--------------------------------------------------------------------------------
+Total convergence speed: 302
+Total NFE: 2100735
+Success rate: 13/13 (100.0%)
+Avg convergence per branch: 23.2
+Avg NFE per branch: 161595.0
+================================================================================
+
+
+🏁 TESTING COMPLETE! Results saved to: results_parallel.csv
+
