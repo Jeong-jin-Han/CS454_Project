@@ -280,7 +280,8 @@ if __name__ == "__main__":
         multiprocessing.set_start_method('spawn', force=True)
     
     # Configuration
-    file_path = "./benchmark/count_divisor_2.py"
+    # file_path = "./benchmark/count_divisor_2.py"
+    file_path = "./benchmark/HJJ/parallel_test.py"
     
     results, branch_summaries = run_parallel_test(
         file_path=file_path,
