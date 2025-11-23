@@ -15,6 +15,12 @@ class FunctionInfo:
         self.args_dim = len(args)
         self.node = node
 
+        # Set max/min const
+        extractor = ConstantExtractor()
+        extractor.visit(node)
+        self.min_const = min(extractor.total_constants)-10 if extractor.total_constants else -300
+        self.max_const = max(extractor.total_constants)+10 if extractor.total_constants else 300
+
     def __repr__(self):
         return f"Function {self.name} with {self.args_dim} arg(s): {self.args}"
 
@@ -498,16 +504,6 @@ def instrument_and_load(source_code: str):
     namespace = {"_record": record}
     compiled = compile(instrumented_tree, filename="<instrumented>", mode="exec")
     exec(compiled, namespace)
-
-    for func in traveler.functions:
-        func_name = func.name
-        func_node = func.node
-
-        print(f" '{func_name}' test ")
-
-        extractor = ConstantExtractor()
-        extractor.visit(func_node)
-
 
     return namespace, traveler, record, instrumented_tree
 
