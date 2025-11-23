@@ -7,7 +7,7 @@ def busy_wait(duration_sec):
         pass  # 아무것도 안 하지만 CPU는 계속 사용됨
 
 def parallel(n: int):
-    busy_wait(10)
+    # busy_wait(10)
 
     if n == 5:
         pass

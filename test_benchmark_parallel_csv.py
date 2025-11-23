@@ -306,7 +306,9 @@ if __name__ == "__main__":
         multiprocessing.set_start_method('spawn', force=True)
     
     # Configuration
-    file_path = "./benchmark/count_divisor_2.py"
+    # file_path = "./benchmark/count_divisor_2.py"
+    file_path = "./benchmark/HJJ/parallel_test.py"
+
     output_csv = "results_parallel.csv"
     
     results, csv_path = run_parallel_test_with_csv(
