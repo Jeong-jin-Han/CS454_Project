@@ -19,9 +19,13 @@ def count_divisors_of_gcd(a: int, b: int) -> int:
             cnt += 2 if i * i != gcd else 1
         i += 1
 
-    if cnt > 30:
+    # if cnt > 30:
+    #     print("More than thirty!")
+    # elif cnt == 10:
+    #     print("Exactly 10 divisors!")
+    if cnt > 100:
         print("More than thirty!")
-    elif cnt == 10:
+    elif cnt == 19:
         print("Exactly 10 divisors!")
     
     return cnt
