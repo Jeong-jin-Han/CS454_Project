@@ -14,11 +14,8 @@ def collatz_steps(n: int):
             break
 
     if steps > 15:
-        # print("Too many steps!")
-        pass
+        print("Too many steps!")
     elif steps == 10:
-        # print("Exactly 10 steps!")
-        pass
+        print("Exactly 10 steps!")
     else:
-        # print("Perfect :)")
-        pass
+        print("Perfect :)")
