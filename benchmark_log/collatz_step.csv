@@ -3,5 +3,5 @@ collatz_steps,2,1,4,0.0,[0],True,1
 collatz_steps,7,3,8,0.0,[2],True,1
 collatz_steps,8,1,4,0.0,[4],True,1
 collatz_steps,13,7,22,0.0,[27],True,4
-collatz_steps,16,13,40,0.0,[30],True,7
-collatz_steps,19,49,130,0.0,[24],True,16
+collatz_steps,16,10,30,0.0009990009990008542,[22],False,5
+collatz_steps,19,19,48,0.0029940099850206403,[3],False,5

@@ -74,7 +74,7 @@ def test_single_branch_with_metrics(args):
             return random.randint(low, high)
 
         # 50% uniform, 50% biased around constants
-        if random.random() < 0.5:
+        if random.random() < 0.2:
             return random.randint(low, high)
 
         # Prefer per-variable constants if available, otherwise fall back to all constants

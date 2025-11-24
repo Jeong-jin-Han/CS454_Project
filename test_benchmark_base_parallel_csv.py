@@ -64,7 +64,7 @@ def test_single_branch_baseline_with_metrics(args):
             return random.randint(low, high)
 
         # 50% uniform, 50% biased around constants
-        if random.random() < 0.5:
+        if random.random() < 0.2:
             return random.randint(low, high)
 
         # Prefer per-variable constants if available, otherwise fall back to all constants
@@ -391,9 +391,9 @@ if __name__ == "__main__":
     
     # Configuration: Test entire directory
     run_directory_test_baseline(
-        source_dir="./benchmark_small",
+        source_dir="./benchmark_small_1",
         output_dir="benchmark_log",
-        max_trials_per_branch=20,
+        max_trials_per_branch=5,
         success_threshold=0.0,
         initial_low=-1000,      # Reduced from -100000
         initial_high=1000,      # Reduced from 10000
