@@ -1,0 +1,5 @@
+function,lineno,convergence_speed,nfe,best_fitness,best_solution,success,num_trials
+match,4,9,20,0.0,[4],True,1
+match,6,3,8,0.0,[7],True,1
+match,8,26,92,2.000999000999001,[7],False,20
+match,10,20,80,inf,None,False,20

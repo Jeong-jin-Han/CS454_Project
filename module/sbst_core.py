@@ -25,6 +25,9 @@ class FunctionInfo:
         
         self.min_const = min(extractor.total_constants)-10 if extractor.total_constants else -300
         self.max_const = max(extractor.total_constants)+10 if extractor.total_constants else 300
+        # Store per-variable and total constants for smarter initialization
+        self.var_constants = extractor.constants
+        self.total_constants = set(extractor.total_constants)
 
     def __repr__(self):
         return f"Function {self.name} with {self.args_dim} arg(s): {self.args}"

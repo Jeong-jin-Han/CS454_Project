@@ -48,6 +48,46 @@ def test_single_branch_baseline_with_metrics(args):
     func_info = [f for f in traveler.functions if f.name == func_name][0]
     dim = len(func_info.args)
     func_args = func_info.args
+
+    # Prepare constant-based metadata for biased initialization
+    var_constants = getattr(func_info, "var_constants", {}) or {}
+    total_constants = list(getattr(func_info, "total_constants", set()) or [])
+
+    def sample_initial_arg(arg_name: str, low: int, high: int) -> int:
+        """
+        Sample a single argument value using a mixture of:
+          - uniform over [low, high]
+          - Gaussians centered at extracted constants for this variable
+        """
+        # If we have no constants at all, fall back to uniform
+        if not total_constants and not var_constants:
+            return random.randint(low, high)
+
+        # 50% uniform, 50% biased around constants
+        if random.random() < 0.5:
+            return random.randint(low, high)
+
+        # Prefer per-variable constants if available, otherwise fall back to all constants
+        const_list = list(var_constants.get(arg_name, []))
+        if not const_list:
+            const_list = total_constants
+        if not const_list:
+            return random.randint(low, high)
+
+        center = random.choice(const_list)
+
+        # Use a modest sigma so we stay reasonably close to interesting constants
+        # but still explore around them.
+        span = max(1, high - low)
+        sigma = max(1, int(0.01 * span))  # 1% of span
+
+        val = int(random.gauss(center, sigma))
+        # Clamp to [low, high]
+        if val < low:
+            val = low
+        elif val > high:
+            val = high
+        return val
     
     # Metrics
     total_steps = 0
@@ -63,9 +103,12 @@ def test_single_branch_baseline_with_metrics(args):
             print(f"[Worker {worker_pid}] Branch {lineno} succeeded, skipping remaining trials")
             break
         
-        # Random initial point
+        # Random initial point (biased by extracted constants)
         random.seed(42 + lineno * 1000 + trial)
-        initial = [random.randint(initial_low, initial_high) for _ in func_args]
+        initial = [
+            sample_initial_arg(arg_name, initial_low, initial_high)
+            for arg_name in func_args
+        ]
         
         # Initial fitness
         init_fit = fitness_calc.fitness_for_candidate(
