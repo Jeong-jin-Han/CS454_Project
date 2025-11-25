@@ -76,13 +76,13 @@ def fitness_doomsday(w: int, x: int, y: int, z: int) -> float:
     # Success
     return 0.0
 
-FITNESS_FUNC = fitness_doomsday
-TEST_CONFIG = {
-    'dim': 4,
-    'start_point': (0, 0, 0, 0),
-    'optimal_val': 0.0,
-    'threshold': 1e-1,
-    'max_iterations': 200, 
-    'basin_max_search': 500,
-    'max_steps_baseline': 20000
-}
+# FITNESS_FUNC = fitness_doomsday
+# TEST_CONFIG = {
+#     'dim': 4,
+#     'start_point': (0, 0, 0, 0),
+#     'optimal_val': 0.0,
+#     'threshold': 1e-1,
+#     'max_iterations': 200, 
+#     'basin_max_search': 500,
+#     'max_steps_baseline': 20000
+# }
