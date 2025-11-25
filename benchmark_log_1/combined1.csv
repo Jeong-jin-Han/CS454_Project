@@ -1,0 +1,8 @@
+function,lineno,convergence_speed,nfe,best_fitness,best_solution,success,num_trials
+combined1,3,8935,160832,0.0,"[7, 10102, 50]",True,1
+combined1,9,2,38,0.0,"[-11, 10093, 127]",True,1
+combined1,11,2,38,0.0,"[49, 10111, 30]",True,1
+combined1,13,2,38,0.0,"[42, 10108, -10]",True,1
+combined1,15,2,38,0.0,"[-11, 10102, 59]",True,1
+combined1,17,2,38,0.0,"[8204, 3908, 78]",True,1
+combined1,23,1,2,0.0,"[-10, 10112, 73]",True,1

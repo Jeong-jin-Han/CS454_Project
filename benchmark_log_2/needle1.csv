@@ -1,0 +1,4 @@
+function,lineno,convergence_speed,nfe,best_fitness,best_solution,success,num_trials
+needle1,3,1,8,0.0,"[996, 24, 76]",True,1
+needle1,4,11,74,0.0,"[2010, 93, 235]",True,4
+needle1,16,1,8,0.0,"[-3, 5, 797]",True,1

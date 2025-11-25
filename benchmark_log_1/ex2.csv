@@ -1,4 +1,4 @@
 function,lineno,convergence_speed,nfe,best_fitness,best_solution,success,num_trials
-testme,2,54,326,0.0,"[108, 109, 248]",True,1
-testme,3,123,740,0.0,"[108, 109, 228]",True,1
-testme,8,38,30621,0.0,"[-2, 162, 105]",True,1
+testme,2,1,2,0.0,"[-2, 0, 32]",True,1
+testme,3,3,56,0.0,"[-2, -1, 270]",True,1
+testme,8,1,2,0.0,"[-4, 2, 57]",True,1

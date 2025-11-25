@@ -1,0 +1,6 @@
+function,lineno,convergence_speed,nfe,best_fitness,best_solution,success,num_trials
+f,4,2,10,0.0,"[2, 1]",True,1
+f,5,1,6,0.0,"[2, 1]",True,1
+f,7,2,10,0.0,"[2, -2]",True,1
+f,12,3,16,0.0,"[0, 1]",True,2
+f,16,1,6,0.0,"[0, -2]",True,1

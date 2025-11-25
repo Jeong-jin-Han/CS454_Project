@@ -1,0 +1,9 @@
+function,lineno,convergence_speed,nfe,best_fitness,best_solution,success,num_trials
+disarm_doomsday,23,5,20,inf,None,False,5
+disarm_doomsday,27,5,20,inf,None,False,5
+disarm_doomsday,31,5,20,inf,None,False,5
+disarm_doomsday,35,5,20,inf,None,False,5
+fitness_doomsday,47,5,20,inf,None,False,5
+fitness_doomsday,55,5,20,inf,None,False,5
+fitness_doomsday,65,5,20,inf,None,False,5
+fitness_doomsday,73,5,20,inf,None,False,5

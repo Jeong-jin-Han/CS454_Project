@@ -1,0 +1,7 @@
+function,lineno,convergence_speed,nfe,best_fitness,best_solution,success,num_trials
+count_divisors,2,1,2,0.0,[0],True,1
+count_divisors,4,2,6,0.0,[-1],True,1
+count_divisors,9,2,6,0.0,[-1],True,1
+count_divisors,10,2,6,0.0,[-1],True,1
+count_divisors,14,42,192816,0.0,[-50400],True,4
+count_divisors,16,78,561320,0.0009990009990008542,[-40016],False,5
