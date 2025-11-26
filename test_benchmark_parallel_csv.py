@@ -17,7 +17,7 @@ import glob
 from pathlib import Path
 from multiprocessing import Pool, cpu_count
 from module.sbst_core import instrument_and_load, FitnessCalculator
-from hill_climb_multiD import hill_climb_with_compression_nd_code, CompressionManagerND
+from compression_hc import hill_climb_with_compression_nd_code, CompressionManagerND
 
 
 def test_single_branch_with_metrics(args):
@@ -424,8 +424,8 @@ if __name__ == "__main__":
     
     # Configuration: Test entire directory
     run_directory_test(
-        source_dir="./benchmark_small_1",
-        output_dir="benchmark_log_1",
+        source_dir="./benchmark_small",
+        output_dir="benchmark_log_3",
         max_trials_per_branch=5,
         success_threshold=0.0,
         initial_low=-1000,      # Reduced from -100000

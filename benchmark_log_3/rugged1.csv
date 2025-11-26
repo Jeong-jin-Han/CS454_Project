@@ -1,0 +1,10 @@
+function,lineno,convergence_speed,nfe,best_fitness,best_solution,success,num_trials
+rugged1,1,1,2,0.0,"[5, 6, 1]",True,1
+rugged1,2,1,2,0.0,"[9, 5, 12]",True,1
+rugged1,3,1,2,0.0,"[6, 6, 8]",True,1
+rugged1,4,1,2,0.0,"[9, 1, 11]",True,1
+rugged1,5,1,2,0.0,"[10, 4, -2]",True,1
+rugged1,6,2,38,0.0,"[3, 7, 4]",True,1
+rugged1,7,1,2,0.0,"[0, -2, 4]",True,1
+rugged1,8,2,38,0.0,"[0, 6, 2]",True,1
+rugged1,9,2,38,0.0,"[3, 0, 7]",True,1

@@ -1,0 +1,9 @@
+function,lineno,convergence_speed,nfe,best_fitness,best_solution,success,num_trials
+disarm_doomsday,1,55,3506835,0.005979055874250849,"[1500, 218, -10, 65545]",False,5
+disarm_doomsday,2,55,3506886,1.0029940099850205,"[1800, 65545, 51980, 60861]",False,5
+disarm_doomsday,3,55,3506780,2.0119223626393543,"[900, 64610, 1162, 139]",False,5
+disarm_doomsday,4,71,3539382,2.9999997166160157,"[2000, -32785, 15797, -10]",False,5
+fitness_doomsday,5,1,2,0.0,"[204224, 400010, 1238, -10]",True,1
+fitness_doomsday,6,2,76686,0.0,"[2199, 1391, 94954, -10]",True,1
+fitness_doomsday,7,55,4002210,1.0009990009990009,"[102554, 139150, -10, 1584]",False,5
+fitness_doomsday,8,55,4002210,1.0009990009990009,"[-100020, 102380, 561, 3656]",False,5
