@@ -60,8 +60,6 @@ class IntConstFolder(ast.NodeTransformer):
         return node
     
     def visit_Name(self, node: ast.Name):
-        if isinstance(node.ctx, ast.Load) and node.id in self.env:
-            return ast.copy_location(ast.Constant(self.env[node.id]), node)
         return node
     
     def visit_Assign(self, node: ast.Assign):

@@ -1,2 +1,2 @@
 function,lineno,convergence_speed,nfe,best_fitness,best_solution,success,num_trials
-verify_packet,14,27,450855,0.9999999874419641,[-80750],False,5
+verify_packet,1,40,730477,0.9999898521818055,[34560129],False,5

@@ -1,9 +1,9 @@
 function,lineno,convergence_speed,nfe,best_fitness,best_solution,success,num_trials
-disarm_doomsday,23,5,35,inf,None,False,5
-disarm_doomsday,27,5,35,inf,None,False,5
-disarm_doomsday,31,5,35,inf,None,False,5
-disarm_doomsday,35,5,35,inf,None,False,5
-fitness_doomsday,47,5,35,inf,None,False,5
-fitness_doomsday,55,5,35,inf,None,False,5
-fitness_doomsday,65,5,35,inf,None,False,5
-fitness_doomsday,73,5,35,inf,None,False,5
+disarm_doomsday,1,55,1000260,1.0009990009990009,[-99454],False,5
+disarm_doomsday,2,55,1000260,2.0,[-100020],False,5
+disarm_doomsday,3,55,1000260,3.0,[-100020],False,5
+disarm_doomsday,4,55,1000260,4.0,[-34465],False,5
+fitness_doomsday,5,55,1000260,1.0009990009990009,[104214],False,5
+fitness_doomsday,6,55,1000260,1.0009990009990009,[-91171],False,5
+fitness_doomsday,7,55,1000260,1.0009990009990009,[102554],False,5
+fitness_doomsday,8,55,1000260,1.0009990009990009,[-100020],False,5

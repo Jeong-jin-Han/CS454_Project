@@ -1,8 +1,8 @@
 function,lineno,convergence_speed,nfe,best_fitness,best_solution,success,num_trials
-combined1,3,8935,160832,0.0,"[7, 10102, 50]",True,1
-combined1,9,2,38,0.0,"[-11, 10093, 127]",True,1
-combined1,11,2,38,0.0,"[49, 10111, 30]",True,1
-combined1,13,2,38,0.0,"[42, 10108, -10]",True,1
-combined1,15,2,38,0.0,"[-11, 10102, 59]",True,1
-combined1,17,2,38,0.0,"[8204, 3908, 78]",True,1
-combined1,23,1,2,0.0,"[-10, 10112, 73]",True,1
+combined1,1,10067,231196,0.0,"[7, 10102, 50]",True,1
+combined1,2,2,38,0.0,"[80, 10005, 162]",True,1
+combined1,3,2,38,0.0,"[-2, -10, 137]",True,1
+combined1,4,2,38,0.0,"[160, -1, 72]",True,1
+combined1,5,2,38,0.0,"[-10, -3, 4329]",True,1
+combined1,6,2,38,0.0,"[224, 25, -10]",True,1
+combined1,7,6,25205,0.0,"[0, 4337, -12]",True,1

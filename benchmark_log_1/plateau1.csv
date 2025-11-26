@@ -1,5 +1,5 @@
 function,lineno,convergence_speed,nfe,best_fitness,best_solution,success,num_trials
-plateau1,6,13,236,0.0,"[-10, 4, 13]",True,1
-plateau1,8,13,236,0.0,"[11, 16, 9]",True,1
-plateau1,14,64,601188,0.0,"[6, 25, 10]",True,2
-plateau1,15,8,146,0.0,"[10, 9, 8]",True,1
+plateau1,1,18,326,0.0,"[5, 8, 8]",True,1
+plateau1,2,5,92,0.0,"[15, 19, 15]",True,1
+plateau1,3,10,182,0.0,"[17, 18, 16]",True,1
+plateau1,4,29,120534,0.0,"[50, 1, 0]",True,2

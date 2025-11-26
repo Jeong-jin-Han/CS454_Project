@@ -4,8 +4,8 @@ import random
 
 from hill_climb_multiD import hill_climb_with_compression_nd_code, CompressionManagerND
 
-# file_path = "./benchmark/ex5.py" # path to target
-file_path = "./benchmark/collatz_step.py" # path to target
+file_path = "./benchmark/prime_check.py" # path to target
+# file_path = "./benchmark/collatz_step.py" # path to target
 # file_path = "./benchmark/HJJ/rugged_case.py" # path to target
 # file_path = "./benchmark/count_divisor_2.py" # path to target
 # file_path = "./benchmark/HJJ/needle_case.py" # path to target
