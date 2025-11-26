@@ -15,9 +15,8 @@ def _hash(val: int) -> int:
     return val & 0xFFFFFFFF
 
 # 1. [Target Code] 둠스데이 프로토콜
-def disarm_doomsday(point: tuple) -> bool:
-    w, x, y, z = point
-    
+# SBST 프레임워크가 4개의 정수 인자를 개별적으로 전달하도록 인터페이스를 변경
+def disarm_doomsday(w: int, x: int, y: int, z: int) -> bool:
     # Level 1: Voltage (Range Check via Quantization)
     # 계측기가 100단위로만 동작한다고 가정 (Integer Division)
     if 20 <= (w // 100) <= 21:
@@ -38,9 +37,8 @@ def disarm_doomsday(point: tuple) -> bool:
     return False
 
 # 2. [Fitness Function] Approach Level + Branch Distance
-def fitness_doomsday(point: tuple) -> float:
-    w, x, y, z = point
-    
+# 마찬가지로 튜플 대신 4개의 정수 인자를 직접 받도록 수정
+def fitness_doomsday(w: int, x: int, y: int, z: int) -> float:
     # --- Level 1 Check ---
     # w // 100 이 20~21 사이여야 함 (2000~2199)
     w_val = w // 100
@@ -78,13 +76,13 @@ def fitness_doomsday(point: tuple) -> float:
     # Success
     return 0.0
 
-FITNESS_FUNC = fitness_doomsday
-TEST_CONFIG = {
-    'dim': 4,
-    'start_point': (0, 0, 0, 0),
-    'optimal_val': 0.0,
-    'threshold': 1e-1,
-    'max_iterations': 200, 
-    'basin_max_search': 500,
-    'max_steps_baseline': 20000
-}
+# FITNESS_FUNC = fitness_doomsday
+# TEST_CONFIG = {
+#     'dim': 4,
+#     'start_point': (0, 0, 0, 0),
+#     'optimal_val': 0.0,
+#     'threshold': 1e-1,
+#     'max_iterations': 200, 
+#     'basin_max_search': 500,
+#     'max_steps_baseline': 20000
+# }
