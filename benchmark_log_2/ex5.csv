@@ -1,4 +1,4 @@
 function,lineno,convergence_speed,nfe,best_fitness,best_solution,success,num_trials
-collection,2,2725,16348,0.0,"[42, 15391, 482846]",True,2
-collection,3,3559,21358,0.10290877725746395,"[3817, -10, 822867]",False,5
-collection,4,6109,36646,0.897091222742536,"[42, -10, -10]",False,5
+collection,1,2054,12322,0.0,"[42, 6921, -10]",True,2
+collection,2,8728,52354,0.9966107848217887,"[42, 5788, 891173]",False,5
+collection,3,160,964,0.0,"[42, 1, 33]",True,2

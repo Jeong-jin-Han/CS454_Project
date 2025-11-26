@@ -1,2 +1,2 @@
 function,lineno,convergence_speed,nfe,best_fitness,best_solution,success,num_trials
-derivative_quadratic,8,1,4,0.0,[-1],True,1
+derivative_quadratic,1,1,4,0.0,[1],True,1
