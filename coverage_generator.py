@@ -40,7 +40,7 @@ def main(dir_name: str):
                 text=True
             )
             result = subprocess.run(
-                ["coverage", "report"],
+                ["coverage", "report", "-m"],
                 check=True,
                 stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE,
@@ -55,24 +55,29 @@ def main(dir_name: str):
         for line in coverage_lines:
             if program_name in line:
                 parts = line.split()
-                coverage_percent = parts[-1]
-                output_rows.append((program_name, coverage_percent))
+                miss = parts[2]
+                branch = parts[3]
+                coverage_percent = parts[5]
+                missing_line = " ".join(parts[6:]) if len(parts) > 6 else None
+                output_rows.append((program_name, coverage_percent, miss, branch, missing_line))
                 break
 
         # Clean temp script
         os.remove(test_filename)
 
+        print(f"Complete coverage checking for {program_name}: miss / branch = {miss}{f"({missing_line})" if missing_line else ""} / {branch}")
+
     # Write final CSV
     out_path = f"coverage_result/coverage_report_{dir_name}.csv"
     with open(out_path, "w", newline="") as out:
         writer = csv.writer(out)
-        writer.writerow(["file_name", "total_coverage"])
+        writer.writerow(["file_name", "total_coverage", "misses", "branches", "missing_line"])
         writer.writerows(output_rows)
 
     print(f"Coverage report written to {out_path}")
 
     total = 0
-    for (_, percentage) in output_rows:
+    for (_, percentage, _, _, _) in output_rows:
         total += int(percentage[:-1])
     
     print(f"Final coverage: {total}% / {len(output_rows) * 100}%")
