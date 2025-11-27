@@ -1,4 +1,0 @@
-function,lineno,convergence_speed,nfe,best_fitness,best_solution,success,num_trials,error
-f,1,1,10000,0.0,"(2,)",True,1,
-f,2,10,80023,0.003990019965055436,"(4,)",False,5,
-f,3,1,10000,0.0,"(71,)",True,1,

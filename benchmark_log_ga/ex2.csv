@@ -1,4 +1,0 @@
-function,lineno,convergence_speed,nfe,best_fitness,best_solution,success,num_trials,error
-testme,1,1,10000,0.0,"(74, 263, 213)",True,1,
-testme,2,1,10000,0.0,"(61, 194, 86)",True,1,
-testme,3,1,10000,0.0,"(54, 149, 32)",True,1,

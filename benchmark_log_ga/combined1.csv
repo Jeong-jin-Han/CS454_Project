@@ -1,8 +1,0 @@
-function,lineno,convergence_speed,nfe,best_fitness,best_solution,success,num_trials,error
-combined1,1,14,139228,0.0,"(7, 10102, 50)",True,1,
-combined1,2,1,10000,0.0,"(2266, 6541, 3068)",True,1,
-combined1,3,1,10000,0.0,"(1115, 8818, 7927)",True,1,
-combined1,4,1,10000,0.0,"(6707, 6837, 7589)",True,1,
-combined1,5,1,10000,0.0,"(8118, 8097, 6459)",True,1,
-combined1,6,1,10000,0.0,"(7309, 9698, 8668)",True,1,
-combined1,7,1,10000,0.0,"(5273, 722, 5553)",True,1,

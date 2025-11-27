@@ -6,6 +6,7 @@ Same metrics as compression version for fair comparison.
 """
 
 import os
+import sys
 import time
 import random
 import csv
@@ -22,10 +23,17 @@ def test_single_branch_baseline_with_metrics(args):
     """
     (file_path, func_name, lineno, branch_data,
      max_trials, success_threshold, initial_low, initial_high,
-     max_steps) = args
+     max_steps, target_outcome, use_biased_init) = args
     
     worker_pid = os.getpid()
-    print(f"\n[Worker PID {worker_pid}] Starting branch {func_name}::{lineno}")
+    outcome_str = "True" if target_outcome else "False"
+    
+    # Reduce output verbosity
+    worker_verbose = os.environ.get('WORKER_VERBOSE', '0') == '1'
+    
+    if worker_verbose:
+        print(f"\n[Worker PID {worker_pid}] Starting branch {func_name}::{lineno} (outcome={outcome_str})")
+        sys.stdout.flush()
     
     # Load instrumented code
     source = open(file_path).read()
@@ -42,7 +50,6 @@ def test_single_branch_baseline_with_metrics(args):
     branch_info = traveler.branches[func_name][lineno]
     target_branch_node = branch_info.node
     subject_node = branch_info.subject
-    target_outcome = True
     
     # Get function info
     func_info = [f for f in traveler.functions if f.name == func_name][0]
@@ -56,14 +63,19 @@ def test_single_branch_baseline_with_metrics(args):
     def sample_initial_arg(arg_name: str, low: int, high: int) -> int:
         """
         Sample a single argument value using a mixture of:
-          - uniform over [low, high]
-          - Gaussians centered at extracted constants for this variable
+          - uniform over [low, high] (if use_biased_init=False)
+          - Gaussians centered at extracted constants (if use_biased_init=True)
         """
+        # If biased initialization is disabled, use pure random
+        if not use_biased_init:
+            return random.randint(low, high)
+        
+        # Biased initialization: use constants if available
         # If we have no constants at all, fall back to uniform
         if not total_constants and not var_constants:
             return random.randint(low, high)
 
-        # 50% uniform, 50% biased around constants
+        # 20% uniform, 80% biased around constants
         if random.random() < 0.2:
             return random.randint(low, high)
 
@@ -100,7 +112,9 @@ def test_single_branch_baseline_with_metrics(args):
     # Run all trials
     for trial in range(max_trials):
         if branch_success:
-            print(f"[Worker {worker_pid}] Branch {lineno} succeeded, skipping remaining trials")
+            if worker_verbose:
+                print(f"[Worker {worker_pid}] Branch {lineno} succeeded, skipping remaining trials")
+                sys.stdout.flush()
             break
         
         # Random initial point (biased by extracted constants)
@@ -117,7 +131,9 @@ def test_single_branch_baseline_with_metrics(args):
             subject_node, parent_map
         )
         
-        print(f"[Worker {worker_pid}] Branch {lineno}, Trial {trial+1}/{max_trials}: init_f={init_fit:.4f}")
+        if worker_verbose:
+            print(f"[Worker {worker_pid}] Branch {lineno} ({outcome_str}), Trial {trial+1}/{max_trials}: init_f={init_fit:.4f}")
+            sys.stdout.flush()
         
         # Run baseline hill climbing (NO compression)
         traj = hill_climb_simple_nd_code(
@@ -149,20 +165,25 @@ def test_single_branch_baseline_with_metrics(args):
         
         # Check success
         if final_f <= success_threshold:
-            print(f"[Worker {worker_pid}] 🎉 Branch {lineno} succeeded at trial {trial}")
+            if worker_verbose:
+                print(f"[Worker {worker_pid}] 🎉 Branch {lineno} ({outcome_str}) succeeded at trial {trial}")
+                sys.stdout.flush()
             branch_success = True
     
     # Get total NFE
     total_nfe = fitness_calc.evals
     
-    print(f"\n[Worker {worker_pid}] ✅ Branch {lineno} completed:")
-    print(f"  Convergence speed: {total_steps}")
-    print(f"  Total NFE: {total_nfe}")
-    print(f"  Best fitness: {best_fitness:.6g}")
+    if worker_verbose:
+        print(f"\n[Worker {worker_pid}] ✅ Branch {lineno} ({outcome_str}) completed:")
+        print(f"  Convergence speed: {total_steps}")
+        print(f"  Total NFE: {total_nfe}")
+        print(f"  Best fitness: {best_fitness:.6g}")
+        sys.stdout.flush()
     
     return {
         'function': func_name,
         'lineno': lineno,
+        'outcome': target_outcome,
         'convergence_speed': total_steps,
         'nfe': total_nfe,
         'best_fitness': best_fitness,
@@ -181,10 +202,15 @@ def run_parallel_test_baseline_with_csv(
     initial_low=-100000,
     initial_high=10000,
     max_steps=2000,
-    num_workers=None
+    num_workers=None,
+    skip_for_false=True,
+    use_biased_init=True  # Toggle biased initialization on/off
 ):
     """
     Run baseline parallel testing and save to CSV.
+    
+    Args:
+        skip_for_false: If True, skip for-loop and while-True False branches (unreachable)
     """
     
     print("\n" + "="*80)
@@ -226,13 +252,31 @@ def run_parallel_test_baseline_with_csv(
             print(f"   Function range too narrow ({func_range}), using default: [{initial_low}, {initial_high}]")
         
         for lineno, branch_info in branches.items():
-            task = (
-                file_path, func_name, lineno, branch_info,
-                max_trials_per_branch, success_threshold,
-                func_initial_low, func_initial_high,
-                max_steps
-            )
-            branch_tasks.append(task)
+            # Check if this branch is a for-loop or while-True
+            is_for_loop = lineno in getattr(traveler.tx, 'loop_minlen', {})
+            is_while_true = lineno in getattr(traveler.tx, 'while_always_true', {})
+            
+            # Create tasks for both True and False outcomes
+            for target_outcome in [True, False]:
+                # Skip while-True False branches (never exit) - unreachable
+                if skip_for_false and is_while_true and target_outcome is False:
+                    print(f"   ⏭️  Skipping while-True False: line {lineno} (unreachable)")
+                    continue
+                
+                # Skip for-loop False branches (not entering loop) - usually unreachable
+                if skip_for_false and is_for_loop and target_outcome is False:
+                    print(f"   ⏭️  Skipping for-loop False: line {lineno} (often unreachable)")
+                    continue
+                
+                task = (
+                    file_path, func_name, lineno, branch_info,
+                    max_trials_per_branch, success_threshold,
+                    func_initial_low, func_initial_high,
+                    max_steps,
+                    target_outcome,
+                    use_biased_init  # Biased or random initialization
+                )
+                branch_tasks.append(task)
     
     print(f"\n📊 Total branches to test: {len(branch_tasks)}\n")
     
@@ -241,12 +285,33 @@ def run_parallel_test_baseline_with_csv(
     
     print(f"🔧 Starting {num_workers} worker processes...")
     print("="*80 + "\n")
+    sys.stdout.flush()
     
     # Run in parallel
     start_time = time.time()
     
-    with Pool(processes=num_workers) as pool:
+    pool = None
+    try:
+        pool = Pool(processes=num_workers)
         branch_results = pool.map(test_single_branch_baseline_with_metrics, branch_tasks)
+        pool.close()
+        pool.join()
+    except KeyboardInterrupt:
+        print("\n⚠️  Interrupted by user")
+        if pool:
+            pool.terminate()
+            pool.join()
+        raise
+    except Exception as e:
+        print(f"\n❌ Error during parallel execution: {e}")
+        if pool:
+            pool.terminate()
+            pool.join()
+        raise
+    finally:
+        if pool:
+            pool.close()
+            pool.join()
     
     elapsed_time = time.time() - start_time
     
@@ -257,13 +322,14 @@ def run_parallel_test_baseline_with_csv(
     print(f"⏱️  Total time: {elapsed_time:.2f} seconds ({elapsed_time/60:.2f} minutes)")
     print(f"📊 Total branches: {len(branch_results)}")
     print("="*80 + "\n")
+    sys.stdout.flush()
     
     # Write to CSV
     print(f"📝 Writing results to {output_csv}...")
     
     with open(output_csv, 'w', newline='') as csvfile:
         fieldnames = [
-            'function', 'lineno', 'convergence_speed', 'nfe',
+            'function', 'lineno', 'outcome', 'convergence_speed', 'nfe',
             'best_fitness', 'best_solution', 'success', 'num_trials'
         ]
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
@@ -274,6 +340,7 @@ def run_parallel_test_baseline_with_csv(
             writer.writerow({
                 'function': result['function'],
                 'lineno': result['lineno'],
+                'outcome': result['outcome'],
                 'convergence_speed': result['convergence_speed'],
                 'nfe': result['nfe'],
                 'best_fitness': result['best_fitness'],
@@ -283,17 +350,19 @@ def run_parallel_test_baseline_with_csv(
             })
     
     print(f"✅ Results written to {output_csv}\n")
+    sys.stdout.flush()
     
     # Print summary table
     print("="*80)
     print("📈 RESULTS SUMMARY")
     print("="*80)
-    print(f"{'Function':<20} {'Line':<6} {'Conv.Speed':<12} {'NFE':<10} {'Best Fitness':<15} {'Success'}")
+    print(f"{'Function':<20} {'Line':<6} {'Out':<6} {'Conv.Speed':<12} {'NFE':<10} {'Best Fitness':<15} {'Success'}")
     print("-"*80)
     
     for result in branch_results:
         success_mark = "✅" if result['success'] else "❌"
-        print(f"{result['function']:<20} {result['lineno']:<6} "
+        outcome_str = "T" if result['outcome'] else "F"
+        print(f"{result['function']:<20} {result['lineno']:<6} {outcome_str:<6} "
               f"{result['convergence_speed']:<12} {result['nfe']:<10} "
               f"{result['best_fitness']:<15.6g} {success_mark}")
     
@@ -312,6 +381,7 @@ def run_parallel_test_baseline_with_csv(
     print(f"Avg convergence per branch: {total_convergence/len(branch_results):.1f}")
     print(f"Avg NFE per branch: {total_nfe/len(branch_results):.1f}")
     print("="*80 + "\n")
+    sys.stdout.flush()
     
     return branch_results, output_csv
 
@@ -324,7 +394,9 @@ def run_directory_test_baseline(
     initial_low=-100000,
     initial_high=10000,
     max_steps=2000,
-    num_workers=None
+    num_workers=None,
+    skip_for_false=True,
+    use_biased_init=True  # Toggle biased initialization on/off
 ):
     """
     Test all .py files in source_dir and save results to output_dir with mirrored structure.
@@ -366,7 +438,9 @@ def run_directory_test_baseline(
                 initial_low=initial_low,
                 initial_high=initial_high,
                 max_steps=max_steps,
-                num_workers=num_workers
+                num_workers=num_workers,
+                skip_for_false=skip_for_false,
+                use_biased_init=use_biased_init
             )
         except Exception as e:
             print(f"❌ Error testing {py_file}: {e}")
@@ -382,6 +456,33 @@ def run_directory_test_baseline(
 # ============================================================================
 if __name__ == "__main__":
     import multiprocessing
+    import argparse
+    
+    # Command-line argument parsing
+    parser = argparse.ArgumentParser(
+        description='Baseline Hill Climbing (No Compression) - Branch Coverage Testing',
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog='''
+Examples:
+  # With biased initialization (default):
+  python test_benchmark_base_parallel_csv.py
+  
+  # With pure random initialization:
+  python test_benchmark_base_parallel_csv.py --random-init
+  
+  # Custom output directory:
+  python test_benchmark_base_parallel_csv.py --output benchmark_log_biased
+  python test_benchmark_base_parallel_csv.py --random-init --output benchmark_log_random
+        '''
+    )
+    parser.add_argument('--random-init', action='store_true',
+                       help='Use pure random initialization instead of biased (default: biased)')
+    parser.add_argument('--output', '-o', type=str, default='benchmark_log_2',
+                       help='Output directory for CSV files (default: benchmark_log_2)')
+    parser.add_argument('--source', '-s', type=str, default='./benchmark',
+                       help='Source directory containing benchmark files (default: ./benchmark)')
+    
+    args = parser.parse_args()
     
     # Use 'fork' if available
     if 'fork' in multiprocessing.get_all_start_methods():
@@ -389,15 +490,26 @@ if __name__ == "__main__":
     else:
         multiprocessing.set_start_method('spawn', force=True)
     
+    # Print configuration
+    init_type = "RANDOM" if args.random_init else "BIASED"
+    print(f"\n{'='*80}")
+    print(f"🔧 CONFIGURATION: Baseline Hill Climbing (No Compression)")
+    print(f"{'='*80}")
+    print(f"Initialization: {init_type}")
+    print(f"Source dir:     {args.source}")
+    print(f"Output dir:     {args.output}")
+    print(f"{'='*80}\n")
+    
     # Configuration: Test entire directory
     run_directory_test_baseline(
-        source_dir="./benchmark_small",
-        output_dir="benchmark_log_2",
+        source_dir=args.source,
+        output_dir=args.output,
         max_trials_per_branch=5,
         success_threshold=0.0,
-        initial_low=-1000,      # Reduced from -100000
-        initial_high=1000,      # Reduced from 10000
+        initial_low=-1000,
+        initial_high=1000,
         max_steps=2000,
-        num_workers=None  # Use all CPU cores
+        num_workers=None,
+        use_biased_init=not args.random_init  # Invert the flag
     )
 

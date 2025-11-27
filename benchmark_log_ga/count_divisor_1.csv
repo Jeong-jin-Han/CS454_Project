@@ -1,7 +1,0 @@
-function,lineno,convergence_speed,nfe,best_fitness,best_solution,success,num_trials,error
-count_divisors,1,1,10000,0.0,"(0,)",True,1,
-count_divisors,2,1,10000,0.0,"(-4,)",True,1,
-count_divisors,3,1,10000,0.0,"(71,)",True,1,
-count_divisors,4,1,10000,0.0,"(42,)",True,1,
-count_divisors,5,10,80250,0.0860277142986774,"(90,)",False,5,
-count_divisors,6,10,80250,0.006972083790460326,"(84,)",False,5,

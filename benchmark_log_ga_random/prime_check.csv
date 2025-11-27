@@ -1,0 +1,13 @@
+function,lineno,outcome,convergence_speed,nfe,best_fitness,best_solution,success,num_trials,adjusted_pop_size,adjusted_max_gen,error
+prime_check,1,True,1,100,0.0,"(-5,)",True,1,100,10,
+prime_check,1,False,1,100,0.0,"(16,)",True,1,100,10,
+prime_check,2,True,1,100,0.0,"(17,)",True,1,100,10,
+prime_check,2,False,1,100,0.0,"(2,)",True,1,100,10,
+prime_check,3,True,1,100,0.0,"(8,)",True,1,100,10,
+prime_check,3,False,1,100,0.0,"(29,)",True,1,100,10,
+prime_check,4,True,1,100,0.0,"(31,)",True,1,100,10,
+prime_check,4,False,1,100,0.0,"(15,)",True,1,100,10,
+prime_check,5,True,1,100,0.0,"(5,)",True,1,100,10,
+prime_check,5,False,1,100,0.0,"(3,)",True,1,100,10,
+prime_check,6,True,1,100,0.0,"(6,)",True,1,100,10,
+prime_check,6,False,1,100,0.0,"(16,)",True,1,100,10,

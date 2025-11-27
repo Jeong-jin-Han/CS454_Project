@@ -1,5 +1,0 @@
-function,lineno,convergence_speed,nfe,best_fitness,best_solution,success,num_trials,error
-check_schedule,1,81,801774,0.0,"(-3,)",True,3,
-check_schedule,2,195,1971369,0.008955164506282975,"(-1,)",False,5,
-fitness_calendar,3,1,10000,0.0,"(83728,)",True,1,
-fitness_calendar,4,41,406071,0.0,"(-6,)",True,2,

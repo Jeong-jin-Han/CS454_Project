@@ -1,0 +1,15 @@
+function,lineno,outcome,convergence_speed,nfe,best_fitness,best_solution,success,num_trials
+combined1,1,True,10067,186196,0.0,"[7, 10102, 50]",True,1
+combined1,1,False,1,2,0.0,"[89, 36, 105]",True,1
+combined1,2,True,2,38,0.0,"[80, 10005, 162]",True,1
+combined1,2,False,1,2,0.0,"[81, 10005, 161]",True,1
+combined1,3,True,2,38,0.0,"[-2, -10, 137]",True,1
+combined1,3,False,1,2,0.0,"[-3, -10, 137]",True,1
+combined1,4,True,2,38,0.0,"[160, -1, 72]",True,1
+combined1,4,False,1,2,0.0,"[159, -1, 72]",True,1
+combined1,5,True,2,38,0.0,"[-10, -3, 4329]",True,1
+combined1,5,False,2,38,0.0,"[-11, -3, 4330]",True,1
+combined1,6,True,2,38,0.0,"[224, 25, -10]",True,1
+combined1,6,False,2,38,0.0,"[225, 23, -10]",True,1
+combined1,7,True,6,4193,0.0,"[0, 4337, -12]",True,1
+combined1,7,False,1,2,0.0,"[64, 4338, -10]",True,1

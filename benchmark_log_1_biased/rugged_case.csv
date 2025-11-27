@@ -1,0 +1,3 @@
+function,lineno,outcome,convergence_speed,nfe,best_fitness,best_solution,success,num_trials
+rugged,1,True,29096,64419,0.0,[31410],True,1
+rugged,1,False,1,2,0.0,[100],True,1

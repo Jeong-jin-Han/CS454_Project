@@ -1,9 +1,0 @@
-function,lineno,convergence_speed,nfe,best_fitness,best_solution,success,num_trials,error
-unlock_door,1,1,10000,0.0,"(10, -2, -1, 6)",True,1,
-unlock_door,2,175,1749619,0.005979055874250849,"(10, 14, 13, 0)",False,5,
-unlock_door,3,175,1748122,1.005979055874251,"(10, 14, -5, -5)",False,5,
-unlock_door,4,175,1748915,2.005979055874251,"(10, 14, 9, 11)",False,5,
-fitness_digital_lock,5,1,10000,0.0,"(228, 364, 791, 396)",True,1,
-fitness_digital_lock,6,1,10000,0.0,"(168, 272, 164, 733)",True,1,
-fitness_digital_lock,7,1,10000,0.0,"(320, 35, 337, 581)",True,1,
-fitness_digital_lock,8,1,10000,0.0,"(581, 351, 40, 784)",True,1,

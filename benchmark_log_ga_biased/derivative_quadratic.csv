@@ -1,0 +1,3 @@
+function,lineno,outcome,convergence_speed,nfe,best_fitness,best_solution,success,num_trials,adjusted_pop_size,adjusted_max_gen,error
+derivative_quadratic,1,True,1,100,0.0,"(2,)",True,1,100,10,
+derivative_quadratic,1,False,15,1596,0.0009990009990008542,"(2,)",False,5,100,10,

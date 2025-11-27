@@ -630,7 +630,8 @@ def hill_climb_with_compression_nd_code(
     """
     deactivation_patience=20
     def fitness_func_nd_code(x):
-        return np.abs(fitness_calc.fitness_for_candidate(func_obj, x, target_branch_node, target_outcome, subject_node, parent_map))
+        # Fitness should already be non-negative (AL >= 0, BD >= 0)
+        return fitness_calc.fitness_for_candidate(func_obj, x, target_branch_node, target_outcome, subject_node, parent_map)
 
 
     traj = []
@@ -859,7 +860,8 @@ def hill_climb_simple_nd_code(
     point = tuple(int(x) for x in start_point)
 
     def fitness_func_nd_code(x):
-        return np.abs(fitness_calc.fitness_for_candidate(func_obj, x, target_branch_node, target_outcome, subject_node, parent_map))
+        # Fitness should already be non-negative (AL >= 0, BD >= 0)
+        return fitness_calc.fitness_for_candidate(func_obj, x, target_branch_node, target_outcome, subject_node, parent_map)
 
     f = fitness_func_nd_code(point)
     traj = [(point, f)]

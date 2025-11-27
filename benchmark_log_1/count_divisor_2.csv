@@ -1,7 +1,0 @@
-function,lineno,convergence_speed,nfe,best_fitness,best_solution,success,num_trials
-count_divisors_of_gcd,1,7,58,0.0,"[0, 2]",True,1
-count_divisors_of_gcd,4,1,2,0.0,"[11, 1]",True,1
-count_divisors_of_gcd,5,1,2,0.0,"[12, 19]",True,1
-count_divisors_of_gcd,6,1,2,0.0,"[4, 8]",True,1
-count_divisors_of_gcd,7,18,343104,0.0,"[-9996, -9996]",True,2
-count_divisors_of_gcd,8,32,625632,0.0,"[-19984, -19984]",True,3

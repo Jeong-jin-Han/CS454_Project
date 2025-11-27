@@ -1,4 +1,0 @@
-function,lineno,convergence_speed,nfe,best_fitness,best_solution,success,num_trials
-collection,1,5006,90110,0.0,"[3817, 3247, -10]",True,1
-collection,2,7370,132662,0.0,"[3817, 1, 730505]",True,1
-collection,3,168,603100,0.0,"[42, 1, 33]",True,2

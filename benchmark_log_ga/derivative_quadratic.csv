@@ -1,2 +1,0 @@
-function,lineno,convergence_speed,nfe,best_fitness,best_solution,success,num_trials,error
-derivative_quadratic,1,1,10000,0.0,"(3,)",True,1,

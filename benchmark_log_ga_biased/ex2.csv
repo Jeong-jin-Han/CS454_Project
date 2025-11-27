@@ -1,0 +1,7 @@
+function,lineno,outcome,convergence_speed,nfe,best_fitness,best_solution,success,num_trials,adjusted_pop_size,adjusted_max_gen,error
+testme,1,True,1,100,0.0,"(1, 4, 0)",True,1,100,10,
+testme,1,False,1,100,0.0,"(284, 74, 0)",True,1,100,10,
+testme,2,True,1,100,0.0,"(1, 62, 276)",True,1,100,10,
+testme,2,False,1,100,0.0,"(0, 286, 5)",True,1,100,10,
+testme,3,True,1,100,0.0,"(6, 59, 2)",True,1,100,10,
+testme,3,False,1,100,0.0,"(6, 59, 2)",True,1,100,10,

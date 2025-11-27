@@ -1,0 +1,7 @@
+function,lineno,outcome,convergence_speed,nfe,best_fitness,best_solution,success,num_trials
+testme,1,True,2,38,0.0,"[3, 4, 0]",True,1
+testme,1,False,1,2,0.0,"[4, 3, 0]",True,1
+testme,2,True,1,2,0.0,"[59, 281, 283]",True,1
+testme,2,False,2,38,0.0,"[59, 281, 284]",True,1
+testme,3,True,5,92,0.0,"[-2, 279, 278]",True,1
+testme,3,False,1,2,0.0,"[2, 279, 278]",True,1

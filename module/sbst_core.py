@@ -545,6 +545,10 @@ class BoolToProbe(ast.NodeTransformer):
         # 루프의 최소 반복 횟수 정보
         # 구조: {bid: 최소 반복 횟수}, 값이 없으면 0
 
+        self.while_always_true = {}
+        # while True: 같은 항상 참인 while 루프 추적
+        # 구조: {bid: True} if the while condition is always True
+
         self._cond_stack = [False]
         # 현재 AST 탐색 위치가 조건식(test) 안인지 표시하는 플래그 스택
         # e.g.) if문의 test 안일 때 True, 바깥일 때 False
@@ -1131,6 +1135,10 @@ class BoolToProbe(ast.NodeTransformer):
         return node
 
     def visit_While(self, node: ast.While):
+        # Check if the while condition is always True (e.g., while True:)
+        original_test = node.test
+        is_always_true = (self._const_truth(original_test) is True)
+        
         node.test = self._visit_in_cond(node.test)
         bid = self._alloc()
 
@@ -1140,6 +1148,10 @@ class BoolToProbe(ast.NodeTransformer):
         self.bid_to_func[bid] = cur_func
         self.func_to_bids[cur_func].append(bid)
 
+        # Mark if this is a while-True loop (False branch unreachable)
+        if is_always_true:
+            self.while_always_true[bid] = True
+            debug_print(f"Detected while True: bid={bid}")
 
         node.test = ast.Call(
             func = ast.Attribute(value=ast.Name(id="__probe", ctx=ast.Load()),
@@ -1927,16 +1939,41 @@ def fitness_AL(func, args_tuple, target_bid: int, want_true: bool, tx: BoolToPro
     return normalise(BD)
 
 
-def make_targets_for_func(tx: BoolToProbe, func_name: str, want="both"):
+def make_targets_for_func(tx: BoolToProbe, func_name: str, want="both", skip_for_false=True, skip_while_true_false=True):
+    """
+    Generate targets for a function.
+    
+    Args:
+        tx: BoolToProbe transformer with branch metadata
+        func_name: Name of the function
+        want: "both" for True/False, or True/False for specific direction
+        skip_for_false: If True, skip False direction for for-loops (usually unreachable)
+        skip_while_true_false: If True, skip while-True False branches (unreachable)
+    """
     targets = []
     for bid in tx.func_to_bids.get(func_name, []):
         # Record the number of guards required to reach this branch as its depth
         depth = len(tx.if_guards.get(bid, []))
         # Set both True and False directions as targets for each branch
         wants = [True, False] if want == "both" else [want]
+        
+        # Check if this bid is a for-loop or while-True
+        is_for_loop = bid in getattr(tx, "loop_minlen", {})
+        is_while_true = bid in getattr(tx, "while_always_true", {})
+        
         for w in wants:
+            # Skip while-True False branches (never exit loop) - unreachable
+            if skip_while_true_false and is_while_true and (w is False):
+                debug_print(f"Skipping while-True False branch: bid={bid} (unreachable)")
+                continue
+            
+            # Skip for-loop False branches (not entering loop) - usually unreachable
+            if skip_for_false and is_for_loop and (w is False):
+                debug_print(f"Skipping for-loop False branch: bid={bid} (often unreachable)")
+                continue
+            
             # for-헤더였고, minlen>=1이 확정이면 False는 UNSAT
-            if bid in getattr(tx, "loop_minlen", {}) and tx.loop_minlen[bid] is not None:
+            if is_for_loop and tx.loop_minlen[bid] is not None:
                 if (tx.loop_minlen[bid] >= 1) and (w is False):
                     continue  # UNSAT → 스킵
         
@@ -2045,13 +2082,21 @@ def autotune_hparams_for_func(
     return hparams_map
 
 def _mark_covered_for_args(covered: set[tuple[int,bool]], func, args, tx, func_name):
-    __probe.clear(); func(*args)
+    __probe.clear()
+    try:
+        func(*args)
+    except Exception:
+        pass  # Execution might fail, but we still want partial coverage info
+    
+    # Mark all directions that were actually taken in THIS execution
     for b in tx.func_to_bids.get(func_name, []):
         rec = __probe.records.get(b)
         if not rec: 
             continue
-        if rec.get("seen_true"):  covered.add((b, True))
-        if rec.get("seen_false"): covered.add((b, False))
+        if rec.get("seen_true"):  
+            covered.add((b, True))
+        if rec.get("seen_false"): 
+            covered.add((b, False))
 
 
 
@@ -2067,13 +2112,21 @@ def _hits_with(self_suite, func, bid, want_true):
 def solve_all_branches_for_func(ns, tx, func_name, xmin=-10, xmax=10,
                                 restarts=6, base_seed=42, max_rounds=200,
                                 verbose=False, algo: str = "avm", compare: bool = False, 
-                                eval_limit_per_restart=20000):
+                                eval_limit_per_restart=20000, skip_for_false=True, skip_while_true_false=True):
+    """
+    Solve all branches for a function using search-based testing.
+    
+    Args:
+        skip_for_false: If True, skip for-loop False branches (often unreachable)
+        skip_while_true_false: If True, skip while-True False branches (unreachable)
+    """
     covered: set[tuple[int,bool]] = set()
     
     func = ns[func_name]
     param_names = list(inspect.signature(func).parameters.keys())
     dim = len(param_names)
-    targets = make_targets_for_func(tx, func_name, want="both")
+    targets = make_targets_for_func(tx, func_name, want="both", skip_for_false=skip_for_false, 
+                                   skip_while_true_false=skip_while_true_false)
     results, suite, seen = [], [], set()
 
     debug_print(f"[DEBUG] targets {targets}")
@@ -2088,8 +2141,16 @@ def solve_all_branches_for_func(ns, tx, func_name, xmin=-10, xmax=10,
     for i, (depth, bid, want_true) in enumerate(targets, start=1):
         eval_fit = (lambda b, w: (lambda v: fitness_AL(func, v, b, w, tx)))(bid, want_true)
 
-        if (bid, want_true) in covered or _hits_with(suite, func, bid, want_true):
-            if verbose: debug_print("already check")
+        debug_print(f"[Target {i}/{len(targets)}] bid={bid}, want_true={want_true}, depth={depth}")
+        debug_print(f"  Covered so far: {covered}")
+        
+        if (bid, want_true) in covered:
+            debug_print(f"  -> SKIP: already in covered set")
+            continue
+        
+        if _hits_with(suite, func, bid, want_true):
+            debug_print(f"  -> SKIP: already hit by existing test in suite")
+            covered.add((bid, want_true))
             continue
 
 
@@ -2166,11 +2227,19 @@ def solve_all_branches_for_func(ns, tx, func_name, xmin=-10, xmax=10,
 
         # === Adopt results/accumulate test cases ===
         ok = (f_best == 0.0 and bool(hit))  # Considered successful only when fitness is 0 and the actual branch direction is taken
+        debug_print(f"  Result: ok={ok}, f={f_best}, hit={hit}, sol={sol_best}")
+        
         if ok:
             warm_cache[key] = sol_best       # Reuse for the same chain/direction
         if ok and sol_best not in seen:      # Remove duplicate inputs
             seen.add(sol_best); suite.append(sol_best)
+            before_covered = len(covered)
             _mark_covered_for_args(covered, func, sol_best, tx, func_name)
+            debug_print(f"  Added to suite. Coverage: {before_covered} -> {len(covered)} branches")
+        elif ok:
+            debug_print(f"  Solution is duplicate, not adding to suite")
+        else:
+            debug_print(f"  Solution FAILED: fitness={f_best}, hit={hit}")
 
         outcome_last = (rec.get("outcome") if rec is not None else None)
         result_entry = {
@@ -2189,7 +2258,15 @@ def solve_all_branches_for_func(ns, tx, func_name, xmin=-10, xmax=10,
         results.append(result_entry)
 
         if len(covered) >= total_targets:
+            debug_print(f"[COMPLETE] All {total_targets} targets covered!")
             break
+    
+    debug_print(f"\n[SUMMARY] Function '{func_name}':")
+    debug_print(f"  Total targets: {total_targets}")
+    debug_print(f"  Covered: {len(covered)}/{total_targets}")
+    debug_print(f"  Covered branches: {sorted(covered)}")
+    debug_print(f"  Test suite size: {len(suite)}")
+    
     return param_names, suite, results
 
 
@@ -2539,6 +2616,10 @@ if __name__ == "__main__":
     parser.add_argument("--eval-limit-per-restart", type=int, default=10000)
     parser.add_argument("--algo", choices=["avm", "hc"], default="avm")
     parser.add_argument("--compare", action="store_true")
+    parser.add_argument("--test-for-false", action="store_true", 
+                       help="Test for-loop False branches (usually unreachable, slow)")
+    parser.add_argument("--test-while-true-false", action="store_true",
+                       help="Test while-True False branches (unreachable)")
 
     args = parser.parse_args()
 
@@ -2597,6 +2678,8 @@ if __name__ == "__main__":
             algo=args.algo, compare=args.compare,
             max_rounds=max_rounds,
             eval_limit_per_restart=eval_limit_per_restart,
+            skip_for_false=not args.test_for_false,  # By default, skip for-loop False branches
+            skip_while_true_false=not args.test_while_true_false,  # By default, skip while-True False
         )
         if args.compare:
             funcs_results.append(results)

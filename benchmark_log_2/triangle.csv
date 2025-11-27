@@ -1,7 +1,0 @@
-function,lineno,convergence_speed,nfe,best_fitness,best_solution,success,num_trials
-triangle,1,3,20,0.0,"[0, 3, 6]",True,1
-triangle,2,4,26,0.0,"[1, 5, 4]",True,1
-triangle,3,5,40,1.0009990009990009,"[2, 3, 6]",False,5
-triangle,4,5,40,2.0,"[5, 4, -10]",False,5
-triangle,5,5,38,0.0,"[6, 4, 6]",True,4
-triangle,6,8,58,0.0029940099850206403,"[4, 5, 3]",False,5

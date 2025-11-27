@@ -1,7 +1,0 @@
-function,lineno,convergence_speed,nfe,best_fitness,best_solution,success,num_trials
-prime_check,1,5,12,0.0,[1],True,1
-prime_check,2,1,4,0.0,[20],True,1
-prime_check,3,1,4,0.0,[9],True,1
-prime_check,4,2,6,0.0,[11],True,1
-prime_check,5,7,24,0.0009990009990008542,[2],False,5
-prime_check,6,3,12,0.0,[12],True,3

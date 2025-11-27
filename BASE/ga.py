@@ -34,9 +34,21 @@ def ga(
     ensure_mutation: bool = True,
     mutation_step_choices: Tuple[int, ...] = (-3, -2, -1, 1, 2, 3),
     rng: random.Random = random.Random(),
+    # biased initialization parameters
+    use_biased_init: bool = False,
+    var_constants: dict = None,
+    total_constants: list = None,
 ):
     value_range = (func_info.min_const, func_info.max_const)
     num_args = func_info.args_dim
+    func_args = func_info.args
+    
+    # Initialize biased init parameters if not provided
+    if var_constants is None:
+        var_constants = {}
+    if total_constants is None:
+        total_constants = []
+    
     # --- Helper functions ---
     if gene_mut_p is None:
         gene_mut_p = 1.0 / max(1, num_args)
@@ -45,7 +57,45 @@ def ga(
         return max(value_range[0], min(value_range[1], v))
 
     def init_individual() -> Tuple[int, ...]:
-        return tuple(rng.randint(*value_range) for _ in range(num_args))
+        """Initialize individual with optional biased initialization."""
+        if not use_biased_init:
+            # Pure random initialization
+            return tuple(rng.randint(*value_range) for _ in range(num_args))
+        
+        # Biased initialization: sample near extracted constants
+        result = []
+        for i in range(num_args):
+            arg_name = func_args[i] if i < len(func_args) else f"arg{i}"
+            
+            # If no constants available, fall back to uniform
+            if not total_constants and not var_constants:
+                result.append(rng.randint(*value_range))
+                continue
+            
+            # 20% uniform, 80% biased around constants
+            if rng.random() < 0.2:
+                result.append(rng.randint(*value_range))
+                continue
+            
+            # Prefer per-variable constants if available
+            const_list = list(var_constants.get(arg_name, []))
+            if not const_list:
+                const_list = total_constants
+            if not const_list:
+                result.append(rng.randint(*value_range))
+                continue
+            
+            # Sample near a randomly chosen constant
+            center = rng.choice(const_list)
+            span = max(1, value_range[1] - value_range[0])
+            sigma = max(1, int(0.01 * span))  # 1% of span
+            
+            # Sample from Gaussian and clip to range
+            val = int(rng.gauss(center, sigma))
+            val = clip(val)
+            result.append(val)
+        
+        return tuple(result)
 
     def selection(pop, fits, k=tournament_k):
         idxs = rng.sample(range(len(pop)), k)

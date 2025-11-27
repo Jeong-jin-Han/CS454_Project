@@ -1,2 +1,0 @@
-function,lineno,convergence_speed,nfe,best_fitness,best_solution,success,num_trials
-rugged,1,6,22,0.9999999999999744,[100],False,5

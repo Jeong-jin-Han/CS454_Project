@@ -1,8 +1,0 @@
-function,lineno,convergence_speed,nfe,best_fitness,best_solution,success,num_trials,error
-intersect,1,1,10000,0.0,"(14, 3, 11, 14, -7, 2, 1, -8)",True,1,
-intersect,2,1,10000,0.0,"(4, -9, 14, 5, 14, 16, 15, 14)",True,1,
-intersect,3,1,10000,0.0,"(7, 11, -4, 12, -4, 12, 16, 15)",True,1,
-intersect,4,1,10000,0.0,"(3, 3, 4, 12, -3, 6, 13, 11)",True,1,
-intersect,5,1,10000,0.0,"(-3, 1, 15, 2, 4, -7, 6, 2)",True,1,
-intersect,6,1,10000,0.0,"(6, 11, 15, 16, 13, 3, 13, 3)",True,1,
-intersect,7,1,10000,0.0,"(4, 7, 4, 7, 17, 8, -5, -5)",True,1,

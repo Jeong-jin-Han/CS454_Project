@@ -1,4 +1,0 @@
-function,lineno,convergence_speed,nfe,best_fitness,best_solution,success,num_trials
-needle1,1,1,2,0.0,"[45, 43, -7]",True,1
-needle1,2,3,204,0.0,"[-37, 100, 1415]",True,1
-needle1,3,1,2,0.0,"[996, 24, 76]",True,1

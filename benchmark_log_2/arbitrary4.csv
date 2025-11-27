@@ -1,5 +1,0 @@
-function,lineno,convergence_speed,nfe,best_fitness,best_solution,success,num_trials
-f,1,27,164,0.0,"[39, -17, 2]",True,1
-f,2,7,44,0.0,"[3, 1, 1]",True,1
-f,3,2,14,0.0,"[48, 48, 48]",True,1
-f,4,2,14,0.0,"[3, 6, 6]",True,1

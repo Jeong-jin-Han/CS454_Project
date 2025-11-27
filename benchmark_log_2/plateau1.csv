@@ -1,5 +1,0 @@
-function,lineno,convergence_speed,nfe,best_fitness,best_solution,success,num_trials
-plateau1,1,18,110,0.0,"[5, 8, 8]",True,1
-plateau1,2,5,32,0.0,"[15, 19, 15]",True,1
-plateau1,3,16,98,0.0,"[9, 19, 11]",True,1
-plateau1,4,28,172,0.0,"[50, 1, 0]",True,2
