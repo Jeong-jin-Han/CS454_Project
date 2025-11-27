@@ -1,0 +1,7 @@
+function,lineno,convergence_speed,nfe,best_fitness,best_solution,success,num_trials,error
+collatz_steps,1,1,10000,0.0,"(-5,)",True,1,
+collatz_steps,2,1,10000,0.0,"(17,)",True,1,
+collatz_steps,3,1,10000,0.0,"(29,)",True,1,
+collatz_steps,4,1,10000,0.0,"(27,)",True,1,
+collatz_steps,5,1,10000,0.0,"(14,)",True,1,
+collatz_steps,6,1,10000,0.0,"(26,)",True,1,

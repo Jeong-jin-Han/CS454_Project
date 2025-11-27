@@ -1,0 +1,4 @@
+function,lineno,convergence_speed,nfe,best_fitness,best_solution,success,num_trials,error
+collection,1,33,328163,0.0,"(3817, 109654, 314268)",True,1,
+collection,2,155,1552462,0.0,"(3817, 58, 234659)",True,4,
+collection,3,244,2440720,1.7977399498581785,"(3817, 1697, 144596)",False,5,

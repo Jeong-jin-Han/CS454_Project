@@ -1,0 +1,7 @@
+function,lineno,convergence_speed,nfe,best_fitness,best_solution,success,num_trials,error
+count_divisors_of_gcd,1,1,10000,0.0,"(19, 0)",True,1,
+count_divisors_of_gcd,4,1,10000,0.0,"(16, 16)",True,1,
+count_divisors_of_gcd,5,1,10000,0.0,"(4, 13)",True,1,
+count_divisors_of_gcd,6,1,10000,0.0,"(1, 7)",True,1,
+count_divisors_of_gcd,7,70,676321,0.022726285130352353,"(36, 36)",False,5,
+count_divisors_of_gcd,8,70,676655,0.0009990009990008542,"(36, 36)",False,5,
