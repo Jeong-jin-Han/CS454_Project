@@ -1,0 +1,39 @@
+file_name,total_coverage,misses,branches,missing_line
+triangle,100%,0,0,
+arbitrary5,100%,0,6,
+arbitrary10,90%,1,8,14
+rugged1,95%,1,18,23
+arbitrary7,92%,1,10,20
+ex1,82%,2,8,"9, 18"
+digit_sum,100%,0,10,
+arbitrary2,90%,1,8,16
+rugged_case,89%,1,2,34
+arbitrary4,100%,0,8,
+arbitrary1,87%,2,12,"15, 23"
+needle2,78%,2,4,"12, 29"
+combined1,94%,1,14,20
+plateau3,63%,3,16,"9->14, 11-13, 27->29, 29->31, 31->33, 33->36"
+arbitrary3,100%,0,8,
+arbitrary9,100%,0,10,
+plateau1,90%,1,8,11
+combined2,62%,14,16,"10-15, 22->37, 33-35, 69-77"
+arbitrary6,100%,0,6,
+mixed_case,78%,5,12,36-41
+derivative_quadratic,80%,1,2,11
+count_divisor_2,88%,2,12,"23, 25"
+ex6,83%,2,6,10-11
+prime_check,100%,0,12,
+needle_case,84%,1,4,"15, 21->25"
+ex5,71%,2,6,"5, 11"
+plateau2,83%,1,8,"8->15, 13, 35->39"
+needle1,100%,0,4,
+ex7,100%,0,6,
+rugged2,78%,2,4,"12, 29"
+ex2,100%,0,6,
+parallel_test,96%,1,26,39
+collatz_step,100%,0,12,
+arbitrary8,87%,1,6,7
+ex4,80%,1,4,8
+count_divisor_1,86%,2,12,"15, 17"
+plateau_case,57%,5,8,29-37
+ex3,88%,1,14,"17->20, 18->20, 26"

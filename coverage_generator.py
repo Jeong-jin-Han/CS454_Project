@@ -63,9 +63,13 @@ def main(dir_name: str):
                 break
 
         # Clean temp script
-        os.remove(test_filename)
+        print(test_filename)
+        # os.remove(test_filename)
 
-        print(f"Complete coverage checking for {program_name}: miss / branch = {miss}{f"({missing_line})" if missing_line else ""} / {branch}")
+        # print(f"Complete coverage checking for {program_name}: miss / branch = {miss}{f"({missing_line})" if missing_line else ""} / {branch}")
+        missing_part = f"({missing_line})" if missing_line else ""
+
+        print(f"Complete coverage checking for {program_name}: miss / branch = {miss}{missing_part} / {branch}")
 
     # Write final CSV
     out_path = f"coverage_result/coverage_report_{dir_name}.csv"
