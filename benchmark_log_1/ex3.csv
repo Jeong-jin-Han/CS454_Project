@@ -1,0 +1,8 @@
+function,lineno,convergence_speed,nfe,best_fitness,best_solution,success,num_trials
+intersect,1,1,2,0.0,"[5, 6, 1, 7, 0, 8, 3, 9]",True,1
+intersect,2,2,258,0.0,"[1, 5, 12, 4, 4, 1, -8, 17]",True,1
+intersect,3,2,258,0.0,"[6, 5, 15, 7, 3, 5, 4, 5]",True,1
+intersect,4,1,2,0.0,"[2, 4, 3, 0, 3, 7, 3, 2]",True,1
+intersect,5,2,258,0.0,"[1, 1, 4, 3, 4, 0, 4, 4]",True,1
+intersect,6,2,258,0.0,"[4, 7, 4, 0, 2, 1, 2, 1]",True,1
+intersect,7,6,770,0.0,"[2, 1, 2, 1, 5, 4, 5, 0]",True,1

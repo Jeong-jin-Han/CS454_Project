@@ -1,0 +1,7 @@
+function,lineno,convergence_speed,nfe,best_fitness,best_solution,success,num_trials
+mixed,1,1,2,0.0,"[104, 130, -10]",True,1
+mixed,2,1,2,0.0,"[4914, 997, 1365]",True,1
+mixed,3,4942,88958,0.0,"[4980, -1000, 8974]",True,1
+mixed,4,4901,138221,0.0,"[4991, -1000, -10]",True,1
+mixed,5,7,128,0.0,"[106, 126, 42]",True,1
+mixed,6,50,902,0.0,"[225, 59, 39]",True,1

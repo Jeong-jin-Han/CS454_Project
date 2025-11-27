@@ -1,0 +1,5 @@
+function,lineno,convergence_speed,nfe,best_fitness,best_solution,success,num_trials
+plateau_case,1,1,2,0.0,"[46, 5010]",True,1
+plateau_case,2,1,2,0.0,"[435, 452]",True,1
+plateau_case,3,55,2000710,1.0009990009990009,"[-99016, 429]",False,5
+plateau_case,4,55,2000710,1.0009990009990009,"[-99924, 491]",False,5

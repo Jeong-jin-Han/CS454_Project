@@ -4,3 +4,5 @@ env/
 venv/
 *.pyc
 __pypackages__/
+tmp/
+*.md
