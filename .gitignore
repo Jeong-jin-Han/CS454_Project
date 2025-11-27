@@ -6,3 +6,4 @@ venv/
 __pypackages__/
 tmp/
 *.md
+.coverage
