@@ -602,6 +602,8 @@ def hill_climb_with_compression_nd_code(
     global_min_threshold=1e-6,
     verbose = False,
     cm = None,  # Optional: reuse compression manager across trials
+    time_limit=None,  # Time limit in seconds
+    start_time=None,  # Start time from time.time()
 ):
     """
     N-D hill climbing with axis-aligned 1D compressions.
@@ -628,6 +630,8 @@ def hill_climb_with_compression_nd_code(
     traj : list of (point, fitness, used_compression)
     cm : CompressionManagerND
     """
+    import time as time_module
+    
     deactivation_patience=20
     def fitness_func_nd_code(x):
         # Fitness should already be non-negative (AL >= 0, BD >= 0)
@@ -646,6 +650,14 @@ def hill_climb_with_compression_nd_code(
     active_dims = list(range(dim))
     # dim_stagnation: 각 변수가 얼마나 오랫동안 Fitness에 기여하지 못했는지 카운트
     dim_stagnation = {d: 0 for d in range(dim)}
+
+    # ⏱️ Check time before initial evaluation
+    if time_limit is not None and start_time is not None:
+        if time_module.time() - start_time >= time_limit:
+            # Time exceeded before starting
+            point = tuple(int(x) for x in start_point)
+            traj.append((point, float('inf'), False))
+            return traj, cm
 
     # Initialize point
     point = tuple(int(x) for x in start_point)
@@ -685,6 +697,12 @@ def hill_climb_with_compression_nd_code(
         max_steps_per_iteration = 10000  # Safety limit to prevent infinite loops
         
         while step_count < max_steps_per_iteration:
+            # ⏱️ Check time limit before next step
+            if time_limit is not None and start_time is not None:
+                if time_module.time() - start_time >= time_limit:
+                    print(f"⏱️ Time limit reached during iteration {it+1}, stopping")
+                    return traj, cm
+            
             # ----- Propose neighbors in all directions -----
             best_point, best_f = point, f
             improved = False
@@ -692,6 +710,12 @@ def hill_climb_with_compression_nd_code(
 
             # 1) Axis-aligned neighbors (O(D))
             for d in active_dims:
+                # ⏱️ Check time before evaluating this dimension
+                if time_limit is not None and start_time is not None:
+                    if time_module.time() - start_time >= time_limit:
+                        print(f"⏱️ Time limit reached, stopping")
+                        return traj, cm
+                
                 fixed_coords = tuple(point[i] for i in range(dim) if i != d)
                 comp_sys = cm.get_system(d, fixed_coords)
 
@@ -711,6 +735,12 @@ def hill_climb_with_compression_nd_code(
             # 2) Diagonal neighbors (O(D^2))
             if len(active_dims) >= 2:
                 for d1, d2 in itertools.combinations(active_dims, 2):
+                    # ⏱️ Check time before diagonal evaluations
+                    if time_limit is not None and start_time is not None:
+                        if time_module.time() - start_time >= time_limit:
+                            print(f"⏱️ Time limit reached during diagonal evaluation, stopping")
+                            return traj, cm
+                    
                     # Compression system for d1
                     fixed1 = tuple(point[i] for i in range(dim) if i != d1)
                     comp1 = cm.get_system(d1, fixed1)
@@ -786,6 +816,12 @@ def hill_climb_with_compression_nd_code(
         # ----- Detect basins along each dimension -----
         basins = {}  # dimension -> (start, length)
         for d in active_dims:
+            # ⏱️ Check time before basin detection
+            if time_limit is not None and start_time is not None:
+                if time_module.time() - start_time >= time_limit:
+                    print(f"⏱️ Time limit reached during basin detection, stopping")
+                    return traj, cm
+            
             basin = detect_basin_along_dimension(fitness_func_nd_code, point, d, max_search=basin_max_search)
             if basin:
                 fixed_coords = tuple(point[i] for i in range(dim) if i != d)
@@ -802,6 +838,12 @@ def hill_climb_with_compression_nd_code(
         restart_candidates = []
         
         for d, (b_start, b_len) in basins.items():
+            # ⏱️ Check time before restart candidate evaluation
+            if time_limit is not None and start_time is not None:
+                if time_module.time() - start_time >= time_limit:
+                    print(f"⏱️ Time limit reached during restart evaluation, stopping")
+                    return traj, cm
+            
             b_end = b_start + b_len - 1
             
             # Try left end (start - 1)
@@ -848,32 +890,58 @@ def hill_climb_simple_nd_code(
     fitness_calc, func_obj, target_branch_node, target_outcome, subject_node, parent_map,
     start_point,
     dim,
-    max_steps=2000
+    max_steps=2000,
+    time_limit=None,  # Time limit in seconds
+    start_time=None,  # Start time from time.time()
 ):
     """
     Simple N-D hill climbing WITHOUT compression (for comparison).
+    
+    With strict time limit enforcement - checks before each fitness evaluation.
     
     Returns:
     --------
     traj : list of (point, fitness)
     """
+    import time
+    
     point = tuple(int(x) for x in start_point)
 
     def fitness_func_nd_code(x):
         # Fitness should already be non-negative (AL >= 0, BD >= 0)
         return fitness_calc.fitness_for_candidate(func_obj, x, target_branch_node, target_outcome, subject_node, parent_map)
 
+    # ⏱️ Check time before initial evaluation
+    if time_limit is not None and start_time is not None:
+        if time.time() - start_time >= time_limit:
+            return [(point, float('inf'))]  # Return immediately if time exceeded
+    
     f = fitness_func_nd_code(point)
     traj = [(point, f)]
 
     for _ in range(max_steps):
+        # ⏱️ Check time limit before evaluating neighbors
+        if time_limit is not None and start_time is not None:
+            if time.time() - start_time >= time_limit:
+                return traj  # Return best found so far
+        
         # Try 2*dim neighbors (±1 in each dimension)
         candidates = []
         for d in range(dim):
+            # ⏱️ Check time before each evaluation
+            if time_limit is not None and start_time is not None:
+                if time.time() - start_time >= time_limit:
+                    return traj
+            
             # -1 in dimension d
             neighbor = list(point)
             neighbor[d] -= 1
             candidates.append((tuple(neighbor), fitness_func_nd_code(tuple(neighbor))))
+            
+            # ⏱️ Check time before next evaluation
+            if time_limit is not None and start_time is not None:
+                if time.time() - start_time >= time_limit:
+                    return traj
             
             # +1 in dimension d
             neighbor = list(point)

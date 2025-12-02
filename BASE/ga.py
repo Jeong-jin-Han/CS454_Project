@@ -1,4 +1,4 @@
-import ast, os, random
+import ast, os, random, time
 from typing import Tuple
 from module.sbst_core import instrument_and_load, FitnessCalculator
 import ast, random
@@ -38,6 +38,9 @@ def ga(
     use_biased_init: bool = False,
     var_constants: dict = None,
     total_constants: list = None,
+    # time limit parameters
+    time_limit: float = None,  # Time limit in seconds
+    start_time: float = None,  # Start time from time.time()
 ):
     value_range = (func_info.min_const, func_info.max_const)
     num_args = func_info.args_dim
@@ -134,9 +137,22 @@ def ga(
     if fitness_calc._record.get_trace():
         k = fitness_calc._record.get_trace()[-1]
 
-    # Evaluate initial population with early stopping
+    # Evaluate initial population with early stopping and time limit checking
     fit_cache = []
     for ind in population:
+        # ⏱️ Check time limit before evaluating
+        if time_limit is not None and start_time is not None:
+            elapsed = time.time() - start_time
+            if elapsed >= time_limit:
+                print(f"[GA] ⏱️ Time limit ({time_limit}s) reached during initialization after {len(fit_cache)} evaluations")
+                # Return best so far
+                if fit_cache:
+                    best_fitness_init = min(fit for fit, _ in fit_cache)
+                    best_ind_init = [ind for fit, ind in fit_cache if fit == best_fitness_init][0]
+                    return best_ind_init, best_fitness_init
+                else:
+                    return population[0], float('inf')
+        
         fitness = fitness_calc.fitness_for_candidate(
             func_obj,
             ind,
@@ -182,11 +198,19 @@ def ga(
             child = mutate(crossover(p1, p2))
             next_gen.append(child)
         next_gen = dedup(next_gen)
-        # Next generation evaluation with early stopping
+        # Next generation evaluation with early stopping and time limit checking
         population = next_gen
         fit_cache = []
         
         for ind in population:
+            # ⏱️ Check time limit before evaluating
+            if time_limit is not None and start_time is not None:
+                elapsed = time.time() - start_time
+                if elapsed >= time_limit:
+                    print(f"[GA] ⏱️ Time limit ({time_limit}s) reached in Gen {gen} after {len(fit_cache)} evaluations in this generation")
+                    print(f"[GA] Returning best solution found: fitness={best_fit:.6g}")
+                    return best_ind, best_fit
+            
             fitness = fitness_calc.fitness_for_candidate(
                 func_obj,
                 ind,

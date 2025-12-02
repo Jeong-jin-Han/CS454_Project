@@ -1,17 +1,17 @@
-function,lineno,outcome,convergence_speed,nfe,best_fitness,best_solution,success,num_trials,total_time,time_to_solution
-rugged1,1,True,0,1,0.0,"(0, -7, 7)",True,1,0.012,0.012
-rugged1,2,True,0,1,0.0,"(0, -7, 7)",True,1,0.012,0.012
-rugged1,3,True,0,2,0.0,"(3, -8, 6)",True,2,0.012,0.012
-rugged1,3,False,0,1,0.0,"(0, -7, 7)",True,1,0.011,0.011
-rugged1,4,True,0,1,0.0,"(0, -7, 7)",True,1,0.012,0.012
-rugged1,4,False,0,1,0.0,"(0, -7, 7)",True,1,0.014,0.014
-rugged1,5,True,0,1,0.0,"(0, -7, 7)",True,1,0.011,0.011
-rugged1,5,False,0,1,0.0,"(0, -7, 7)",True,1,0.012,0.012
-rugged1,6,True,0,1,0.0,"(0, -7, 7)",True,1,0.010,0.010
-rugged1,6,False,0,1,0.0,"(0, -7, 7)",True,1,0.011,0.011
-rugged1,7,True,0,1,0.0,"(0, -7, 7)",True,1,0.010,0.010
-rugged1,7,False,0,2,0.0,"(3, -8, 6)",True,2,0.010,0.010
-rugged1,8,True,0,10,0.0,"(0, 0, 19)",True,10,0.012,0.012
-rugged1,8,False,0,1,0.0,"(0, -7, 7)",True,1,0.009,0.009
-rugged1,9,True,0,6,0.0,"(-1, 9, -8)",True,6,0.011,0.011
-rugged1,9,False,0,2,0.0,"(3, -8, 6)",True,2,0.009,0.009
+function,lineno,outcome,convergence_speed,nfe,best_fitness,best_solution,success,num_trials,generations,total_time,time_to_solution
+rugged1,1,True,1,1,0.0,"(0, -7, 7)",True,1,1,0.191,0.191
+rugged1,2,True,1,1,0.0,"(0, -7, 7)",True,1,1,0.229,0.229
+rugged1,3,True,1,2,0.0,"(3, -8, 6)",True,2,1,0.178,0.178
+rugged1,3,False,1,1,0.0,"(0, -7, 7)",True,1,1,0.440,0.440
+rugged1,4,True,1,1,0.0,"(0, -7, 7)",True,1,1,0.259,0.259
+rugged1,4,False,1,1,0.0,"(0, -7, 7)",True,1,1,0.497,0.497
+rugged1,5,True,1,1,0.0,"(0, -7, 7)",True,1,1,0.418,0.418
+rugged1,5,False,1,1,0.0,"(0, -7, 7)",True,1,1,0.262,0.262
+rugged1,6,True,1,1,0.0,"(0, -7, 7)",True,1,1,0.271,0.271
+rugged1,6,False,1,1,0.0,"(0, -7, 7)",True,1,1,0.189,0.189
+rugged1,7,True,1,1,0.0,"(0, -7, 7)",True,1,1,0.196,0.196
+rugged1,7,False,1,2,0.0,"(3, -8, 6)",True,2,1,0.252,0.252
+rugged1,8,True,1,10,0.0,"(0, 0, 19)",True,10,1,0.201,0.201
+rugged1,8,False,1,1,0.0,"(0, -7, 7)",True,1,1,0.240,0.240
+rugged1,9,True,1,6,0.0,"(-1, 9, -8)",True,6,1,0.183,0.183
+rugged1,9,False,1,2,0.0,"(3, -8, 6)",True,2,1,0.165,0.165

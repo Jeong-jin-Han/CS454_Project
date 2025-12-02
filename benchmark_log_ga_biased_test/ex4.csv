@@ -1,5 +1,5 @@
-function,lineno,outcome,convergence_speed,nfe,best_fitness,best_solution,success,num_trials,total_time,time_to_solution
-tertiary,1,True,0,49,0.0,"(42, 2017)",True,49,0.003,0.003
-tertiary,1,False,0,1,0.0,"(0, 200)",True,1,0.003,0.003
-tertiary,2,True,9,944,0.0,"(42, 2007)",True,944,0.021,0.021
-tertiary,2,False,0,49,0.0,"(42, 2017)",True,49,0.003,0.003
+function,lineno,outcome,convergence_speed,nfe,best_fitness,best_solution,success,num_trials,generations,total_time,time_to_solution
+tertiary,1,True,1,49,0.0,"(42, 2017)",True,49,1,0.141,0.141
+tertiary,1,False,1,1,0.0,"(0, 200)",True,1,1,0.140,0.140
+tertiary,2,True,3,20711,0.0,"(42, 2007)",True,20711,3,0.681,0.681
+tertiary,2,False,1,49,0.0,"(42, 2017)",True,49,1,0.094,0.094

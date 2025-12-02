@@ -1,12 +1,12 @@
 file_name,total_coverage,misses,branches,missing_line
 plateau_case,57%,5,8,29-37
 collatz_step,100%,0,12,
-ex5,57%,3,6,4-7
+ex5,100%,0,6,
 plateau2,88%,1,8,"13, 35->39"
 ex2,100%,0,6,
 rugged_case,89%,1,2,34
 ex1,100%,0,8,
-combined1,94%,1,14,4
+combined1,100%,0,14,
 arbitrary8,87%,1,6,7
 arbitrary7,100%,0,10,
 arbitrary1,100%,0,12,
@@ -29,7 +29,7 @@ parallel_test,100%,0,26,
 needle_case,84%,1,4,"15, 21->25"
 plateau1,100%,0,8,
 digit_sum,100%,0,10,
-combined2,55%,17,16,"10-15, 33-35, 62-77"
+combined2,49%,18,16,"10-15, 30-35, 62-77"
 arbitrary3,100%,0,8,
 arbitrary2,100%,0,8,
 needle1,100%,0,4,

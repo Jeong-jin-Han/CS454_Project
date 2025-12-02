@@ -170,13 +170,15 @@ def test_single_branch_baseline_with_metrics(args):
             print(f"[Worker {worker_pid}] Branch {lineno} ({outcome_str}), Trial {trial+1}: init_f={init_fit:.4f}")
             sys.stdout.flush()
         
-        # Run baseline hill climbing (NO compression)
+        # Run baseline hill climbing (NO compression) with strict time limit
         traj = hill_climb_simple_nd_code(
             fitness_calc, func_obj,
             target_branch_node, target_outcome,
             subject_node, parent_map,
             initial, dim,
-            max_steps=max_steps
+            max_steps=max_steps,
+            time_limit=time_limit,  # ⏱️ Pass time limit
+            start_time=branch_start_time  # ⏱️ Pass start time
         )
         
         # Extract results

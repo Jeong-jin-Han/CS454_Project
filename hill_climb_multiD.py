@@ -829,32 +829,58 @@ def hill_climb_simple_nd_code(
     fitness_calc, func_obj, target_branch_node, target_outcome, subject_node, parent_map,
     start_point,
     dim,
-    max_steps=2000
+    max_steps=2000,
+    time_limit=None,  # Time limit in seconds
+    start_time=None,  # Start time from time.time()
 ):
     """
     Simple N-D hill climbing WITHOUT compression (for comparison).
+    
+    With strict time limit enforcement - checks before each fitness evaluation.
     
     Returns:
     --------
     traj : list of (point, fitness)
     """
+    import time
+    
     point = tuple(int(x) for x in start_point)
 
     def fitness_func_nd_code(x):
         return np.abs(fitness_calc.fitness_for_candidate(func_obj, x, target_branch_node, target_outcome, subject_node, parent_map))
         # return fitness_calc.fitness_for_candidate(func_obj, x, target_branch_node, target_outcome, subject_node, parent_map)
 
+    # ⏱️ Check time before initial evaluation
+    if time_limit is not None and start_time is not None:
+        if time.time() - start_time >= time_limit:
+            return [(point, float('inf'))]  # Return immediately if time exceeded
+    
     f = fitness_func_nd_code(point)
     traj = [(point, f)]
 
     for _ in range(max_steps):
+        # ⏱️ Check time limit before evaluating neighbors
+        if time_limit is not None and start_time is not None:
+            if time.time() - start_time >= time_limit:
+                return traj  # Return best found so far
+        
         # Try 2*dim neighbors (±1 in each dimension)
         candidates = []
         for d in range(dim):
+            # ⏱️ Check time before each evaluation
+            if time_limit is not None and start_time is not None:
+                if time.time() - start_time >= time_limit:
+                    return traj
+            
             # -1 in dimension d
             neighbor = list(point)
             neighbor[d] -= 1
             candidates.append((tuple(neighbor), fitness_func_nd_code(tuple(neighbor))))
+            
+            # ⏱️ Check time before next evaluation
+            if time_limit is not None and start_time is not None:
+                if time.time() - start_time >= time_limit:
+                    return traj
             
             # +1 in dimension d
             neighbor = list(point)

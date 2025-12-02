@@ -213,7 +213,7 @@ def test_single_branch_with_metrics(args):
         if not worker_verbose:
             sys.stdout = open(os.devnull, 'w')
         
-        # Run hill climbing (all fitness evals counted automatically)
+        # Run hill climbing (all fitness evals counted automatically) with strict time limit
         try:
             traj, branch_cm = hill_climb_with_compression_nd_code(
                 fitness_calc, func_obj,
@@ -223,7 +223,9 @@ def test_single_branch_with_metrics(args):
                 max_iterations=max_iterations,
                 basin_max_search=basin_max_search,
                 global_min_threshold=1e-6,
-                cm=branch_cm
+                cm=branch_cm,
+                time_limit=time_limit,  # ⏱️ Pass time limit
+                start_time=branch_start_time  # ⏱️ Pass start time
             )
         finally:
             # Restore stdout

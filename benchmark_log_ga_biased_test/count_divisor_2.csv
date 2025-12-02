@@ -1,13 +1,13 @@
-function,lineno,outcome,convergence_speed,nfe,best_fitness,best_solution,success,num_trials,total_time,time_to_solution
-count_divisors_of_gcd,1,True,0,1,0.0,"(0, -4)",True,1,0.009,0.009
-count_divisors_of_gcd,1,False,0,2,0.0,"(9, 17)",True,2,0.012,0.012
-count_divisors_of_gcd,4,True,0,2,0.0,"(9, 17)",True,2,0.009,0.009
-count_divisors_of_gcd,4,False,2957,293970,0.0009990009990008542,"(36, 1)",False,293970,20.006,N/A
-count_divisors_of_gcd,5,True,0,2,0.0,"(9, 17)",True,2,0.009,0.009
-count_divisors_of_gcd,5,False,2699,263576,0.001997003995005797,"(9, 17)",False,263576,20.052,N/A
-count_divisors_of_gcd,6,True,0,2,0.0,"(9, 17)",True,2,0.009,0.009
-count_divisors_of_gcd,6,False,0,30,0.0,"(10, 5)",True,30,0.012,0.012
-count_divisors_of_gcd,7,True,2402,247043,0.022726285130352353,"(36, 36)",False,247043,20.015,N/A
-count_divisors_of_gcd,7,False,0,2,0.0,"(9, 17)",True,2,0.008,0.008
-count_divisors_of_gcd,8,True,2392,246026,0.0009990009990008542,"(36, 36)",False,246026,20.018,N/A
-count_divisors_of_gcd,8,False,0,2,0.0,"(9, 17)",True,2,0.008,0.008
+function,lineno,outcome,convergence_speed,nfe,best_fitness,best_solution,success,num_trials,generations,total_time,time_to_solution
+count_divisors_of_gcd,1,True,1,1,0.0,"(0, -4)",True,1,1,0.287,0.287
+count_divisors_of_gcd,1,False,1,2,0.0,"(9, 17)",True,2,1,0.226,0.226
+count_divisors_of_gcd,4,True,1,2,0.0,"(9, 17)",True,2,1,0.119,0.119
+count_divisors_of_gcd,4,False,7,63765,0.0009990009990008542,"(36, 1)",False,63765,7,20.148,N/A
+count_divisors_of_gcd,5,True,1,2,0.0,"(9, 17)",True,2,1,0.204,0.204
+count_divisors_of_gcd,5,False,10,94690,0.001997003995005797,"(9, 17)",False,94690,10,20.002,N/A
+count_divisors_of_gcd,6,True,1,2,0.0,"(9, 17)",True,2,1,0.295,0.295
+count_divisors_of_gcd,6,False,1,30,0.0,"(10, 5)",True,30,1,0.243,0.243
+count_divisors_of_gcd,7,True,10,95031,0.022726285130352353,"(36, 36)",False,95031,10,20.001,N/A
+count_divisors_of_gcd,7,False,1,2,0.0,"(9, 17)",True,2,1,0.139,0.139
+count_divisors_of_gcd,8,True,10,91651,0.0009990009990008542,"(36, 36)",False,91651,10,20.154,N/A
+count_divisors_of_gcd,8,False,1,2,0.0,"(9, 17)",True,2,1,0.128,0.128

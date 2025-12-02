@@ -1,7 +1,7 @@
-function,lineno,outcome,convergence_speed,nfe,best_fitness,best_solution,success,num_trials,total_time,time_to_solution
-collection,1,True,6,596,0.0,"(1038472, -8, 2180)",True,596,0.020,0.020
-collection,1,False,0,1,0.0,"(-10, 107463, 1030699)",True,1,0.005,0.005
-collection,2,True,10142,1002287,0.006972083790460326,"(1038472, -5, -10)",False,1002287,20.018,N/A
-collection,2,False,6,596,0.0,"(1038472, -8, 2180)",True,596,0.029,0.029
-collection,3,True,10109,999196,1.0069720837904603,"(1038472, -5, -10)",False,999196,20.010,N/A
-collection,3,False,10087,997017,1.0069720837904603,"(1038472, -5, -10)",False,997017,20.010,N/A
+function,lineno,outcome,convergence_speed,nfe,best_fitness,best_solution,success,num_trials,generations,total_time,time_to_solution
+collection,1,True,2,15534,0.0,"(42, 685807, 10974)",True,15534,2,0.808,0.808
+collection,1,False,1,1,0.0,"(-10, 107463, 1030699)",True,1,1,0.127,0.127
+collection,2,True,6,51841,0.0,"(42, 25, 11061)",True,51841,6,2.287,2.287
+collection,2,False,2,15534,0.0,"(42, 685807, 10974)",True,15534,2,0.849,0.849
+collection,3,True,29,282790,0.0,"(42, 30, 33)",True,282790,29,10.003,10.003
+collection,3,False,6,51841,0.0,"(42, 25, 11061)",True,51841,6,2.324,2.324

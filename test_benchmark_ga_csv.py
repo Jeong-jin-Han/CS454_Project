@@ -31,10 +31,16 @@ from BASE.ga import ga
 # ------------------------------------------------------------
 def _ga_worker(args):
     """
-    Test one branch with GA using continuous evolution until time limit.
+    Test one branch with GA using continuous evolution with STRICT time limit enforcement.
     
     Uses the same global random seed for fairness across all branches.
-    Initializes population ONCE, then keeps evolving until time limit is reached.
+    Initializes population ONCE, then keeps evolving until:
+    - Solution found (fitness 0.0) - early stopping
+    - Time limit reached (checked before EACH individual evaluation)
+    - Max generations reached (10000)
+    
+    Time limit is STRICTLY enforced - the GA checks time before evaluating each individual
+    and stops immediately if time limit is exceeded, ensuring it never goes over.
     
     Returns dict with:
     - convergence_speed: total generations evolved
@@ -142,9 +148,10 @@ def _ga_worker(args):
 
         nfe_before = fitness_calc.evals
 
-        # ✅ Run GA once with high max_gen - it will evolve continuously
-        # The ga() function has built-in early stopping at fitness 0.0
-        # We use a very high max_gen so it doesn't stop prematurely
+        # ✅ Run GA once with high max_gen and strict time limit enforcement
+        # The ga() function has:
+        # - Built-in early stopping at fitness 0.0
+        # - Strict time limit checking (stops before exceeding time_limit)
         ind, fit = ga(
             fitness_calc=fitness_calc,
             func_info=func_info,
@@ -164,6 +171,8 @@ def _ga_worker(args):
             use_biased_init=use_biased_init,
             var_constants=var_constants,
             total_constants=total_constants,
+            time_limit=time_limit,  # ⏱️ Strict time limit enforcement
+            start_time=branch_start_time,  # ⏱️ Start time for this branch
         )
 
         nfe_after = fitness_calc.evals
@@ -616,7 +625,7 @@ Examples:
         time_limit_per_branch=args.time_limit,
         random_seed=args.seed,
         success_threshold=0.0,
-        pop_size=100,
+        pop_size=10000, # 100
         num_workers=None,
         skip_for_false=True,
         use_biased_init=not args.random_init  # Invert the flag (like HC)
