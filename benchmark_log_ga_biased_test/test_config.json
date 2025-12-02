@@ -1,0 +1,13 @@
+{
+  "algorithm": "Genetic Algorithm",
+  "initialization": "biased",
+  "source_directory": "./benchmark",
+  "output_directory": "benchmark_log_ga_biased_test",
+  "time_limit_per_branch": 20.0,
+  "random_seed": 42,
+  "population_size": 100,
+  "max_gen_per_cycle": 10,
+  "total_execution_time_seconds": 306.91,
+  "total_execution_time_formatted": "5m 6s",
+  "files_tested": 38
+}

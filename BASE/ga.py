@@ -134,33 +134,44 @@ def ga(
     if fitness_calc._record.get_trace():
         k = fitness_calc._record.get_trace()[-1]
 
-    fit_cache = [
-        (
-            fitness_calc.fitness_for_candidate(
-                func_obj,
-                ind,
-                target_branch_node,
-                target_outcome,
-                subject_node,
-                parent_map,
-            ),
+    # Evaluate initial population with early stopping
+    fit_cache = []
+    for ind in population:
+        fitness = fitness_calc.fitness_for_candidate(
+            func_obj,
             ind,
+            target_branch_node,
+            target_outcome,
+            subject_node,
+            parent_map,
         )
-        for ind in population
-    ]
+        fit_cache.append((fitness, ind))
+        
+        # ✅ Early stop if solution found during initialization
+        if fitness == 0.0:
+            print(f"[GA] ✅ Solution found during initialization after {len(fit_cache)} evaluations!")
+            best_ind, best_fit = ind, 0.0
+            return best_ind, best_fit
+    
     print(
         f"[GA] Starting GA for target branch at line {target_branch_node.lineno if hasattr(target_branch_node, 'lineno') else 'N/A'} with population size {pop_size}, max generations {max_gen}"
     )
-    print(f"[GA] Initial best fitness: {min(fit for fit, _ in fit_cache):.4f}")
-    best_ind, best_fit = None, float("inf")
+    
+    # Initialize best from initial population
+    best_fitness_init = min(fit for fit, _ in fit_cache)
+    best_ind_init = [ind for fit, ind in fit_cache if fit == best_fitness_init][0]
+    print(f"[GA] Initial best fitness: {best_fitness_init:.4f}")
+    best_ind, best_fit = best_ind_init, best_fitness_init
     for gen in range(max_gen):
 
         ranked = sorted(zip(population, fit_cache), key=lambda x: x[1][0])
         elites_n = max(1, int(pop_size * elite_ratio))
         elites = [ind for ind, _ in ranked[:elites_n]]
 
+        # Check if solution already found from previous generation
         if ranked[0][1][0] == 0.0:
             best_ind, best_fit = ranked[0][0], 0.0
+            print(f"[GA] ✅ Solution found! Stopping at generation {gen}")
             break
 
         # Next generation creation
@@ -171,36 +182,35 @@ def ga(
             child = mutate(crossover(p1, p2))
             next_gen.append(child)
         next_gen = dedup(next_gen)
-        # Next generation evaluation
+        # Next generation evaluation with early stopping
         population = next_gen
-        fit_cache = [
-            (
-                fitness_calc.fitness_for_candidate(
-                    func_obj,
-                    ind,
-                    target_branch_node,
-                    target_outcome,
-                    subject_node,
-                    parent_map,
-                ),
+        fit_cache = []
+        
+        for ind in population:
+            fitness = fitness_calc.fitness_for_candidate(
+                func_obj,
                 ind,
+                target_branch_node,
+                target_outcome,
+                subject_node,
+                parent_map,
             )
-            for ind in population
-        ]
-
-        # Update best solution
-        for ind, (fval, _rec) in zip(population, fit_cache):
-            if abs(fval) < abs(best_fit):
-                best_fit = fval
+            fit_cache.append((fitness, ind))
+            
+            # Update best solution
+            if abs(fitness) < abs(best_fit):
+                best_fit = fitness
                 best_ind = ind
+            
+            # ✅ Early stop if solution found during generation evaluation
+            if fitness == 0.0:
+                print(f"[GA] ✅ Solution found in Gen {gen} after {len(fit_cache)} evaluations in this generation!")
+                print(f"[GA] Total evaluations so far: {fitness_calc.evals}")
+                return best_ind, best_fit
 
         print(
             f"[GA] End of Gen {gen}, best ind: {best_ind}, best fitness: {best_fit:.4f}"
         )
-
-        # Early stopping: break loop if optimal solution found
-        if best_fit == 0.0:
-            break
 
         if gen == max_gen - 1:
             print(

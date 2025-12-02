@@ -1,39 +1,22 @@
 #!/usr/bin/env python3
 """
-GA-based parallel branch testing for fair comparison with Hill Climbing.
+GA-based parallel branch testing with time-based continuous evolution.
 
-FAIR COMPARISON SETUP (Updated based on actual HC performance):
-----------------------------------------------------------------
-Hill Climbing (test_benchmark_parallel_csv.py):
-  - max_trials_per_branch: 5
-  - max_iterations: 10
-  - basin_max_search: 1,000 (only triggers when stuck)
-  - Actual performance: ~50-200 evals per trial (adaptive!)
-  - Example (needle1): 212 total evals for 5 branches = 42 evals/branch
+Time-Based Approach:
+- Each branch gets 20 seconds (same as Hill Climbing)
+- Initialize population ONCE, then continuously evolve until time limit
+- No trial restarts - continuous evolution strategy
+- Same CSV format as Hill Climbing for fair comparison
 
-Genetic Algorithm (this file):
-  - max_trials_per_branch: 5 (same as HC)
-  - pop_size: 100
-  - max_gen: 10
-  - Budget: 1,000 evals per trial (fixed: 100 × 10)
-  - Ratio: ~5-20x more than HC (fair for population-based method)
-
-Why this is fair:
-  • HC is adaptive: uses fewer evals when problem is easy
-  • GA is fixed: always uses same budget regardless of difficulty
-  • GA needs more evals than HC (population vs single-point search)
-  • 1000 evals is reasonable minimum for GA to function properly
-
-Both algorithms:
-  - Skip unreachable branches (while-True False, for-loop False)
-  - Use success_threshold: 0.0 (exact match)
-  - Track NFE (Number of Fitness Evaluations) in CSV
-
-Outputs to benchmark_log_ga/<file>.csv
+CSV columns (matching Hill Climbing):
+- function, lineno, outcome, convergence_speed, nfe
+- best_fitness, best_solution, success, num_trials
+- total_time, time_to_solution
 """
 
 import os
 import csv
+import json
 import time
 import random
 from multiprocessing import Pool, cpu_count
@@ -44,48 +27,78 @@ from BASE.ga import ga
 
 
 # ------------------------------------------------------------
-# 1) Per-branch GA evaluation worker
+# 1) Per-branch GA evaluation worker (Time-based continuous evolution)
 # ------------------------------------------------------------
 def _ga_worker(args):
+    """
+    Test one branch with GA using continuous evolution until time limit.
+    
+    Uses the same global random seed for fairness across all branches.
+    Initializes population ONCE, then keeps evolving until time limit is reached.
+    
+    Returns dict with:
+    - convergence_speed: total generations evolved
+    - nfe: total number of fitness evaluations
+    - best_fitness: best fitness found
+    - best_solution: solution achieving best fitness
+    - num_trials: number of individuals examined (initial points) - equals NFE with early stopping
+    - time_to_solution: time elapsed when solution was found (None if not solved)
+    - total_time: total time spent on this branch
+    """
     (
         file_path,
         func_name,
         lineno,
         branch_info,
-        max_trials,
+        time_limit,
+        random_seed,
         success_threshold,
         pop_size,
-        max_gen,
+        max_gen_per_cycle,
         tournament_k,
         elite_ratio,
         gene_mut_p,
         mutation_step_choices,
         ensure_mutation,
-        seed_offset,
-        target_outcome,  # ✅ Added target_outcome parameter
-        use_biased_init,  # ✅ Added use_biased_init parameter
+        target_outcome,
+        use_biased_init,
     ) = args
 
+    worker_pid = os.getpid()
+    outcome_str = "True" if target_outcome else "False"
+    
     result = {
         "function": func_name,
         "lineno": lineno,
-        "outcome": target_outcome,  # ✅ Added outcome to result
+        "outcome": target_outcome,
         "convergence_speed": 0,
         "nfe": 0,
         "best_fitness": float("inf"),
         "best_solution": None,
         "success": False,
         "num_trials": 0,
+        "total_time": 0.0,
+        "time_to_solution": None,
         "error": None,
-        "pid": os.getpid(),
-        "adjusted_pop_size": pop_size,
-        "adjusted_max_gen": max_gen,
+        "worker_pid": worker_pid,
     }
     
     # Suppress verbose output in workers to prevent buffer overflow
     worker_verbose = os.environ.get('WORKER_VERBOSE', '0') == '1'
     import sys
     import time
+    
+    # ⏱️ Start timer for this branch
+    branch_start_time = time.time()
+    
+    # 🎲 Reset to same global seed for ALL branches (fairness)
+    random.seed(random_seed)
+    
+    if worker_verbose:
+        print(f"\n[Worker PID {worker_pid}] Starting branch {func_name}::{lineno} (outcome={outcome_str})")
+        print(f"[Worker PID {worker_pid}] Time limit: {time_limit}s, Global seed: {random_seed}")
+        sys.stdout.flush()
+    
     old_stdout = sys.stdout
     if not worker_verbose:
         sys.stdout = open(os.devnull, 'w')
@@ -105,28 +118,52 @@ def _ga_worker(args):
         best_solution = None
         total_nfe = 0
         total_generations = 0
+        total_individuals_examined = 0  # Track number of initial points (individuals examined)
         success = False
+        time_to_solution = None
 
         target_branch_node = branch_info.node
         subject_node = branch_info.subject
-        # target_outcome is now passed as a parameter
-
-        # NO adaptive adjustment for fair comparison with Hill Climbing
-        # Both algorithms will use their fixed parameters
-        result["adjusted_pop_size"] = pop_size
-        result["adjusted_max_gen"] = max_gen
 
         # Prepare biased initialization metadata
         var_constants = getattr(func_info, "var_constants", {}) or {} if use_biased_init else {}
         total_constants = list(getattr(func_info, "total_constants", set()) or []) if use_biased_init else []
+        
+        init_mode = "BIASED" if use_biased_init else "RANDOM"
+        if worker_verbose:
+            print(f"[Worker {worker_pid}] Initialization mode: {init_mode}")
+            sys.stdout.flush()
 
-        for trial in range(max_trials):
-            seed = seed_offset + lineno * 1000 + trial
-            rng = random.Random(seed)
-            random.seed(seed)
+        # Create RNG for GA
+        rng = random.Random(random_seed)
+        
+        cycle = 0  # Evolution cycle counter
+        
+        # ⏱️ Continuously evolve until time limit is reached
+        while True:
+            elapsed_time = time.time() - branch_start_time
+            
+            # Check if time limit exceeded
+            if elapsed_time >= time_limit:
+                if worker_verbose:
+                    print(f"[Worker {worker_pid}] Time limit ({time_limit}s) reached after {cycle} evolution cycles")
+                    sys.stdout.flush()
+                break
+            
+            # Check if already succeeded
+            if success:
+                if worker_verbose:
+                    print(f"[Worker {worker_pid}] Branch {lineno} succeeded, stopping evolution")
+                    sys.stdout.flush()
+                break
+            
+            if worker_verbose:
+                print(f"[Worker {worker_pid}] Evolution cycle {cycle+1} (elapsed: {elapsed_time:.2f}s/{time_limit}s)")
+                sys.stdout.flush()
 
             nfe_before = fitness_calc.evals
 
+            # Run GA for a few generations (has built-in early stopping at fitness 0.0)
             ind, fit = ga(
                 fitness_calc=fitness_calc,
                 func_info=func_info,
@@ -136,40 +173,71 @@ def _ga_worker(args):
                 subject_node=subject_node,
                 parent_map=parent_map,
                 pop_size=pop_size,
-                max_gen=max_gen,
+                max_gen=max_gen_per_cycle,
                 tournament_k=tournament_k,
                 elite_ratio=elite_ratio,
                 gene_mut_p=gene_mut_p,
                 ensure_mutation=ensure_mutation,
                 mutation_step_choices=mutation_step_choices,
                 rng=rng,
-                use_biased_init=use_biased_init,  # ✅ Pass biased init flag
-                var_constants=var_constants,  # ✅ Pass variable-specific constants
-                total_constants=total_constants,  # ✅ Pass all constants
+                use_biased_init=use_biased_init and cycle == 0,  # Only biased init for first cycle
+                var_constants=var_constants,
+                total_constants=total_constants,
             )
 
             nfe_after = fitness_calc.evals
             nfe_this = nfe_after - nfe_before
 
             total_nfe += nfe_this
-            gens_est = int(round(nfe_this / float(max(1, pop_size))))
-            total_generations += gens_est
+            gens_this = int(round(nfe_this / float(max(1, pop_size))))
+            total_generations += gens_this
+            
+            # Track number of individuals examined (initial points)
+            # Formula: pop_size for first generation + pop_size per subsequent generation
+            # But if early stopping happened, we count actual individuals examined
+            total_individuals_examined += nfe_this  # Each fitness eval = one individual examined
 
             if fit is not None and fit < best_fitness:
                 best_fitness = fit
                 best_solution = ind
+                
+                if worker_verbose:
+                    print(f"[Worker {worker_pid}] New best fitness: {best_fitness:.6g}")
+                    sys.stdout.flush()
 
-            result["num_trials"] += 1
+            cycle += 1
 
+            # Check success
             if fit is not None and fit <= success_threshold:
+                time_to_solution = time.time() - branch_start_time
+                if worker_verbose:
+                    print(f"[Worker {worker_pid}] 🎉 Branch {lineno} ({outcome_str}) succeeded at cycle {cycle}")
+                    print(f"[Worker {worker_pid}] ⏱️  Time to solution: {time_to_solution:.3f}s")
+                    sys.stdout.flush()
                 success = True
-                break
+
+        total_time = time.time() - branch_start_time
+
+        if worker_verbose:
+            print(f"\n[Worker {worker_pid}] ✅ Branch {lineno} ({outcome_str}) completed:")
+            print(f"  Total time: {total_time:.3f}s")
+            print(f"  Evolution cycles run: {cycle}")
+            print(f"  Total generations: {total_generations}")
+            print(f"  Total individuals examined: {total_individuals_examined}")
+            print(f"  Total NFE: {total_nfe}")
+            print(f"  Best fitness: {best_fitness:.6g}")
+            if time_to_solution is not None:
+                print(f"  ⏱️  Time to solution: {time_to_solution:.3f}s")
+            sys.stdout.flush()
 
         result["convergence_speed"] = total_generations
         result["nfe"] = total_nfe
         result["best_fitness"] = best_fitness
         result["best_solution"] = best_solution
         result["success"] = success
+        result["num_trials"] = total_individuals_examined  # Number of individuals examined (initial points)
+        result["total_time"] = total_time
+        result["time_to_solution"] = time_to_solution
 
     except Exception as e:
         result["error"] = str(e)
@@ -188,27 +256,52 @@ def _ga_worker(args):
 def run_parallel_test_with_csv(
     file_path: str,
     output_csv: str,
-    max_trials_per_branch: int = 5,  # Match HC: 5 trials per branch
-    success_threshold: float = 0.0,  # Match HC: exact threshold
-    pop_size: int = 100,  # Small GA: 1000 evals per trial (100 × 10)
-    max_gen: int = 10,    # Few generations for speed
+    time_limit_per_branch: float = 20.0,
+    random_seed: int = 42,
+    success_threshold: float = 0.0,
+    pop_size: int = 100,
+    max_gen_per_cycle: int = 10,  # Generations per evolution cycle
     tournament_k: int = 3,
     elite_ratio: float = 0.1,
     gene_mut_p=None,
     mutation_step_choices=(-3, -2, -1, 1, 2, 3),
     ensure_mutation=True,
     num_workers=None,
-    seed_offset: int = 0,
-    skip_for_false: bool = True,  # ✅ Skip unreachable branches (same as HC)
-    use_biased_init: bool = False,  # ✅ Toggle biased initialization on/off
+    skip_for_false: bool = True,
+    use_biased_init: bool = True,
 ):
     """
-    Run GA-based testing on all branches in a file.
+    Run GA-based testing on all branches in a file with time-based continuous evolution.
+    
+    Each branch is tested with the SAME global random seed for fairness.
+    The seed is reset at the start of each branch test.
+    Population is initialized once, then continuously evolves until time limit.
+    
+    CSV columns (same format as Hill Climbing):
+    - function: Function name
+    - lineno: Branch line number
+    - outcome: Target outcome (True/False)
+    - convergence_speed: Total generations evolved
+    - nfe: Total number of fitness evaluations
+    - best_fitness: Best fitness achieved
+    - best_solution: Solution achieving best fitness
+    - success: Whether branch was solved
+    - num_trials: Number of individuals examined (initial points) - equals NFE for fair comparison
+    - total_time: Total time spent on this branch
+    - time_to_solution: Time elapsed when solution was found (None if not solved)
     
     Args:
+        time_limit_per_branch: Time limit in seconds for each branch (default: 20.0)
+        random_seed: Global random seed applied to ALL branches for fairness (default: 42)
         skip_for_false: If True, skip for-loop and while-True False branches (unreachable)
     """
-    print(f"\n[GA] Analyzing file: {file_path}")
+    print("\n" + "="*80)
+    print("🚀 PARALLEL GA TESTING WITH CSV OUTPUT (Time-based)")
+    print("="*80)
+    print(f"File: {file_path}")
+    print(f"Output CSV: {output_csv}")
+    print(f"Workers: {num_workers if num_workers else cpu_count()}")
+    print("="*80 + "\n")
 
     source = open(file_path, "r", encoding="utf-8").read()
     namespace, traveler, record, _ = instrument_and_load(source)
@@ -219,10 +312,11 @@ def run_parallel_test_with_csv(
         branches = traveler.branches.get(func_name, {})
         
         if not branches:
-            print(f"  ⏭️  Skipping {func_name} (no branches)")
+            print(f"⏭️  Skipping {func_name} (no branches)")
             continue
         
-        print(f"  📝 Function: {func_name}, Branches: {list(branches.keys())}")
+        print(f"📝 Function: {func_name}")
+        print(f"   Branches: {list(branches.keys())}")
 
         for lineno, branch_info in branches.items():
             # Check if this branch is a for-loop or while-True
@@ -233,12 +327,12 @@ def run_parallel_test_with_csv(
             for target_outcome in [True, False]:
                 # Skip while-True False branches (never exit) - unreachable
                 if skip_for_false and is_while_true and target_outcome is False:
-                    print(f"     ⏭️  Skipping while-True False: line {lineno} (unreachable)")
+                    print(f"   ⏭️  Skipping while-True False: line {lineno} (unreachable)")
                     continue
                 
                 # Skip for-loop False branches (not entering loop) - usually unreachable
                 if skip_for_false and is_for_loop and target_outcome is False:
-                    print(f"     ⏭️  Skipping for-loop False: line {lineno} (often unreachable)")
+                    print(f"   ⏭️  Skipping for-loop False: line {lineno} (often unreachable)")
                     continue
                 
                 tasks.append(
@@ -247,29 +341,38 @@ def run_parallel_test_with_csv(
                         func_name,
                         lineno,
                         branch_info,
-                        max_trials_per_branch,
+                        time_limit_per_branch,
+                        random_seed,
                         success_threshold,
                         pop_size,
-                        max_gen,
+                        max_gen_per_cycle,
                         tournament_k,
                         elite_ratio,
                         gene_mut_p,
                         mutation_step_choices,
                         ensure_mutation,
-                        seed_offset,
-                        target_outcome,  # ✅ Added target_outcome
-                        use_biased_init,  # ✅ Added biased init flag
+                        target_outcome,
+                        use_biased_init,
                     )
                 )
+    
+    print(f"\n📊 Total branches to test: {len(tasks)}\n")
 
     if not tasks:
-        print("  (No branches found)")
-        return []
+        print("(No branches found)")
+        return [], output_csv
 
     if num_workers is None:
         num_workers = cpu_count()
 
+    print(f"🔧 Starting {num_workers} worker processes...")
+    print("="*80 + "\n")
+    import sys
+    sys.stdout.flush()
+
     # Run in parallel with proper cleanup
+    start_time = time.time()
+    
     pool = None
     try:
         pool = Pool(processes=num_workers)
@@ -292,85 +395,188 @@ def run_parallel_test_with_csv(
         if pool:
             pool.close()
             pool.join()
+    
+    elapsed_time = time.time() - start_time
+    
+    # Print summary
+    print("\n" + "="*80)
+    print("✅ ALL BRANCHES COMPLETED")
+    print("="*80)
+    print(f"⏱️  Total time: {elapsed_time:.2f} seconds ({elapsed_time/60:.2f} minutes)")
+    print(f"📊 Total branches: {len(results)}")
+    print("="*80 + "\n")
+    sys.stdout.flush()
 
-    # ----- Write CSV -----
+    # ----- Write CSV (same format as Hill Climbing) -----
+    print(f"📝 Writing results to {output_csv}...")
+    
     output_dir = os.path.dirname(output_csv)
     if output_dir:
         os.makedirs(output_dir, exist_ok=True)
 
     with open(output_csv, "w", newline="", encoding="utf-8") as cf:
-        writer = csv.DictWriter(
-            cf,
-            fieldnames=[
-                "function",
-                "lineno",
-                "outcome",  # ✅ Added outcome column
-                "convergence_speed",
-                "nfe",
-                "best_fitness",
-                "best_solution",
-                "success",
-                "num_trials",
-                "adjusted_pop_size",  # ✅ Track if parameters were adjusted
-                "adjusted_max_gen",
-                "error",
-            ],
-        )
+        fieldnames = [
+            'function', 'lineno', 'outcome', 'convergence_speed', 'nfe',
+            'best_fitness', 'best_solution', 'success', 'num_trials',
+            'total_time', 'time_to_solution'
+        ]
+        writer = csv.DictWriter(cf, fieldnames=fieldnames)
+        
         writer.writeheader()
+        
         for r in results:
-            writer.writerow(
-                {
-                    "function": r["function"],
-                    "lineno": r["lineno"],
-                    "outcome": r["outcome"],  # ✅ Added outcome
-                    "convergence_speed": r["convergence_speed"],
-                    "nfe": r["nfe"],
-                    "best_fitness": r["best_fitness"],
-                    "best_solution": str(r["best_solution"]),
-                    "success": r["success"],
-                    "num_trials": r["num_trials"],
-                    "adjusted_pop_size": r.get("adjusted_pop_size", ""),
-                    "adjusted_max_gen": r.get("adjusted_max_gen", ""),
-                    "error": r["error"],
-                }
-            )
+            if r["error"]:
+                print(f"⚠️  Error in {r['function']}:{r['lineno']}: {r['error']}")
+            
+            writer.writerow({
+                'function': r['function'],
+                'lineno': r['lineno'],
+                'outcome': r['outcome'],
+                'convergence_speed': r['convergence_speed'],
+                'nfe': r['nfe'],
+                'best_fitness': r['best_fitness'],
+                'best_solution': str(r['best_solution']),
+                'success': r['success'],
+                'num_trials': r['num_trials'],
+                'total_time': f"{r['total_time']:.3f}",
+                'time_to_solution': f"{r['time_to_solution']:.3f}" if r['time_to_solution'] is not None else "N/A"
+            })
 
-    print(f"  → CSV saved: {output_csv}")
-    return results
+    print(f"✅ Results written to {output_csv}\n")
+    sys.stdout.flush()
+    
+    # Print summary table (same format as Hill Climbing)
+    print("="*120)
+    print("📈 RESULTS SUMMARY")
+    print("="*120)
+    print(f"{'Function':<20} {'Line':<6} {'Out':<5} {'InitPts':<8} {'Time(s)':<10} {'Time2Sol':<10} "
+          f"{'NFE':<10} {'Best Fitness':<15} {'Success'}")
+    print("-"*120)
+    
+    for r in results:
+        success_mark = "✅" if r['success'] else "❌"
+        outcome_str = "T" if r['outcome'] else "F"
+        time2sol_str = f"{r['time_to_solution']:.2f}s" if r['time_to_solution'] is not None else "N/A"
+        print(f"{r['function']:<20} {r['lineno']:<6} {outcome_str:<5} "
+              f"{r['num_trials']:<8} {r['total_time']:<10.2f} {time2sol_str:<10} "
+              f"{r['nfe']:<10} {r['best_fitness']:<15.6g} {success_mark}")
+    
+    print("="*120 + "\n")
+    
+    # Summary statistics
+    total_convergence = sum(r['convergence_speed'] for r in results)
+    total_nfe = sum(r['nfe'] for r in results)
+    total_init_points = sum(r['num_trials'] for r in results)
+    successes = sum(1 for r in results if r['success'])
+    
+    print("📊 OVERALL STATISTICS")
+    print("-"*80)
+    print(f"Total convergence speed (generations): {total_convergence}")
+    print(f"Total NFE: {total_nfe}")
+    print(f"Total individuals examined (initial points): {total_init_points}")
+    print(f"Success rate: {successes}/{len(results)} ({100*successes/len(results):.1f}%)")
+    print(f"Avg generations per branch: {total_convergence/len(results):.1f}")
+    print(f"Avg NFE per branch: {total_nfe/len(results):.1f}")
+    print(f"Avg initial points per branch: {total_init_points/len(results):.1f}")
+    print("="*80 + "\n")
+    sys.stdout.flush()
+    
+    return results, output_csv
 
 
 # ------------------------------------------------------------
 # 3) Run GA on every Python file in a directory
 # ------------------------------------------------------------
-def run_directory_test(directory: str, skip_for_false: bool = True, use_biased_init: bool = False, output_dir: str = "benchmark_log_ga"):
+def run_directory_test(
+    source_dir,
+    output_dir="benchmark_log_ga",
+    time_limit_per_branch=20.0,
+    random_seed=42,
+    success_threshold=0.0,
+    pop_size=100,
+    max_gen_per_cycle=10,
+    num_workers=None,
+    skip_for_false=True,
+    use_biased_init=True
+):
     """
-    Run GA testing on all Python files in a directory.
+    Test all .py files in source_dir and save results to output_dir with mirrored structure.
     
-    Args:
-        directory: Directory containing Python files to test
-        skip_for_false: If True, skip for-loop and while-True False branches (unreachable)
-        use_biased_init: If True, use biased initialization; if False, use pure random
-        output_dir: Output directory for CSV files
+    Example:
+        benchmark/arbitrary1.py -> benchmark_log_ga/arbitrary1.csv
+        benchmark/HJJ/mixed_case.py -> benchmark_log_ga/HJJ/mixed_case.csv
     """
-    directory = Path(directory)
-    assert directory.exists(), f"{directory} does not exist."
+    source_path = Path(source_dir)
+    output_path = Path(output_dir)
+    
+    # Find all .py files (excluding __pycache__ and other non-test files)
+    py_files = [f for f in source_path.rglob("*.py") 
+                if "__pycache__" not in str(f)]
+    
+    print("\n" + "="*80)
+    print(f"🔍 Found {len(py_files)} Python files in {source_dir}")
+    print("="*80)
 
-    output_dir = Path(output_dir)
-    output_dir.mkdir(exist_ok=True)
+    # ⏱️ Start overall timer
+    overall_start_time = time.time()
 
-    py_files = sorted([p for p in directory.rglob("*.py") if "__pycache__" not in str(p)])
-
-    print(f"\n[GA] Running for directory: {directory}")
-    print(f"  Found {len(py_files)} files.\n")
-
-    for f in py_files:
-        out_csv = output_dir / (f.stem + ".csv")
-        run_parallel_test_with_csv(
-            file_path=str(f),
-            output_csv=str(out_csv),
-            skip_for_false=skip_for_false,  # ✅ Pass skip_for_false
-            use_biased_init=use_biased_init,  # ✅ Pass biased init flag
-        )
+    for py_file in py_files:
+        # Compute relative path and output CSV path
+        rel_path = py_file.relative_to(source_path)
+        csv_file = output_path / rel_path.with_suffix('.csv')
+        
+        # Create output directory if needed
+        csv_file.parent.mkdir(parents=True, exist_ok=True)
+        
+        print(f"\n📝 Testing: {py_file}")
+        print(f"📊 Output: {csv_file}")
+        
+        # Run test on this file
+        try:
+            results, _ = run_parallel_test_with_csv(
+                file_path=str(py_file),
+                output_csv=str(csv_file),
+                time_limit_per_branch=time_limit_per_branch,
+                random_seed=random_seed,
+                success_threshold=success_threshold,
+                pop_size=pop_size,
+                max_gen_per_cycle=max_gen_per_cycle,
+                num_workers=num_workers,
+                skip_for_false=skip_for_false,
+                use_biased_init=use_biased_init
+            )
+        except Exception as e:
+            print(f"❌ Error testing {py_file}: {e}")
+            continue
+    
+    # ⏱️ Calculate total execution time
+    total_execution_time = time.time() - overall_start_time
+    
+    # 📝 Save test configuration to JSON
+    config_file = output_path / "test_config.json"
+    config_data = {
+        "algorithm": "Genetic Algorithm",
+        "initialization": "biased" if use_biased_init else "random",
+        "source_directory": str(source_dir),
+        "output_directory": str(output_dir),
+        "time_limit_per_branch": time_limit_per_branch,
+        "random_seed": random_seed,
+        "population_size": pop_size,
+        "max_gen_per_cycle": max_gen_per_cycle,
+        "total_execution_time_seconds": round(total_execution_time, 2),
+        "total_execution_time_formatted": f"{int(total_execution_time // 60)}m {int(total_execution_time % 60)}s",
+        "files_tested": len(py_files)
+    }
+    
+    with open(config_file, 'w') as f:
+        json.dump(config_data, f, indent=2)
+    
+    print("\n" + "="*80)
+    print(f"⏱️  TOTAL EXECUTION TIME: {total_execution_time:.2f} seconds ({total_execution_time/60:.2f} minutes)")
+    print("="*80)
+    print(f"✅ ALL FILES TESTED! Results saved to {output_dir}/")
+    print(f"📋 Test configuration saved to {config_file}")
+    print("="*80)
 
 
 # ------------------------------------------------------------
@@ -382,15 +588,18 @@ if __name__ == "__main__":
 
     # Command-line argument parsing
     parser = argparse.ArgumentParser(
-        description='Genetic Algorithm - Branch Coverage Testing',
+        description='Genetic Algorithm - Branch Coverage Testing (Time-based)',
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog='''
 Examples:
-  # With biased initialization (default):
+  # With biased initialization and default 20s time limit:
   python test_benchmark_ga_csv.py
   
-  # With pure random initialization:
-  python test_benchmark_ga_csv.py --random-init
+  # With pure random initialization and custom time limit:
+  python test_benchmark_ga_csv.py --random-init --time-limit 30
+  
+  # Custom seed for reproducibility:
+  python test_benchmark_ga_csv.py --seed 123
   
   # Custom output directory:
   python test_benchmark_ga_csv.py --output benchmark_log_ga_biased
@@ -403,9 +612,14 @@ Examples:
                        help='Output directory for CSV files (default: benchmark_log_ga)')
     parser.add_argument('--source', '-s', type=str, default='./benchmark',
                        help='Source directory containing benchmark files (default: ./benchmark)')
+    parser.add_argument('--time-limit', '-t', type=float, default=20.0,
+                       help='Time limit in seconds per branch (default: 20.0)')
+    parser.add_argument('--seed', type=int, default=42,
+                       help='Random seed for reproducibility (default: 42)')
     
     args = parser.parse_args()
 
+    # Use 'fork' if available
     if "fork" in multiprocessing.get_all_start_methods():
         multiprocessing.set_start_method("fork", force=True)
     else:
@@ -414,17 +628,25 @@ Examples:
     # Print configuration
     init_type = "RANDOM" if args.random_init else "BIASED"
     print(f"\n{'='*80}")
-    print(f"🔧 CONFIGURATION: Genetic Algorithm")
+    print(f"🔧 CONFIGURATION: Genetic Algorithm (Time-based)")
     print(f"{'='*80}")
-    print(f"Initialization: {init_type}")
-    print(f"Source dir:     {args.source}")
-    print(f"Output dir:     {args.output}")
+    print(f"Initialization:      {init_type}")
+    print(f"Time limit/branch:   {args.time_limit}s")
+    print(f"Random seed:         {args.seed}")
+    print(f"Source dir:          {args.source}")
+    print(f"Output dir:          {args.output}")
     print(f"{'='*80}\n")
 
     # Run with configuration
     run_directory_test(
-        directory=args.source,
+        source_dir=args.source,
+        output_dir=args.output,
+        time_limit_per_branch=args.time_limit,
+        random_seed=args.seed,
+        success_threshold=0.0,
+        pop_size=100,
+        max_gen_per_cycle=10,
+        num_workers=None,
         skip_for_false=True,
-        use_biased_init=not args.random_init,  # Invert the flag (like HC)
-        output_dir=args.output
+        use_biased_init=not args.random_init  # Invert the flag (like HC)
     )
