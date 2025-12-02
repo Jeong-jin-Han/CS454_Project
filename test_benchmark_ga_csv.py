@@ -54,7 +54,6 @@ def _ga_worker(args):
         random_seed,
         success_threshold,
         pop_size,
-        max_gen_per_cycle,
         tournament_k,
         elite_ratio,
         gene_mut_p,
@@ -137,92 +136,64 @@ def _ga_worker(args):
         # Create RNG for GA
         rng = random.Random(random_seed)
         
-        cycle = 0  # Evolution cycle counter
+        if worker_verbose:
+            print(f"[Worker {worker_pid}] Starting continuous evolution...")
+            sys.stdout.flush()
+
+        nfe_before = fitness_calc.evals
+
+        # ✅ Run GA once with high max_gen - it will evolve continuously
+        # The ga() function has built-in early stopping at fitness 0.0
+        # We use a very high max_gen so it doesn't stop prematurely
+        ind, fit = ga(
+            fitness_calc=fitness_calc,
+            func_info=func_info,
+            func_obj=func_obj,
+            target_branch_node=target_branch_node,
+            target_outcome=target_outcome,
+            subject_node=subject_node,
+            parent_map=parent_map,
+            pop_size=pop_size,
+            max_gen=10000,  # Very high - will be stopped by early stopping or time limit
+            tournament_k=tournament_k,
+            elite_ratio=elite_ratio,
+            gene_mut_p=gene_mut_p,
+            ensure_mutation=ensure_mutation,
+            mutation_step_choices=mutation_step_choices,
+            rng=rng,
+            use_biased_init=use_biased_init,
+            var_constants=var_constants,
+            total_constants=total_constants,
+        )
+
+        nfe_after = fitness_calc.evals
+        nfe_this = nfe_after - nfe_before
+
+        total_nfe = nfe_this
+        # Calculate which generation we're in (1-indexed for human readability)
+        # 1-100 evals = Gen 1, 101-200 = Gen 2, 201-300 = Gen 3, etc.
+        # So for 237 evals: (237-1)//100 + 1 = 236//100 + 1 = 2 + 1 = 3 (3rd generation)
+        total_generations = ((nfe_this - 1) // pop_size + 1) if nfe_this > 0 else 0
+        total_individuals_examined = nfe_this  # Each fitness eval = one individual examined
         
-        # ⏱️ Continuously evolve until time limit is reached
-        while True:
-            elapsed_time = time.time() - branch_start_time
-            
-            # Check if time limit exceeded
-            if elapsed_time >= time_limit:
-                if worker_verbose:
-                    print(f"[Worker {worker_pid}] Time limit ({time_limit}s) reached after {cycle} evolution cycles")
-                    sys.stdout.flush()
-                break
-            
-            # Check if already succeeded
-            if success:
-                if worker_verbose:
-                    print(f"[Worker {worker_pid}] Branch {lineno} succeeded, stopping evolution")
-                    sys.stdout.flush()
-                break
-            
+        best_fitness = fit if fit is not None else float("inf")
+        best_solution = ind
+
+        # Check success
+        if fit is not None and fit <= success_threshold:
+            time_to_solution = time.time() - branch_start_time
             if worker_verbose:
-                print(f"[Worker {worker_pid}] Evolution cycle {cycle+1} (elapsed: {elapsed_time:.2f}s/{time_limit}s)")
+                print(f"[Worker {worker_pid}] 🎉 Branch {lineno} ({outcome_str}) succeeded!")
+                print(f"[Worker {worker_pid}] ⏱️  Time to solution: {time_to_solution:.3f}s")
                 sys.stdout.flush()
-
-            nfe_before = fitness_calc.evals
-
-            # Run GA for a few generations (has built-in early stopping at fitness 0.0)
-            ind, fit = ga(
-                fitness_calc=fitness_calc,
-                func_info=func_info,
-                func_obj=func_obj,
-                target_branch_node=target_branch_node,
-                target_outcome=target_outcome,
-                subject_node=subject_node,
-                parent_map=parent_map,
-                pop_size=pop_size,
-                max_gen=max_gen_per_cycle,
-                tournament_k=tournament_k,
-                elite_ratio=elite_ratio,
-                gene_mut_p=gene_mut_p,
-                ensure_mutation=ensure_mutation,
-                mutation_step_choices=mutation_step_choices,
-                rng=rng,
-                use_biased_init=use_biased_init and cycle == 0,  # Only biased init for first cycle
-                var_constants=var_constants,
-                total_constants=total_constants,
-            )
-
-            nfe_after = fitness_calc.evals
-            nfe_this = nfe_after - nfe_before
-
-            total_nfe += nfe_this
-            gens_this = int(round(nfe_this / float(max(1, pop_size))))
-            total_generations += gens_this
-            
-            # Track number of individuals examined (initial points)
-            # Formula: pop_size for first generation + pop_size per subsequent generation
-            # But if early stopping happened, we count actual individuals examined
-            total_individuals_examined += nfe_this  # Each fitness eval = one individual examined
-
-            if fit is not None and fit < best_fitness:
-                best_fitness = fit
-                best_solution = ind
-                
-                if worker_verbose:
-                    print(f"[Worker {worker_pid}] New best fitness: {best_fitness:.6g}")
-                    sys.stdout.flush()
-
-            cycle += 1
-
-            # Check success
-            if fit is not None and fit <= success_threshold:
-                time_to_solution = time.time() - branch_start_time
-                if worker_verbose:
-                    print(f"[Worker {worker_pid}] 🎉 Branch {lineno} ({outcome_str}) succeeded at cycle {cycle}")
-                    print(f"[Worker {worker_pid}] ⏱️  Time to solution: {time_to_solution:.3f}s")
-                    sys.stdout.flush()
-                success = True
+            success = True
 
         total_time = time.time() - branch_start_time
 
         if worker_verbose:
             print(f"\n[Worker {worker_pid}] ✅ Branch {lineno} ({outcome_str}) completed:")
             print(f"  Total time: {total_time:.3f}s")
-            print(f"  Evolution cycles run: {cycle}")
-            print(f"  Total generations: {total_generations}")
+            print(f"  Total generations evolved: {total_generations}")
             print(f"  Total individuals examined: {total_individuals_examined}")
             print(f"  Total NFE: {total_nfe}")
             print(f"  Best fitness: {best_fitness:.6g}")
@@ -260,7 +231,6 @@ def run_parallel_test_with_csv(
     random_seed: int = 42,
     success_threshold: float = 0.0,
     pop_size: int = 100,
-    max_gen_per_cycle: int = 10,  # Generations per evolution cycle
     tournament_k: int = 3,
     elite_ratio: float = 0.1,
     gene_mut_p=None,
@@ -271,13 +241,14 @@ def run_parallel_test_with_csv(
     use_biased_init: bool = True,
 ):
     """
-    Run GA-based testing on all branches in a file with time-based continuous evolution.
+    Run GA-based testing on all branches in a file with continuous evolution.
     
     Each branch is tested with the SAME global random seed for fairness.
-    The seed is reset at the start of each branch test.
-    Population is initialized once, then continuously evolves until time limit.
+    Population is initialized once, then evolves continuously until:
+    - Solution found (fitness 0.0) - early stopping
+    - max_gen reached (10000 generations)
     
-    CSV columns (same format as Hill Climbing):
+    CSV columns (GA-specific format):
     - function: Function name
     - lineno: Branch line number
     - outcome: Target outcome (True/False)
@@ -286,13 +257,15 @@ def run_parallel_test_with_csv(
     - best_fitness: Best fitness achieved
     - best_solution: Solution achieving best fitness
     - success: Whether branch was solved
-    - num_trials: Number of individuals examined (initial points) - equals NFE for fair comparison
+    - num_trials: Number of individuals examined (equals NFE)
+    - generations: Total generations evolved (same as convergence_speed)
     - total_time: Total time spent on this branch
     - time_to_solution: Time elapsed when solution was found (None if not solved)
     
     Args:
         time_limit_per_branch: Time limit in seconds for each branch (default: 20.0)
         random_seed: Global random seed applied to ALL branches for fairness (default: 42)
+        pop_size: Population size for GA (default: 100)
         skip_for_false: If True, skip for-loop and while-True False branches (unreachable)
     """
     print("\n" + "="*80)
@@ -345,7 +318,6 @@ def run_parallel_test_with_csv(
                         random_seed,
                         success_threshold,
                         pop_size,
-                        max_gen_per_cycle,
                         tournament_k,
                         elite_ratio,
                         gene_mut_p,
@@ -417,7 +389,7 @@ def run_parallel_test_with_csv(
     with open(output_csv, "w", newline="", encoding="utf-8") as cf:
         fieldnames = [
             'function', 'lineno', 'outcome', 'convergence_speed', 'nfe',
-            'best_fitness', 'best_solution', 'success', 'num_trials',
+            'best_fitness', 'best_solution', 'success', 'num_trials', 'generations',
             'total_time', 'time_to_solution'
         ]
         writer = csv.DictWriter(cf, fieldnames=fieldnames)
@@ -438,6 +410,7 @@ def run_parallel_test_with_csv(
                 'best_solution': str(r['best_solution']),
                 'success': r['success'],
                 'num_trials': r['num_trials'],
+                'generations': r['convergence_speed'],  # Same as convergence_speed for clarity
                 'total_time': f"{r['total_time']:.3f}",
                 'time_to_solution': f"{r['time_to_solution']:.3f}" if r['time_to_solution'] is not None else "N/A"
             })
@@ -445,20 +418,20 @@ def run_parallel_test_with_csv(
     print(f"✅ Results written to {output_csv}\n")
     sys.stdout.flush()
     
-    # Print summary table (same format as Hill Climbing)
-    print("="*120)
+    # Print summary table (GA-specific format with generations)
+    print("="*130)
     print("📈 RESULTS SUMMARY")
-    print("="*120)
-    print(f"{'Function':<20} {'Line':<6} {'Out':<5} {'InitPts':<8} {'Time(s)':<10} {'Time2Sol':<10} "
+    print("="*130)
+    print(f"{'Function':<20} {'Line':<6} {'Out':<5} {'InitPts':<8} {'Gens':<6} {'Time(s)':<10} {'Time2Sol':<10} "
           f"{'NFE':<10} {'Best Fitness':<15} {'Success'}")
-    print("-"*120)
+    print("-"*130)
     
     for r in results:
         success_mark = "✅" if r['success'] else "❌"
         outcome_str = "T" if r['outcome'] else "F"
         time2sol_str = f"{r['time_to_solution']:.2f}s" if r['time_to_solution'] is not None else "N/A"
         print(f"{r['function']:<20} {r['lineno']:<6} {outcome_str:<5} "
-              f"{r['num_trials']:<8} {r['total_time']:<10.2f} {time2sol_str:<10} "
+              f"{r['num_trials']:<8} {r['convergence_speed']:<6} {r['total_time']:<10.2f} {time2sol_str:<10} "
               f"{r['nfe']:<10} {r['best_fitness']:<15.6g} {success_mark}")
     
     print("="*120 + "\n")
@@ -466,18 +439,18 @@ def run_parallel_test_with_csv(
     # Summary statistics
     total_convergence = sum(r['convergence_speed'] for r in results)
     total_nfe = sum(r['nfe'] for r in results)
-    total_init_points = sum(r['num_trials'] for r in results)
+    total_individuals = sum(r['num_trials'] for r in results)
     successes = sum(1 for r in results if r['success'])
     
     print("📊 OVERALL STATISTICS")
     print("-"*80)
-    print(f"Total convergence speed (generations): {total_convergence}")
+    print(f"Total generations evolved: {total_convergence}")
     print(f"Total NFE: {total_nfe}")
-    print(f"Total individuals examined (initial points): {total_init_points}")
+    print(f"Total individuals examined: {total_individuals}")
     print(f"Success rate: {successes}/{len(results)} ({100*successes/len(results):.1f}%)")
     print(f"Avg generations per branch: {total_convergence/len(results):.1f}")
     print(f"Avg NFE per branch: {total_nfe/len(results):.1f}")
-    print(f"Avg initial points per branch: {total_init_points/len(results):.1f}")
+    print(f"Avg individuals per branch: {total_individuals/len(results):.1f}")
     print("="*80 + "\n")
     sys.stdout.flush()
     
@@ -494,7 +467,6 @@ def run_directory_test(
     random_seed=42,
     success_threshold=0.0,
     pop_size=100,
-    max_gen_per_cycle=10,
     num_workers=None,
     skip_for_false=True,
     use_biased_init=True
@@ -540,7 +512,6 @@ def run_directory_test(
                 random_seed=random_seed,
                 success_threshold=success_threshold,
                 pop_size=pop_size,
-                max_gen_per_cycle=max_gen_per_cycle,
                 num_workers=num_workers,
                 skip_for_false=skip_for_false,
                 use_biased_init=use_biased_init
@@ -555,14 +526,15 @@ def run_directory_test(
     # 📝 Save test configuration to JSON
     config_file = output_path / "test_config.json"
     config_data = {
-        "algorithm": "Genetic Algorithm",
+        "algorithm": "Genetic Algorithm (Continuous Evolution)",
         "initialization": "biased" if use_biased_init else "random",
         "source_directory": str(source_dir),
         "output_directory": str(output_dir),
         "time_limit_per_branch": time_limit_per_branch,
         "random_seed": random_seed,
         "population_size": pop_size,
-        "max_gen_per_cycle": max_gen_per_cycle,
+        "max_generations": 10000,
+        "evolution_strategy": "continuous (no restarts, early stopping at fitness 0.0)",
         "total_execution_time_seconds": round(total_execution_time, 2),
         "total_execution_time_formatted": f"{int(total_execution_time // 60)}m {int(total_execution_time % 60)}s",
         "files_tested": len(py_files)
@@ -645,7 +617,6 @@ Examples:
         random_seed=args.seed,
         success_threshold=0.0,
         pop_size=100,
-        max_gen_per_cycle=10,
         num_workers=None,
         skip_for_false=True,
         use_biased_init=not args.random_init  # Invert the flag (like HC)

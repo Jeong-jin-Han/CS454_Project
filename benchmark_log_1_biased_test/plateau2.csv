@@ -1,9 +1,9 @@
 function,lineno,outcome,convergence_speed,nfe,best_fitness,best_solution,success,num_trials,total_time,time_to_solution
-check_schedule,1,True,23,39141,0.0,[-10],True,3,0.385,0.385
+check_schedule,1,True,23,39141,0.0,[-10],True,3,0.339,0.339
 check_schedule,1,False,1,2,0.0,[86365],True,1,0.006,0.006
-check_schedule,2,True,144,249295,0.0,[-32401],True,13,2.180,2.180
-check_schedule,2,False,23,39141,0.0,[-10],True,3,0.365,0.365
-fitness_calendar,3,True,2,1017,0.0,[0],True,1,0.035,0.035
+check_schedule,2,True,144,249295,0.0,[-32401],True,13,2.142,2.142
+check_schedule,2,False,23,39141,0.0,[-10],True,3,0.358,0.358
+fitness_calendar,3,True,2,1017,0.0,[0],True,1,0.044,0.044
 fitness_calendar,3,False,1,2,0.0,[-10],True,1,0.006,0.006
-fitness_calendar,4,True,1,2,0.0,[-10],True,1,0.006,0.006
-fitness_calendar,4,False,76,128059,0.0,[-32401],True,7,1.412,1.412
+fitness_calendar,4,True,1,2,0.0,[-10],True,1,0.012,0.012
+fitness_calendar,4,False,76,128059,0.0,[-32401],True,7,1.293,1.293

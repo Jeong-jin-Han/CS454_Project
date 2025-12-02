@@ -1,7 +1,7 @@
 function,lineno,outcome,convergence_speed,nfe,best_fitness,best_solution,success,num_trials,total_time,time_to_solution
 match,2,True,4,10,0.0,[4],True,1,0.005,0.005
 match,2,False,1,4,0.0,[1],True,1,0.005,0.005
-match,3,True,297,608,0.0,[7],True,7,0.028,0.028
-match,3,False,1,4,0.0,[1],True,1,0.004,0.004
+match,3,True,297,608,0.0,[7],True,7,0.027,0.027
+match,3,False,1,4,0.0,[1],True,1,0.005,0.005
 match,4,True,31,66,0.0,[-27],True,2,0.009,0.009
 match,4,False,1,4,0.0,[1],True,1,0.005,0.005
