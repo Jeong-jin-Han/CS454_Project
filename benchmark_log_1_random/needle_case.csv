@@ -1,5 +1,0 @@
-function,lineno,outcome,convergence_speed,nfe,best_fitness,best_solution,success,num_trials
-needle,1,True,55,100260,1.0,[-7977],False,5
-needle,1,False,1,2,0.0,[2033],True,1
-needle,2,True,1,2,0.0,[2737],True,1
-needle,2,False,55,100260,1.0,[-7273],False,5

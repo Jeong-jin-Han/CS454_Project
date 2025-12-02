@@ -1,6 +1,0 @@
-function,lineno,outcome,convergence_speed,nfe,best_fitness,best_solution,success,num_trials
-sum_of_even,1,True,1,2,0.0,[-3],True,1
-sum_of_even,1,False,5,12,0.0,[1],True,1
-sum_of_even,2,True,2,6,0.0,[1],True,1
-sum_of_even,3,True,1,2,0.0,[5],True,1
-sum_of_even,3,False,1,2,0.0,[5],True,1

@@ -1,7 +1,0 @@
-function,lineno,outcome,convergence_speed,nfe,best_fitness,best_solution,success,num_trials,adjusted_pop_size,adjusted_max_gen,error
-collection,1,True,5,473,0.0,"(3817, -10, -10)",True,1,100,10,
-collection,1,False,1,100,0.0,"(718, 173801, -10)",True,1,100,10,
-collection,2,True,17,1657,0.0,"(1038472, 22, 70)",True,2,100,10,
-collection,2,False,7,686,0.0,"(1038472, 4670, 704151)",True,1,100,10,
-collection,3,True,55,5336,1.0039900199650553,"(1038472, -2, 3208)",False,5,100,10,
-collection,3,False,55,5336,1.0039900199650553,"(1038472, -2, 3208)",False,5,100,10,

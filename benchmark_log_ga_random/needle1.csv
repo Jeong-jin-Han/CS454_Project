@@ -1,6 +1,0 @@
-function,lineno,outcome,convergence_speed,nfe,best_fitness,best_solution,success,num_trials,adjusted_pop_size,adjusted_max_gen,error
-needle1,1,True,1,100,0.0,"(1581, 867, 1360)",True,1,100,10,
-needle1,2,True,1,100,0.0,"(156, 397, 1287)",True,1,100,10,
-needle1,2,False,1,100,0.0,"(907, 90, 1928)",True,1,100,10,
-needle1,3,True,1,100,0.0,"(159, 563, 1458)",True,1,100,10,
-needle1,3,False,1,100,0.0,"(1297, 248, 628)",True,1,100,10,

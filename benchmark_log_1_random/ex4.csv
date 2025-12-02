@@ -1,5 +1,0 @@
-function,lineno,outcome,convergence_speed,nfe,best_fitness,best_solution,success,num_trials
-tertiary,1,True,460,3682,0.0,"[42, 290]",True,1
-tertiary,1,False,1,2,0.0,"[501, 290]",True,1
-tertiary,2,True,2876,23010,0.0,"[42, 2007]",True,1
-tertiary,2,False,1547,12378,0.0,"[42, 677]",True,1

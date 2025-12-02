@@ -1,3 +1,0 @@
-function,lineno,outcome,convergence_speed,nfe,best_fitness,best_solution,success,num_trials,adjusted_pop_size,adjusted_max_gen,error
-rugged,1,True,15,1384,0.9999999999999741,"(108,)",False,5,100,10,
-rugged,1,False,1,100,0.0,"(5,)",True,1,100,10,
