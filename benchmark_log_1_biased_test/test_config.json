@@ -5,7 +5,7 @@
   "output_directory": "benchmark_log_1_biased_test",
   "time_limit_per_branch": 20.0,
   "random_seed": 42,
-  "total_execution_time_seconds": 228.89,
-  "total_execution_time_formatted": "3m 48s",
+  "total_execution_time_seconds": 225.56,
+  "total_execution_time_formatted": "3m 45s",
   "files_tested": 38
 }
