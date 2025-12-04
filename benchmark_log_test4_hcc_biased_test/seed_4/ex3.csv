@@ -1,0 +1,15 @@
+function,lineno,outcome,convergence_speed,nfe,best_fitness,best_solution,success,num_trials,total_time,time_to_solution
+intersect,1,True,1,2,0.0,"[0, -10, 2, 0, 3, 4, 6, 3]",True,1,0.0045,0.0045
+intersect,1,False,3,386,0.0,"[0, -10, 2, 0, 5, 3, 5, 3]",True,1,0.0067,0.0067
+intersect,2,True,1,2,0.0,"[0, -10, 2, 0, 3, 4, 6, 3]",True,1,0.0034,0.0034
+intersect,2,False,5,642,0.0,"[-1, -10, 2, 2, 5, 1, 6, 3]",True,1,0.0094,0.0094
+intersect,3,True,3,386,0.0,"[0, -10, 2, 2, 3, 2, 6, 3]",True,1,0.0098,0.0098
+intersect,3,False,1,2,0.0,"[0, -10, 2, 0, 3, 4, 6, 3]",True,1,0.0043,0.0043
+intersect,4,True,4,514,0.0,"[0, -10, 3, 2, 3, 2, 6, 3]",True,1,0.0109,0.0109
+intersect,4,False,3,386,0.0,"[0, -10, 2, 2, 3, 2, 6, 3]",True,1,0.0096,0.0096
+intersect,5,True,4,514,0.0,"[0, -10, 3, 2, 3, 2, 6, 3]",True,1,0.0073,0.0073
+intersect,5,False,7,898,0.0,"[0, -10, 6, 2, 3, 2, 5, 2]",True,1,0.0172,0.0172
+intersect,6,True,3,386,0.0,"[0, -10, 2, 0, 5, 3, 5, 3]",True,1,0.0052,0.0052
+intersect,6,False,19,2722698,0.0009990009990008542,"[-160016, -10, 2, 0, 5, 3, 5, 3]",False,1,20.0030,N/A
+intersect,7,True,11,1410,0.0,"[4, -4, 4, -4, 5, 4, 5, 3]",True,1,0.0154,0.0154
+intersect,7,False,4,514,0.0,"[2, -10, 2, 0, 5, 4, 5, 3]",True,1,0.0070,0.0070

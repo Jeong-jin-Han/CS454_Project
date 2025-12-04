@@ -1,0 +1,7 @@
+function,lineno,outcome,convergence_speed,nfe,best_fitness,best_solution,success,num_trials,generations,total_time,time_to_solution
+collection,1,True,1,3787,0.0,"(42, -10, -10)",True,3787,1,0.0529,0.0529
+collection,1,False,1,1,0.0,"(8245, 848248, 5448)",True,1,1,0.0473,0.0473
+collection,2,True,5,48347,0.0,"(42, 12, 1032888)",True,48347,5,0.5878,0.5878
+collection,2,False,1,3787,0.0,"(42, -10, -10)",True,3787,1,0.0558,0.0558
+collection,3,True,16,153654,0.0,"(42, 11, 99)",True,153654,16,1.9938,1.9938
+collection,3,False,5,48347,0.0,"(42, 12, 1032888)",True,48347,5,0.5888,0.5888

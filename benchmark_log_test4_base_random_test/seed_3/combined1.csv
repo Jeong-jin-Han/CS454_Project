@@ -1,0 +1,15 @@
+function,lineno,outcome,convergence_speed,nfe,best_fitness,best_solution,success,num_trials,total_time,time_to_solution
+combined1,1,True,189741,1138069,0.90432772999068,"[7, 9673, 1969]",False,95,20.000,N/A
+combined1,1,False,1,8,0.0,"[3888, 9699, 8906]",True,1,0.003,0.003
+combined1,2,True,3,22,0.0,"[2126, 6050, 9884]",True,2,0.003,0.003
+combined1,2,False,1,8,0.0,"[3888, 9699, 8906]",True,1,0.003,0.003
+combined1,3,True,3,24,0.0,"[7756, 9506, 1063]",True,3,0.005,0.005
+combined1,3,False,1,8,0.0,"[3888, 9699, 8906]",True,1,0.004,0.004
+combined1,4,True,1,8,0.0,"[3888, 9699, 8906]",True,1,0.004,0.004
+combined1,4,False,2,14,0.0,"[3887, 9699, 8906]",True,1,0.004,0.004
+combined1,5,True,2,14,0.0,"[3888, 9699, 8907]",True,1,0.002,0.002
+combined1,5,False,2,14,0.0,"[3887, 9699, 8906]",True,1,0.002,0.002
+combined1,6,True,3,20,0.0,"[3887, 9700, 8906]",True,1,0.002,0.002
+combined1,6,False,2,14,0.0,"[3887, 9699, 8906]",True,1,0.002,0.002
+combined1,7,True,1,8,0.0,"[3888, 9699, 8906]",True,1,0.002,0.002
+combined1,7,False,3,24,0.0,"[7756, 9506, 1063]",True,3,0.002,0.002

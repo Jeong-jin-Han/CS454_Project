@@ -1,0 +1,6 @@
+function,lineno,outcome,convergence_speed,nfe,best_fitness,best_solution,success,num_trials,generations,total_time,time_to_solution
+needle1,1,True,1,1,0.0,"(16, 1645, 2010)",True,1,1,0.0815,0.0815
+needle1,2,True,1,34,0.0,"(1210, 90, 1479)",True,34,1,0.6366,0.6366
+needle1,2,False,1,1,0.0,"(16, 1645, 2010)",True,1,1,0.0826,0.0826
+needle1,3,True,1,1,0.0,"(16, 1645, 2010)",True,1,1,0.0786,0.0786
+needle1,3,False,1,1,0.0,"(16, 1645, 2010)",True,1,1,0.0815,0.0815

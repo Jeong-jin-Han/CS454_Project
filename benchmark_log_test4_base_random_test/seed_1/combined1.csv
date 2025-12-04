@@ -1,0 +1,15 @@
+function,lineno,outcome,convergence_speed,nfe,best_fitness,best_solution,success,num_trials,total_time,time_to_solution
+combined1,1,True,193161,1158578,0.8567306204204113,"[191, 9315, 1023]",False,97,20.000,N/A
+combined1,1,False,1,8,0.0,"[2191, 9315, 1023]",True,1,0.003,0.003
+combined1,2,True,1,8,0.0,"[2191, 9315, 1023]",True,1,0.012,0.012
+combined1,2,False,2,14,0.0,"[2190, 9315, 1023]",True,1,0.011,0.011
+combined1,3,True,2,14,0.0,"[2191, 9316, 1023]",True,1,0.013,0.013
+combined1,3,False,2,14,0.0,"[2190, 9315, 1023]",True,1,0.013,0.013
+combined1,4,True,3,20,0.0,"[2190, 9315, 1022]",True,1,0.009,0.009
+combined1,4,False,2,14,0.0,"[2190, 9315, 1023]",True,1,0.014,0.014
+combined1,5,True,2,14,0.0,"[2190, 9315, 1023]",True,1,0.008,0.008
+combined1,5,False,2,14,0.0,"[2191, 9314, 1023]",True,1,0.002,0.002
+combined1,6,True,3,20,0.0,"[2191, 9313, 1023]",True,1,0.003,0.003
+combined1,6,False,2,14,0.0,"[2191, 9314, 1023]",True,1,0.002,0.002
+combined1,7,True,2,16,0.0,"[4169, 1921, 8107]",True,2,0.002,0.002
+combined1,7,False,1,8,0.0,"[2191, 9315, 1023]",True,1,0.002,0.002

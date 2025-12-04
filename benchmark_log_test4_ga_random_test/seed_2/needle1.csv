@@ -1,0 +1,6 @@
+function,lineno,outcome,convergence_speed,nfe,best_fitness,best_solution,success,num_trials,generations,total_time,time_to_solution
+needle1,1,True,1,1,0.0,"(1946, 1756, 1930)",True,1,1,0.0416,0.0416
+needle1,2,True,1,69,0.0,"(224, 1943, 127)",True,69,1,1.2204,1.2204
+needle1,2,False,1,1,0.0,"(1946, 1756, 1930)",True,1,1,0.0387,0.0387
+needle1,3,True,1,1,0.0,"(1946, 1756, 1930)",True,1,1,0.0436,0.0436
+needle1,3,False,1,1,0.0,"(1946, 1756, 1930)",True,1,1,0.0433,0.0433

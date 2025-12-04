@@ -1,0 +1,7 @@
+function,lineno,outcome,convergence_speed,nfe,best_fitness,best_solution,success,num_trials,total_time,time_to_solution
+testme,1,True,1,8,0.0,"[18, 36, 33]",True,1,0.005,0.005
+testme,1,False,19,116,0.0,"[36, 36, 33]",True,1,0.033,0.033
+testme,2,True,26,158,0.0,"[18, 36, 58]",True,1,0.036,0.036
+testme,2,False,1,8,0.0,"[18, 36, 33]",True,1,0.005,0.005
+testme,3,True,1,8,0.0,"[18, 36, 33]",True,1,0.004,0.004
+testme,3,False,1,8,0.0,"[18, 36, 33]",True,1,0.004,0.004

@@ -1,0 +1,14 @@
+{
+  "algorithm": "HillClimbing+Compression (multi-seed)",
+  "source_directory": "./benchmark",
+  "output_directory": "benchmark_log_test4_hcc_test",
+  "time_limit_per_branch": 20.0,
+  "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "total_time": 8027.954596996307
+}

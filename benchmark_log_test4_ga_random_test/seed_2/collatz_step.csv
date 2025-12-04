@@ -1,0 +1,13 @@
+function,lineno,outcome,convergence_speed,nfe,best_fitness,best_solution,success,num_trials,generations,total_time,time_to_solution
+collatz_steps,1,True,1,1,0.0,"(-8,)",True,1,1,0.0161,0.0161
+collatz_steps,1,False,1,4,0.0,"(12,)",True,4,1,0.0159,0.0159
+collatz_steps,2,True,1,4,0.0,"(12,)",True,4,1,0.0161,0.0161
+collatz_steps,2,False,1,99,0.0,"(1,)",True,99,1,0.0251,0.0251
+collatz_steps,3,True,1,4,0.0,"(12,)",True,4,1,0.0144,0.0144
+collatz_steps,3,False,1,4,0.0,"(12,)",True,4,1,0.0180,0.0180
+collatz_steps,4,True,1,8,0.0,"(27,)",True,8,1,0.0145,0.0145
+collatz_steps,4,False,1,4,0.0,"(12,)",True,4,1,0.0161,0.0161
+collatz_steps,5,True,1,8,0.0,"(27,)",True,8,1,0.0149,0.0149
+collatz_steps,5,False,1,4,0.0,"(12,)",True,4,1,0.0146,0.0146
+collatz_steps,6,True,1,12,0.0,"(26,)",True,12,1,0.0150,0.0150
+collatz_steps,6,False,1,4,0.0,"(12,)",True,4,1,0.0140,0.0140

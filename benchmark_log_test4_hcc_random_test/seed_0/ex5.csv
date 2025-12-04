@@ -1,0 +1,7 @@
+function,lineno,outcome,convergence_speed,nfe,best_fitness,best_solution,success,num_trials,total_time,time_to_solution
+collection,1,True,51,2901357,1.0,"[695411, 403948, 794762]",False,3,20.1120,N/A
+collection,1,False,1,2,0.0,"[885430, 403948, 794762]",True,1,0.0032,0.0032
+collection,2,True,50,2841330,2.0,"[695411, 403948, 794762]",False,3,20.0480,N/A
+collection,2,False,50,2841330,2.0,"[695411, 403948, 794762]",False,3,20.0309,N/A
+collection,3,True,50,2841330,3.0,"[695411, 403948, 794762]",False,3,20.0629,N/A
+collection,3,False,50,2841330,3.0,"[695411, 403948, 794762]",False,3,20.0407,N/A

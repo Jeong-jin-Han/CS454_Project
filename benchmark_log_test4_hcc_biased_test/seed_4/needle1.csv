@@ -1,0 +1,6 @@
+function,lineno,outcome,convergence_speed,nfe,best_fitness,best_solution,success,num_trials,total_time,time_to_solution
+needle1,1,True,1,2,0.0,"[-1, 29, 1977]",True,1,0.0400,0.0400
+needle1,2,True,3,124,0.0,"[-14, 30, 1977]",True,1,2.0657,2.0657
+needle1,2,False,1,2,0.0,"[-1, 29, 1977]",True,1,0.0381,0.0381
+needle1,3,True,1,2,0.0,"[-1, 29, 1977]",True,1,0.0415,0.0415
+needle1,3,False,1,2,0.0,"[-1, 29, 1977]",True,1,0.0409,0.0409

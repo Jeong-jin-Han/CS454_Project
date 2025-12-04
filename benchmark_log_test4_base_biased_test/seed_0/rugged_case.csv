@@ -1,0 +1,3 @@
+function,lineno,outcome,convergence_speed,nfe,best_fitness,best_solution,success,num_trials,total_time,time_to_solution
+rugged,1,True,1175963,4437661,0.9999999999999741,[108],False,1042869,20.000,N/A
+rugged,1,False,1,4,0.0,[102],True,1,0.002,0.002

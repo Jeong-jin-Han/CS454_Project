@@ -1,0 +1,6 @@
+function,lineno,outcome,convergence_speed,nfe,best_fitness,best_solution,success,num_trials,generations,total_time,time_to_solution
+needle1,1,True,1,1,0.0,"(83, 31, 15)",True,1,1,0.0754,0.0754
+needle1,2,True,1,90,0.0,"(18, 945, 1405)",True,90,1,1.5807,1.5807
+needle1,2,False,1,1,0.0,"(83, 31, 15)",True,1,1,0.0753,0.0753
+needle1,3,True,1,1,0.0,"(83, 31, 15)",True,1,1,0.0760,0.0760
+needle1,3,False,1,1,0.0,"(83, 31, 15)",True,1,1,0.0748,0.0748

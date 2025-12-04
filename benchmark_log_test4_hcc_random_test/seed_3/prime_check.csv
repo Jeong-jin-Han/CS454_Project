@@ -1,0 +1,13 @@
+function,lineno,outcome,convergence_speed,nfe,best_fitness,best_solution,success,num_trials,total_time,time_to_solution
+prime_check,1,True,4,10,0.0,[1],True,1,0.0026,0.0026
+prime_check,1,False,1,2,0.0,[4],True,1,0.0024,0.0024
+prime_check,2,True,1,2,0.0,[4],True,1,0.0022,0.0022
+prime_check,2,False,2,6,0.0,[3],True,1,0.0023,0.0023
+prime_check,3,True,1,2,0.0,[4],True,1,0.0022,0.0022
+prime_check,3,False,2,6,0.0,[5],True,1,0.0023,0.0023
+prime_check,4,True,2,6,0.0,[3],True,1,0.0022,0.0022
+prime_check,4,False,1,2,0.0,[4],True,1,0.0022,0.0022
+prime_check,5,True,2,6,0.0,[5],True,1,0.0023,0.0023
+prime_check,5,False,2,6,0.0,[3],True,1,0.0027,0.0027
+prime_check,6,True,2,10009,0.0,[6],True,1,0.0384,0.0384
+prime_check,6,False,1,2,0.0,[4],True,1,0.0023,0.0023

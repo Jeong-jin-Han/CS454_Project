@@ -1,0 +1,6 @@
+function,lineno,outcome,convergence_speed,nfe,best_fitness,best_solution,success,num_trials,generations,total_time,time_to_solution
+needle1,1,True,1,1,0.0,"(1718, 777, 1541)",True,1,1,0.0433,0.0433
+needle1,2,True,1,82,0.0,"(1997, 226, 63)",True,82,1,1.4532,1.4532
+needle1,2,False,1,1,0.0,"(1718, 777, 1541)",True,1,1,0.0423,0.0423
+needle1,3,True,1,1,0.0,"(1718, 777, 1541)",True,1,1,0.0408,0.0408
+needle1,3,False,1,1,0.0,"(1718, 777, 1541)",True,1,1,0.0391,0.0391

@@ -1,0 +1,15 @@
+function,lineno,outcome,convergence_speed,nfe,best_fitness,best_solution,success,num_trials,total_time,time_to_solution
+combined1,1,True,36895,221300,0.0,"[7, 10102, 50]",True,19,3.875,3.875
+combined1,1,False,1,8,0.0,"[158, 174, 205]",True,1,0.003,0.003
+combined1,2,True,2,14,0.0,"[158, 174, 204]",True,1,0.003,0.003
+combined1,2,False,1,8,0.0,"[158, 174, 205]",True,1,0.003,0.003
+combined1,3,True,2,14,0.0,"[158, 175, 205]",True,1,0.005,0.005
+combined1,3,False,1,8,0.0,"[158, 174, 205]",True,1,0.004,0.004
+combined1,4,True,2,14,0.0,"[158, 174, 206]",True,1,0.006,0.006
+combined1,4,False,1,8,0.0,"[158, 174, 205]",True,1,0.005,0.005
+combined1,5,True,2,14,0.0,"[158, 173, 205]",True,1,0.002,0.002
+combined1,5,False,1,8,0.0,"[158, 174, 205]",True,1,0.002,0.002
+combined1,6,True,3,22,0.0,"[1, 80, -10]",True,2,0.003,0.003
+combined1,6,False,1,8,0.0,"[158, 174, 205]",True,1,0.002,0.002
+combined1,7,True,1,8,0.0,"[158, 174, 205]",True,1,0.002,0.002
+combined1,7,False,41,248,0.0,"[159, 174, 166]",True,1,0.006,0.006

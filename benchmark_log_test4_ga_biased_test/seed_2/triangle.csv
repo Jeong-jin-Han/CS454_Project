@@ -1,0 +1,13 @@
+function,lineno,outcome,convergence_speed,nfe,best_fitness,best_solution,success,num_trials,generations,total_time,time_to_solution
+triangle,1,True,1,4,0.0,"(1, -5, 0)",True,4,1,0.0422,0.0422
+triangle,1,False,1,1,0.0,"(6, 5, 5)",True,1,1,0.0422,0.0422
+triangle,2,True,1,2,0.0,"(5, 1, 2)",True,2,1,0.0411,0.0411
+triangle,2,False,1,1,0.0,"(6, 5, 5)",True,1,1,0.0414,0.0414
+triangle,3,True,1,105,0.0,"(4, 4, 4)",True,105,1,0.0473,0.0473
+triangle,3,False,1,1,0.0,"(6, 5, 5)",True,1,1,0.0418,0.0418
+triangle,4,True,1,1,0.0,"(6, 5, 5)",True,1,1,0.0392,0.0392
+triangle,4,False,1,7,0.0,"(6, 4, 3)",True,7,1,0.0478,0.0478
+triangle,5,True,1,1,0.0,"(6, 5, 5)",True,1,1,0.0393,0.0393
+triangle,5,False,1,6,0.0,"(5, 5, 1)",True,6,1,0.0386,0.0386
+triangle,6,True,1,56,0.0,"(10, 5, 6)",True,56,1,0.0420,0.0420
+triangle,6,False,1,7,0.0,"(6, 4, 3)",True,7,1,0.0394,0.0394

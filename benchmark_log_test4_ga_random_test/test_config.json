@@ -1,0 +1,15 @@
+{
+  "algorithm": "Genetic Algorithm (multi-seed, continuous evolution)",
+  "source_directory": "./benchmark",
+  "output_directory": "benchmark_log_test4_ga_random_test",
+  "time_limit_per_branch": 20.0,
+  "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "population_size": 10000,
+  "total_execution_time": 1496.4800279140472
+}

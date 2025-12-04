@@ -1,0 +1,9 @@
+function,lineno,outcome,convergence_speed,nfe,best_fitness,best_solution,success,num_trials,generations,total_time,time_to_solution
+plateau_case,1,True,1,28,0.0,"(73, 5010)",True,28,1,0.0428,0.0428
+plateau_case,1,False,1,1,0.0,"(31, 990)",True,1,1,0.0520,0.0520
+plateau_case,2,True,1,1,0.0,"(31, 990)",True,1,1,0.0474,0.0473
+plateau_case,2,False,31,302918,0.35646550422179135,"(2000, -10)",False,302918,31,20.0696,N/A
+plateau_case,3,True,120,1199528,1.0009990009990009,"(31, 990)",False,1199528,120,20.0018,N/A
+plateau_case,3,False,121,1204302,1.0009990009990009,"(31, 990)",False,1204302,121,20.0018,N/A
+plateau_case,4,True,120,1197930,1.0009990009990009,"(31, 990)",False,1197930,120,20.0066,N/A
+plateau_case,4,False,121,1202830,1.0009990009990009,"(31, 990)",False,1202830,121,20.0017,N/A
