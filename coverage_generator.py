@@ -42,7 +42,7 @@ def validate_test_case(module_name: str, func_name: str, args_str: str) -> bool:
 
 
 def main(dir_name: str):
-    csv_files = [f for f in os.listdir(dir_name) if f.endswith(".csv")]
+    csv_files = sorted([f for f in os.listdir(dir_name) if f.endswith(".csv")])  # ✅ Sort alphabetically
     os.makedirs("benchmark", exist_ok=True)
     os.makedirs("coverage_result", exist_ok=True)
 
@@ -121,6 +121,9 @@ def main(dir_name: str):
 
         print(f"Complete coverage checking for {program_name}: miss / branch = {miss}{missing_part} / {branch}")
 
+    # Sort output rows alphabetically by file name
+    output_rows.sort(key=lambda x: x[0])  # Sort by first element (file_name)
+    
     # Write final CSV
     out_path = f"coverage_result/coverage_report_{dir_name}.csv"
     with open(out_path, "w", newline="") as out:

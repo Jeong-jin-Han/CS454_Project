@@ -1,17 +1,20 @@
 import arbitrary6
 
+def test_f_0():
+    arbitrary6.f(1, -7)
+
 def test_f_1():
-    arbitrary6.f(-3, -5)
+    arbitrary6.f(0, -7)
 
 def test_f_2():
-    arbitrary6.f(14, 8)
+    arbitrary6.f(1, 1)
 
 def test_f_3():
-    arbitrary6.f(2, 8)
+    arbitrary6.f(1, -7)
 
 def test_f_4():
-    arbitrary6.f(-3, -5)
+    arbitrary6.f(0, -7)
 
 def test_f_5():
-    arbitrary6.f(14, 8)
+    arbitrary6.f(4, 3)
 
