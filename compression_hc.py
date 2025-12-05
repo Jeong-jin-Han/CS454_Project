@@ -426,26 +426,16 @@ def hill_climb_with_compression_nd(
                 cand_plus = tuple(point_plus)
                 candidates.append((cand_plus, fitness_func_nd(cand_plus)))
 
-            # 2) Diagonal neighbors (O(D^2))
+            # 2) Diagonal neighbors (O(D)) - UNCOMPRESSED
+            # Note: Diagonal moves use UNCOMPRESSED ±1 steps because compression
+            # is per-dimension and indexed by other fixed dimensions. Diagonal moves
+            # change multiple dimensions, creating index mismatches. Uncompressed
+            # diagonal moves prevent getting stuck near optima.
             if dim >= 2:
                 for d1, d2 in itertools.combinations(range(dim), 2):
-                    # Compression system for d1
-                    fixed1 = tuple(point[i] for i in range(dim) if i != d1)
-                    comp1 = cm.get_system(d1, fixed1)
-                    if comp1 is not None:
-                        z1 = comp1.forward(point[d1])
-                        n1_vals = [comp1.inverse(z1 - 1), comp1.inverse(z1 + 1)]
-                    else:
-                        n1_vals = [point[d1] - 1, point[d1] + 1]
-
-                    # Compression system for d2
-                    fixed2 = tuple(point[i] for i in range(dim) if i != d2)
-                    comp2 = cm.get_system(d2, fixed2)
-                    if comp2 is not None:
-                        z2 = comp2.forward(point[d2])
-                        n2_vals = [comp2.inverse(z2 - 1), comp2.inverse(z2 + 1)]
-                    else:
-                        n2_vals = [point[d2] - 1, point[d2] + 1]
+                    # Use uncompressed ±1 moves in both dimensions
+                    n1_vals = [point[d1] - 1, point[d1] + 1]
+                    n2_vals = [point[d2] - 1, point[d2] + 1]
 
                     # Combine offsets in both dimensions
                     for v1 in n1_vals:
@@ -732,7 +722,8 @@ def hill_climb_with_compression_nd_code(
                     fit = fitness_func_nd_code(cand_pt_t)
                     candidates.append((cand_pt_t, fit, [d])) # (point, modified_dim)
 
-            # 2) Diagonal neighbors (O(D^2))
+            # 2) Diagonal neighbors (O(D)) - UNCOMPRESSED
+            # ⚠️ Diagonal moves use UNCOMPRESSED ±1 to avoid compression index mismatches
             if len(active_dims) >= 2:
                 for d1, d2 in itertools.combinations(active_dims, 2):
                     # ⏱️ Check time before diagonal evaluations
@@ -741,23 +732,9 @@ def hill_climb_with_compression_nd_code(
                             print(f"⏱️ Time limit reached during diagonal evaluation, stopping")
                             return traj, cm
                     
-                    # Compression system for d1
-                    fixed1 = tuple(point[i] for i in range(dim) if i != d1)
-                    comp1 = cm.get_system(d1, fixed1)
-                    if comp1 is not None:
-                        z1 = comp1.forward(point[d1])
-                        n1_vals = [comp1.inverse(z1 - 1), comp1.inverse(z1 + 1)]
-                    else:
-                        n1_vals = [point[d1] - 1, point[d1] + 1]
-
-                    # Compression system for d2
-                    fixed2 = tuple(point[i] for i in range(dim) if i != d2)
-                    comp2 = cm.get_system(d2, fixed2)
-                    if comp2 is not None:
-                        z2 = comp2.forward(point[d2])
-                        n2_vals = [comp2.inverse(z2 - 1), comp2.inverse(z2 + 1)]
-                    else:
-                        n2_vals = [point[d2] - 1, point[d2] + 1]
+                    # Use uncompressed ±1 moves in both dimensions
+                    n1_vals = [point[d1] - 1, point[d1] + 1]
+                    n2_vals = [point[d2] - 1, point[d2] + 1]
 
                     # Combine offsets in both dimensions
                     for v1 in n1_vals:

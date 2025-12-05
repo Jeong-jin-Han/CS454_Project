@@ -1,2 +1,2 @@
-convergence_speed,nfe,best_fitness,best_solution,success,num_trials,generations,total_time,time_to_solution
-33,33,20.64922220125782,"[-21, -18]",False,33,33,0.013465166091918945,
+convergence_speed,nfe,best_fitness,best_solution,success,num_trials_run,total_time,time_to_solution
+37,37,0.0,[0],True,4,0.016462,0.016460418701171875
