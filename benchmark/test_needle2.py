@@ -1,14 +1,14 @@
 import needle2
 
 def test_verify_system_state_0():
-    needle2.verify_system_state(32, 32, 32)
+    needle2.verify_system_state(11, 11, 11)
 
 def test_verify_system_state_1():
-    needle2.verify_system_state(0, -7, 0)
+    needle2.verify_system_state(-2, 3, 5)
 
 def test_fitness_coupled_2():
-    needle2.fitness_coupled(60, -26, -21)
+    needle2.fitness_coupled(8, 32, 128)
 
 def test_fitness_coupled_3():
-    needle2.fitness_coupled(-3, 1669, -10)
+    needle2.fitness_coupled(4444, 6833, 7985)
 

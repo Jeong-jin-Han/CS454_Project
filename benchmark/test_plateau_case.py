@@ -1,26 +1,26 @@
 import plateau_case
 
 def test_plateau_case_0():
-    plateau_case.plateau_case(-837, 1664)
+    plateau_case.plateau_case(582, 3957)
 
 def test_plateau_case_1():
-    plateau_case.plateau_case(-1, 829)
+    plateau_case.plateau_case(2217, 3411)
 
 def test_plateau_case_2():
-    plateau_case.plateau_case(-1, 829)
+    plateau_case.plateau_case(2217, 3411)
 
 def test_plateau_case_3():
-    plateau_case.plateau_case(1950, -500)
+    plateau_case.plateau_case(2000, -10)
 
 def test_plateau_case_4():
-    plateau_case.plateau_case(1981, -499)
+    plateau_case.plateau_case(2217, 3411)
 
 def test_plateau_case_5():
-    plateau_case.plateau_case(1966, -484)
+    plateau_case.plateau_case(2217, 3411)
 
 def test_plateau_case_6():
-    plateau_case.plateau_case(1993, -498)
+    plateau_case.plateau_case(2217, 3411)
 
 def test_plateau_case_7():
-    plateau_case.plateau_case(1966, -484)
+    plateau_case.plateau_case(2217, 3411)
 
