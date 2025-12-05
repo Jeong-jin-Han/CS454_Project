@@ -1,0 +1,9 @@
+function,lineno,outcome,convergence_speed,nfe,best_fitness,best_solution,success,num_trials,generations,total_time,time_to_solution
+f,1,True,1,4,0.0,"(4, 1, 0)",True,4,1,0.094,0.094
+f,1,False,1,1,0.0,"(6, 4, 11)",True,1,1,0.083,0.083
+f,2,True,1,556,0.0,"(1, 1, 1)",True,556,1,0.094,0.094
+f,2,False,1,4,0.0,"(4, 1, 0)",True,4,1,0.085,0.085
+f,3,True,1,63,0.0,"(1, 0, 3)",True,63,1,0.085,0.085
+f,3,False,1,4,0.0,"(4, 1, 0)",True,4,1,0.064,0.064
+f,4,True,1,25,0.0,"(3, -4, -9)",True,25,1,0.084,0.084
+f,4,False,1,1,0.0,"(6, 4, 11)",True,1,1,0.097,0.097

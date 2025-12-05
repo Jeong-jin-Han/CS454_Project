@@ -1,0 +1,5 @@
+function,lineno,outcome,convergence_speed,nfe,best_fitness,best_solution,success,num_trials,total_time,time_to_solution
+plateau_10,1,True,1,2,0.0,[10],True,1,0.007,0.007
+plateau_10,1,False,2,6,0.0,[11],True,1,0.008,0.008
+plateau_10,2,True,3,1020,0.0,[0],True,1,0.029,0.029
+plateau_10,2,False,2,6,0.0,[11],True,1,0.007,0.007

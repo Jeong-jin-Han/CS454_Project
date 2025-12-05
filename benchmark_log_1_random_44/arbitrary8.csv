@@ -1,0 +1,7 @@
+function,lineno,outcome,convergence_speed,nfe,best_fitness,best_solution,success,num_trials,total_time,time_to_solution
+f,1,True,40,82,0.0,[3],True,1,0.010,0.010
+f,1,False,1,2,0.0,[42],True,1,0.010,0.010
+f,2,True,1751,1682466,0.003990019965055436,[1],False,156,20.011,N/A
+f,2,False,1,2,0.0,[42],True,1,0.006,0.006
+f,3,True,1,2,0.0,[42],True,1,0.006,0.006
+f,3,False,38,78,0.0,[5],True,1,0.008,0.008

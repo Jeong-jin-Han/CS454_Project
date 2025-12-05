@@ -1,0 +1,38 @@
+file_name,total_coverage,misses,branches,missing_line
+triangle,100%,0,0,
+arbitrary5,100%,0,6,
+arbitrary10,100%,0,8,
+rugged1,100%,0,18,
+arbitrary7,100%,0,10,
+ex1,100%,0,8,
+digit_sum,100%,0,10,
+arbitrary2,100%,0,8,
+rugged_case,89%,1,2,34
+arbitrary4,100%,0,8,
+arbitrary1,100%,0,12,
+needle2,78%,2,4,"12, 29"
+combined1,94%,1,14,4
+plateau3,100%,0,16,
+arbitrary3,100%,0,8,
+arbitrary9,100%,0,10,
+plateau1,100%,0,8,
+combined2,49%,18,16,"10-15, 30-35, 62-77"
+mixed_case,78%,5,12,36-41
+derivative_quadratic,80%,1,2,11
+count_divisor_2,88%,2,12,"23, 25"
+ex6,100%,0,6,
+prime_check,100%,0,12,
+needle_case,84%,1,4,"15, 21->25"
+ex5,57%,3,6,4-7
+plateau2,88%,1,8,"13, 35->39"
+needle1,100%,0,4,
+ex7,100%,0,6,
+rugged2,78%,2,4,"12, 29"
+ex2,100%,0,6,
+parallel_test,100%,0,26,
+collatz_step,100%,0,12,
+arbitrary8,87%,1,6,7
+ex4,100%,0,4,
+count_divisor_1,86%,2,12,"15, 17"
+plateau_case,83%,2,8,"30, 34"
+ex3,100%,0,14,

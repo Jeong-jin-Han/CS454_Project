@@ -1,0 +1,13 @@
+function,lineno,outcome,convergence_speed,nfe,best_fitness,best_solution,success,num_trials,total_time,time_to_solution
+mixed,1,True,1,2,0.0,"[34, 1901, 66]",True,1,0.017,0.017
+mixed,1,False,1435,25832,0.0,"[1468, 468, 66]",True,1,0.551,0.551
+mixed,2,True,1435,25832,0.0,"[1468, 468, 66]",True,1,0.552,0.552
+mixed,2,False,4917,88508,0.0,"[4950, -1000, 66]",True,1,2.178,2.178
+mixed,3,True,4947,89048,0.0,"[4980, -1000, 66]",True,1,1.630,1.630
+mixed,3,False,4917,88508,0.0,"[4950, -1000, 66]",True,1,1.546,1.546
+mixed,4,True,4947,94049,0.0,"[4991, -1000, 66]",True,1,2.325,2.325
+mixed,4,False,4917,88508,0.0,"[4950, -1000, 66]",True,1,2.141,2.141
+mixed,5,True,25,452,0.0,"[34, 1901, 42]",True,1,0.031,0.031
+mixed,5,False,1,2,0.0,"[34, 1901, 66]",True,1,0.007,0.007
+mixed,6,True,22,398,0.0,"[34, 1901, 45]",True,1,0.013,0.013
+mixed,6,False,1,2,0.0,"[34, 1901, 66]",True,1,0.005,0.005
