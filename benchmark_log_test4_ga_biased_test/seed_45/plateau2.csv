@@ -1,0 +1,9 @@
+function,lineno,outcome,convergence_speed,nfe,best_fitness,best_solution,success,num_trials,generations,total_time,time_to_solution
+check_schedule,1,True,1,6,0.0,"(-10,)",True,6,1,0.0209,0.0209
+check_schedule,1,False,1,1,0.0,"(3564,)",True,1,1,0.0175,0.0175
+check_schedule,2,True,186,1855667,0.008955164506282975,"(-10,)",False,1855667,186,20.0153,N/A
+check_schedule,2,False,1,6,0.0,"(-10,)",True,6,1,0.0182,0.0182
+fitness_calendar,3,True,1,2,0.0,"(63462,)",True,2,1,0.0213,0.0213
+fitness_calendar,3,False,1,1,0.0,"(-10,)",True,1,1,0.0194,0.0194
+fitness_calendar,4,True,1,1,0.0,"(-10,)",True,1,1,0.0251,0.0251
+fitness_calendar,4,False,185,1846648,0.008955164506282975,"(-10,)",False,1846648,185,20.0005,N/A

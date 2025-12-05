@@ -1,0 +1,15 @@
+function,lineno,outcome,convergence_speed,nfe,best_fitness,best_solution,success,num_trials,generations,total_time,time_to_solution
+combined1,1,True,13,123566,0.0,"(7, 10102, 50)",True,123566,13,2.8800,2.8800
+combined1,1,False,1,1,0.0,"(6232, 5433, 3770)",True,1,1,0.0312,0.0312
+combined1,2,True,1,3,0.0,"(4634, 9051, 4524)",True,3,1,0.0398,0.0398
+combined1,2,False,1,1,0.0,"(6232, 5433, 3770)",True,1,1,0.0296,0.0296
+combined1,3,True,1,10,0.0,"(3526, 1181, 5891)",True,10,1,0.0265,0.0265
+combined1,3,False,1,1,0.0,"(6232, 5433, 3770)",True,1,1,0.0491,0.0491
+combined1,4,True,1,1,0.0,"(6232, 5433, 3770)",True,1,1,0.0479,0.0479
+combined1,4,False,1,2,0.0,"(2710, 6308, 9458)",True,2,1,0.0319,0.0319
+combined1,5,True,1,5,0.0,"(4070, 290, 7189)",True,5,1,0.0317,0.0317
+combined1,5,False,1,2,0.0,"(2710, 6308, 9458)",True,2,1,0.0277,0.0277
+combined1,6,True,1,2,0.0,"(2710, 6308, 9458)",True,2,1,0.0340,0.0340
+combined1,6,False,1,8,0.0,"(964, 1953, 9619)",True,8,1,0.0285,0.0285
+combined1,7,True,1,2,0.0,"(2710, 6308, 9458)",True,2,1,0.0285,0.0285
+combined1,7,False,1,1,0.0,"(6232, 5433, 3770)",True,1,1,0.0241,0.0241

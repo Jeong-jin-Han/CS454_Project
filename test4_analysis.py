@@ -58,11 +58,15 @@ def plot_seed_variance(df, metrics=["best_fitness", "nfe", "convergence_speed"])
         for metric in metrics:
             plt.figure(figsize=(8, 5))
             sns.boxplot(x="seed", y=metric, data=df_algo)
-            plt.title(f"Seed Variance for {algo} — {metric}")
+            # plt.title(f"Seed Variance for {algo} — {metric}")
             plt.tight_layout()
             # save in test4_analysis_plots folder
             plt.savefig(
                 PLOT_DIR / f"{algo}_{metric}_seed_variance_boxplot.png", dpi=300
+            )
+            # save pdf
+            plt.savefig(
+                PLOT_DIR / f"{algo}_{metric}_seed_variance_boxplot.pdf"
             )
             plt.close()
 
@@ -73,10 +77,11 @@ def plot_seed_variance(df, metrics=["best_fitness", "nfe", "convergence_speed"])
 def plot_algorithm_boxplot(df):
     plt.figure(figsize=(10, 5))
     sns.boxplot(x="algorithm", y="best_fitness", data=df)
-    plt.title("Algorithm Comparison — Best Fitness")
+    # plt.title("Algorithm Comparison — Best Fitness")
     plt.xticks(rotation=30)
     plt.tight_layout()
     plt.savefig(PLOT_DIR / "algorithm_best_fitness_boxplot.png", dpi=300)
+    plt.savefig(PLOT_DIR / "algorithm_best_fitness_boxplot.pdf")
     plt.close()
 
 
@@ -96,9 +101,10 @@ def plot_seed_sensitivity_by_algorithm(df):
 
     plt.figure(figsize=(10, 6))
     sns.heatmap(pivot, cmap="coolwarm", annot=True, fmt=".2f", norm=norm)
-    plt.title("Seed Sensitivity Heatmap (Success Rate)")
+    # plt.title("Seed Sensitivity Heatmap (Success Rate)")
     plt.tight_layout()
     plt.savefig(PLOT_DIR / "seed_sensitivity_successrate.png", dpi=300)
+    plt.savefig(PLOT_DIR / "seed_sensitivity_successrate.pdf")
     plt.close()
 
 
@@ -109,9 +115,10 @@ def plot_seed_sensitivity_by_algorithm_convergence(df):
 
     plt.figure(figsize=(10, 6))
     sns.heatmap(pivot, annot=True, fmt=".0f", cmap="magma")
-    plt.title("Seed Sensitivity Heatmap (Convergence Speed)")
+    # plt.title("Seed Sensitivity Heatmap (Convergence Speed)")
     plt.tight_layout()
     plt.savefig(PLOT_DIR / "seed_sensitivity_convergence.png", dpi=300)
+    plt.savefig(PLOT_DIR / "seed_sensitivity_convergence.pdf")
     plt.close()
 
 
@@ -128,9 +135,10 @@ def plot_branch_difficulty(df):
 
     plt.figure(figsize=(12, 10))
     sns.heatmap(pivot, cmap="coolwarm", annot=False)
-    plt.title("Branch Difficulty Heatmap (Success Rate %)")
+    # plt.title("Branch Difficulty Heatmap (Success Rate %)")
     plt.tight_layout()
     plt.savefig(PLOT_DIR / "branch_difficulty_heatmap.png", dpi=300)
+    plt.savefig(PLOT_DIR / "branch_difficulty_heatmap.pdf")
     plt.close()
 
 
@@ -181,10 +189,11 @@ def plot_sensitivity_score(summary_df):
     sns.barplot(
         x="algorithm", y="sensitivity_score", data=summary_df, palette="viridis"
     )
-    plt.title("Overall Algorithm Seed Sensitivity Score (Lower = More Stable)")
+    # plt.title("Overall Algorithm Seed Sensitivity Score (Lower = More Stable)")
     plt.xticks(rotation=25)
     plt.tight_layout()
     plt.savefig(PLOT_DIR / "algorithm_seed_sensitivity_score.png", dpi=300)
+    plt.savefig(PLOT_DIR / "algorithm_seed_sensitivity_score.pdf")
     plt.close()
 
 
@@ -199,12 +208,15 @@ if __name__ == "__main__":
         "hcc_random": "benchmark_log_test4_hcc_random_test",
         "ga_biased": "benchmark_log_test4_ga_biased_test",
         "ga_random": "benchmark_log_test4_ga_random_test",
-        "base_biased": "benchmark_log_test4_base_biased_test",
-        "base_random": "benchmark_log_test4_base_random_test",
+        "hc_biased": "benchmark_log_test4_hc_biased_test",
+        "hc_random": "benchmark_log_test4_hc_random_test",
     }
 
     print("📂 Loading CSV result files...")
+    # get seed from 41-45
+    # df = load_algorithm_results(base_paths)
     df = load_algorithm_results(base_paths)
+    df = df[df["seed"].isin([41, 42, 43, 44, 45])]
     print(f"Loaded {len(df)} rows.")
 
     print("\n[A] Seed variance boxplots…")

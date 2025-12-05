@@ -1,3 +1,3 @@
 function,lineno,outcome,convergence_speed,nfe,best_fitness,best_solution,success,num_trials,total_time,time_to_solution
-derivative_quadratic,1,True,1,2,0.0,[-9],True,1,0.0023,0.0023
-derivative_quadratic,1,False,258,4921278,0.0009990009990008542,[-190028],False,13,20.0141,N/A
+derivative_quadratic,1,True,1,2,0.0,[-9],True,1,0.0024,0.0024
+derivative_quadratic,1,False,2753,5019015,0.0009990009990008542,[-10019],False,251,20.0019,N/A

@@ -4,11 +4,11 @@
   "output_directory": "benchmark_log_test4_hcc_random_test",
   "time_limit_per_branch": 20.0,
   "seeds": [
-    0,
-    1,
-    2,
-    3,
-    4
+    41,
+    42,
+    43,
+    44,
+    45
   ],
-  "total_time": 2454.1412348747253
+  "total_time": 1181.8208940029144
 }

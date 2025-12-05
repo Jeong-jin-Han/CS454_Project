@@ -1,7 +1,0 @@
-function,lineno,outcome,convergence_speed,nfe,best_fitness,best_solution,success,num_trials,generations,total_time,time_to_solution
-testme,1,True,1,2,0.0,"(0, 4, 3)",True,2,1,0.0411,0.0411
-testme,1,False,1,1,0.0,"(0, 0, -1)",True,1,1,0.0387,0.0387
-testme,2,True,1,5,0.0,"(3, 54, 206)",True,5,1,0.0417,0.0417
-testme,2,False,1,2,0.0,"(0, 4, 3)",True,2,1,0.0398,0.0398
-testme,3,True,1,2,0.0,"(0, 4, 3)",True,2,1,0.0395,0.0395
-testme,3,False,1,5,0.0,"(3, 54, 206)",True,5,1,0.0378,0.0378

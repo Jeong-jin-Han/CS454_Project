@@ -1,9 +1,9 @@
 function,lineno,outcome,convergence_speed,nfe,best_fitness,best_solution,success,num_trials,total_time,time_to_solution
-plateau1,1,True,14,254,0.0,"[1, 5, 3]",True,1,0.0136,0.0136
-plateau1,1,False,1,2,0.0,"[0, -8, 2]",True,1,0.0052,0.0052
-plateau1,2,True,25,452,0.0,"[12, 16, 10]",True,1,0.0170,0.0170
-plateau1,2,False,1,2,0.0,"[0, -8, 2]",True,1,0.0054,0.0054
-plateau1,3,True,7,128,0.0,"[-5, -10, 0]",True,1,0.0082,0.0082
-plateau1,3,False,1,2,0.0,"[0, -8, 2]",True,1,0.0040,0.0040
-plateau1,4,True,7,128,0.0,"[-5, -10, 0]",True,1,0.0102,0.0102
-plateau1,4,False,24,60439,0.0,"[10, 10, 3]",True,2,1.6467,1.6467
+plateau1,1,True,14,254,0.0,"[1, 5, 3]",True,1,0.0099,0.0099
+plateau1,1,False,1,2,0.0,"[0, -8, 2]",True,1,0.0032,0.0032
+plateau1,2,True,25,452,0.0,"[12, 16, 10]",True,1,0.0153,0.0153
+plateau1,2,False,1,2,0.0,"[0, -8, 2]",True,1,0.0031,0.0031
+plateau1,3,True,7,128,0.0,"[-5, -10, 0]",True,1,0.0076,0.0076
+plateau1,3,False,1,2,0.0,"[0, -8, 2]",True,1,0.0039,0.0039
+plateau1,4,True,7,128,0.0,"[-5, -10, 0]",True,1,0.0077,0.0077
+plateau1,4,False,24,6439,0.0,"[10, 10, 3]",True,2,0.1764,0.1764

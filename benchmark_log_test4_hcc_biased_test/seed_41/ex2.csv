@@ -1,0 +1,7 @@
+function,lineno,outcome,convergence_speed,nfe,best_fitness,best_solution,success,num_trials,total_time,time_to_solution
+testme,1,True,1,2,0.0,"[7, 283, -1]",True,1,0.0023,0.0023
+testme,1,False,139,2504,0.0,"[145, 145, -1]",True,1,1.3709,1.3709
+testme,2,True,60,1082,0.0,"[7, 283, 58]",True,1,0.1022,0.1022
+testme,2,False,1,2,0.0,"[7, 283, -1]",True,1,0.0023,0.0023
+testme,3,True,1,2,0.0,"[7, 283, -1]",True,1,0.0026,0.0026
+testme,3,False,1,2,0.0,"[7, 283, -1]",True,1,0.0024,0.0024

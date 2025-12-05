@@ -1,0 +1,9 @@
+function,lineno,outcome,convergence_speed,nfe,best_fitness,best_solution,success,num_trials,total_time,time_to_solution
+foo,1,True,50,402,0.0,"[42, 25]",True,1,0.0048,0.0048
+foo,1,False,1,2,0.0,"[-7, 25]",True,1,0.0038,0.0038
+foo,2,True,74,594,0.0,"[42, 0]",True,1,0.0068,0.0068
+foo,2,False,50,402,0.0,"[42, 25]",True,1,0.0061,0.0061
+bar,3,True,13,236,0.0,"[4, 1, 2]",True,1,0.0067,0.0067
+bar,3,False,1,2,0.0,"[-7, 1, 14]",True,1,0.0054,0.0054
+bar,4,True,6,110,0.0,"[-2, -3, 14]",True,1,0.0046,0.0046
+bar,4,False,1,2,0.0,"[-7, 1, 14]",True,1,0.0036,0.0036

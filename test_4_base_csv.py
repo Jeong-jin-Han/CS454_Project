@@ -328,9 +328,9 @@ if __name__ == "__main__":
     )
     parser.add_argument("--source", "-s", type=str, default="./benchmark")
     parser.add_argument(
-        "--output", "-o", type=str, default="benchmark_log_test4_hcc_base"
+        "--output", "-o", type=str, default="benchmark_log_test4_hc_test"
     )
-    parser.add_argument("--seeds", nargs="+", type=int, default=[0])
+    parser.add_argument("--seeds", nargs="+", type=int, default=[41, 42, 43, 44, 45])
     parser.add_argument("--random-init", action="store_true")
     parser.add_argument("--time-limit", "-t", type=float, default=20.0)
 

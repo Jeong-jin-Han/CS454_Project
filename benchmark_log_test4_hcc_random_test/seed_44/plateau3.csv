@@ -1,0 +1,17 @@
+function,lineno,outcome,convergence_speed,nfe,best_fitness,best_solution,success,num_trials,total_time,time_to_solution
+unlock_door,1,True,8,258,0.0,"[10, 6, 7, 12]",True,1,0.0047,0.0047
+unlock_door,1,False,1,2,0.0,"[3, 6, 7, 12]",True,1,0.0034,0.0034
+unlock_door,2,True,21,674,0.0,"[10, 20, 7, 12]",True,1,0.0078,0.0078
+unlock_door,2,False,8,258,0.0,"[10, 6, 7, 12]",True,1,0.0046,0.0046
+unlock_door,3,True,43,1378,0.0,"[10, 20, 30, 12]",True,1,0.0214,0.0214
+unlock_door,3,False,21,674,0.0,"[10, 20, 7, 12]",True,1,0.0091,0.0091
+unlock_door,4,True,70,2242,0.0,"[10, 20, 30, 40]",True,1,0.0225,0.0225
+unlock_door,4,False,43,1378,0.0,"[10, 20, 30, 12]",True,1,0.0218,0.0218
+fitness_digital_lock,5,True,1,2,0.0,"[408, 522, 544, 708]",True,1,0.0019,0.0019
+fitness_digital_lock,5,False,399,12770,0.0,"[10, 522, 544, 708]",True,1,0.1502,0.1502
+fitness_digital_lock,6,True,1,2,0.0,"[408, 522, 544, 708]",True,1,0.0017,0.0017
+fitness_digital_lock,6,False,503,16098,0.0,"[408, 20, 544, 708]",True,1,0.1847,0.1847
+fitness_digital_lock,7,True,1,2,0.0,"[408, 522, 544, 708]",True,1,0.0033,0.0033
+fitness_digital_lock,7,False,515,16482,0.0,"[408, 522, 30, 708]",True,1,0.1848,0.1848
+fitness_digital_lock,8,True,1,2,0.0,"[408, 522, 544, 708]",True,1,0.0035,0.0035
+fitness_digital_lock,8,False,669,21410,0.0,"[408, 522, 544, 40]",True,1,0.2328,0.2328

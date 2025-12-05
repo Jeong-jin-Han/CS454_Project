@@ -1,7 +1,7 @@
 function,lineno,outcome,convergence_speed,nfe,best_fitness,best_solution,success,num_trials,total_time,time_to_solution
-collection,1,True,44,2481168,1.0,"[57485, 318021, 108167]",False,3,20.1342,N/A
-collection,1,False,1,2,0.0,"[247504, 318021, 108167]",True,1,0.0039,0.0039
-collection,2,True,43,2441142,2.0,"[57485, 318021, 108167]",False,3,20.1365,N/A
-collection,2,False,43,2441142,2.0,"[57485, 318021, 108167]",False,3,20.1597,N/A
-collection,3,True,43,2441142,3.0,"[57485, 318021, 108167]",False,3,20.0844,N/A
-collection,3,False,43,2441142,3.0,"[57485, 318021, 108167]",False,3,20.1281,N/A
+collection,1,True,16986,490964,0.0,"[3817, 421088, 576079]",True,4,3.8828,3.8828
+collection,1,False,1,2,0.0,"[247504, 318021, 108167]",True,1,0.0024,0.0024
+collection,2,True,45541,2999386,1.0,"[3817, 412079, 576079]",False,37,20.0110,N/A
+collection,2,False,16986,490964,0.0,"[3817, 421088, 576079]",True,4,3.8684,3.8684
+collection,3,True,45540,3005379,2.0,"[3817, 412079, 576079]",False,37,20.0096,N/A
+collection,3,False,45539,2999352,2.0,"[3817, 412079, 576079]",False,37,20.0102,N/A

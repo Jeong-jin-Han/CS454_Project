@@ -1,6 +1,6 @@
 function,lineno,outcome,convergence_speed,nfe,best_fitness,best_solution,success,num_trials,total_time,time_to_solution
-needle1,1,True,1,2,0.0,"[472, 610, 200]",True,1,0.0400,0.0400
-needle1,2,True,2,38,0.0,"[472, 610, 199]",True,1,0.6174,0.6174
-needle1,2,False,1,2,0.0,"[472, 610, 200]",True,1,0.0371,0.0371
-needle1,3,True,1,2,0.0,"[472, 610, 200]",True,1,0.0418,0.0418
-needle1,3,False,1,2,0.0,"[472, 610, 200]",True,1,0.0397,0.0397
+needle1,1,True,1,2,0.0,"[472, 610, 200]",True,1,0.0425,0.0425
+needle1,2,True,2,38,0.0,"[472, 610, 199]",True,1,0.6208,0.6208
+needle1,2,False,1,2,0.0,"[472, 610, 200]",True,1,0.0407,0.0407
+needle1,3,True,1,2,0.0,"[472, 610, 200]",True,1,0.0416,0.0416
+needle1,3,False,1,2,0.0,"[472, 610, 200]",True,1,0.0432,0.0432

@@ -1,0 +1,17 @@
+function,lineno,outcome,convergence_speed,nfe,best_fitness,best_solution,success,num_trials,total_time,time_to_solution
+rugged1,1,True,1,2,0.0,"[-2, 3, 5]",True,1,0.0080,0.0080
+rugged1,2,True,1,2,0.0,"[-2, 3, 5]",True,1,0.0050,0.0050
+rugged1,3,True,2,38,0.0,"[-3, 3, 5]",True,1,0.0110,0.0110
+rugged1,3,False,1,2,0.0,"[-2, 3, 5]",True,1,0.0072,0.0072
+rugged1,4,True,1,2,0.0,"[-2, 3, 5]",True,1,0.0142,0.0142
+rugged1,4,False,1,2,0.0,"[-2, 3, 5]",True,1,0.0077,0.0077
+rugged1,5,True,1,2,0.0,"[-2, 3, 5]",True,1,0.0103,0.0103
+rugged1,5,False,1,2,0.0,"[-2, 3, 5]",True,1,0.0061,0.0061
+rugged1,6,True,1,2,0.0,"[-2, 3, 5]",True,1,0.0031,0.0031
+rugged1,6,False,1,2,0.0,"[-2, 3, 5]",True,1,0.0050,0.0050
+rugged1,7,True,1,2,0.0,"[-2, 3, 5]",True,1,0.0032,0.0032
+rugged1,7,False,2,38,0.0,"[-3, 3, 5]",True,1,0.0091,0.0091
+rugged1,8,True,1,2,0.0,"[-2, 3, 5]",True,1,0.0053,0.0053
+rugged1,8,False,2,38,0.0,"[-2, 2, 5]",True,1,0.0084,0.0084
+rugged1,9,True,3,56,0.0,"[-3, 3, 7]",True,1,0.0093,0.0093
+rugged1,9,False,2,38,0.0,"[-3, 3, 5]",True,1,0.0081,0.0081

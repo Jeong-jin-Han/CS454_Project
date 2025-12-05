@@ -1,0 +1,11 @@
+function,lineno,outcome,convergence_speed,nfe,best_fitness,best_solution,success,num_trials,total_time,time_to_solution
+digit_sum,1,True,81,164,0.0,[-1],True,1,0.0052,0.0052
+digit_sum,1,False,1,2,0.0,[79],True,1,0.0025,0.0025
+digit_sum,2,True,1,2,0.0,[79],True,1,0.0024,0.0024
+digit_sum,2,False,80,162,0.0,[0],True,1,0.0059,0.0059
+digit_sum,3,True,4,10,0.0,[82],True,1,0.0024,0.0024
+digit_sum,3,False,1,2,0.0,[79],True,1,0.0031,0.0031
+digit_sum,4,True,1,2,0.0,[79],True,1,0.0029,0.0029
+digit_sum,4,False,2,6,0.0,[78],True,1,0.0040,0.0040
+digit_sum,5,True,4,34,0.0,[70],True,1,0.0023,0.0023
+digit_sum,5,False,2,6,0.0,[78],True,1,0.0016,0.0016

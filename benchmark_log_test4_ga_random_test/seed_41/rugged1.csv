@@ -1,0 +1,17 @@
+function,lineno,outcome,convergence_speed,nfe,best_fitness,best_solution,success,num_trials,generations,total_time,time_to_solution
+rugged1,1,True,1,1,0.0,"(2, 0, -3)",True,1,1,0.0239,0.0239
+rugged1,2,True,1,1,0.0,"(2, 0, -3)",True,1,1,0.0240,0.0240
+rugged1,3,True,1,2,0.0,"(-5, 18, 19)",True,2,1,0.0248,0.0248
+rugged1,3,False,1,1,0.0,"(2, 0, -3)",True,1,1,0.0211,0.0211
+rugged1,4,True,1,1,0.0,"(2, 0, -3)",True,1,1,0.0314,0.0314
+rugged1,4,False,1,1,0.0,"(2, 0, -3)",True,1,1,0.0334,0.0334
+rugged1,5,True,1,1,0.0,"(2, 0, -3)",True,1,1,0.0246,0.0246
+rugged1,5,False,1,1,0.0,"(2, 0, -3)",True,1,1,0.0244,0.0244
+rugged1,6,True,1,1,0.0,"(2, 0, -3)",True,1,1,0.0224,0.0224
+rugged1,6,False,1,1,0.0,"(2, 0, -3)",True,1,1,0.0271,0.0271
+rugged1,7,True,1,1,0.0,"(2, 0, -3)",True,1,1,0.0267,0.0267
+rugged1,7,False,1,2,0.0,"(-5, 18, 19)",True,2,1,0.0230,0.0230
+rugged1,8,True,1,1,0.0,"(2, 0, -3)",True,1,1,0.0324,0.0324
+rugged1,8,False,1,3,0.0,"(2, 8, 18)",True,3,1,0.0247,0.0247
+rugged1,9,True,1,14,0.0,"(-9, 3, 17)",True,14,1,0.0206,0.0206
+rugged1,9,False,1,2,0.0,"(-5, 18, 19)",True,2,1,0.0285,0.0285

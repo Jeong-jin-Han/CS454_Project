@@ -1,0 +1,14 @@
+{
+  "algorithm": "Baseline Hill Climbing (NO COMPRESSION)",
+  "initialization": "random",
+  "seeds": [
+    41,
+    42,
+    43,
+    44,
+    45
+  ],
+  "source_directory": "benchmark",
+  "output_directory": "benchmark_log_test4_hc_random_test",
+  "time_limit_per_branch": 20.0
+}

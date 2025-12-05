@@ -1,0 +1,6 @@
+function,lineno,outcome,convergence_speed,nfe,best_fitness,best_solution,success,num_trials,total_time,time_to_solution
+needle1,1,True,1,2,0.0,"[545, 844, 988]",True,1,0.0512,0.0512
+needle1,2,True,2,38,0.0,"[545, 845, 987]",True,1,0.6971,0.6971
+needle1,2,False,1,2,0.0,"[545, 844, 988]",True,1,0.0456,0.0456
+needle1,3,True,1,2,0.0,"[545, 844, 988]",True,1,0.0507,0.0507
+needle1,3,False,1,2,0.0,"[545, 844, 988]",True,1,0.0456,0.0456

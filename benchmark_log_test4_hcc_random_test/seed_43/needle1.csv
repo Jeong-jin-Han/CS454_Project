@@ -1,0 +1,6 @@
+function,lineno,outcome,convergence_speed,nfe,best_fitness,best_solution,success,num_trials,total_time,time_to_solution
+needle1,1,True,1,2,0.0,"[67, 574, 1414]",True,1,0.0417,0.0417
+needle1,2,True,2,38,0.0,"[67, 575, 1415]",True,1,0.6395,0.6395
+needle1,2,False,1,2,0.0,"[67, 574, 1414]",True,1,0.0428,0.0428
+needle1,3,True,1,2,0.0,"[67, 574, 1414]",True,1,0.0433,0.0433
+needle1,3,False,1,2,0.0,"[67, 574, 1414]",True,1,0.0479,0.0479

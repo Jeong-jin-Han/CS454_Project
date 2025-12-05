@@ -1,0 +1,7 @@
+function,lineno,outcome,convergence_speed,nfe,best_fitness,best_solution,success,num_trials,total_time,time_to_solution
+f,1,True,12,98,0.0,"[2, 3]",True,1,0.0043,0.0043
+f,1,False,1,2,0.0,"[-9, -1]",True,1,0.0025,0.0025
+f,2,True,13,106,0.0,"[3, -1]",True,1,0.0043,0.0043
+f,2,False,1,2,0.0,"[-9, -1]",True,1,0.0033,0.0033
+f,3,True,1,2,0.0,"[-9, -1]",True,1,0.0032,0.0032
+f,3,False,8,66,0.0,"[-2, 6]",True,1,0.0054,0.0054

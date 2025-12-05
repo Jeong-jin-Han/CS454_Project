@@ -1,0 +1,6 @@
+function,lineno,outcome,convergence_speed,nfe,best_fitness,best_solution,success,num_trials,generations,total_time,time_to_solution
+sum_of_even,1,True,1,1,0.0,"(-2,)",True,1,1,0.0196,0.0196
+sum_of_even,1,False,1,2,0.0,"(3,)",True,2,1,0.0185,0.0185
+sum_of_even,2,True,1,2,0.0,"(3,)",True,2,1,0.0176,0.0176
+sum_of_even,3,True,1,2,0.0,"(3,)",True,2,1,0.0173,0.0173
+sum_of_even,3,False,1,2,0.0,"(3,)",True,2,1,0.0197,0.0197

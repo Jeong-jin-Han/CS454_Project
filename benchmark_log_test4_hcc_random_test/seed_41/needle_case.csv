@@ -1,0 +1,5 @@
+function,lineno,outcome,convergence_speed,nfe,best_fitness,best_solution,success,num_trials,total_time,time_to_solution
+needle,1,True,1253,2285926,1.0,[-6899],False,114,20.0011,N/A
+needle,1,False,1,2,0.0,[3111],True,1,0.0026,0.0026
+needle,2,True,1,2,0.0,[3111],True,1,0.0029,0.0029
+needle,2,False,1240,2261864,1.0,[-6899],False,113,20.0095,N/A

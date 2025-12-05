@@ -4,12 +4,12 @@
   "output_directory": "benchmark_log_test4_ga_biased_test",
   "time_limit_per_branch": 20.0,
   "seeds": [
-    0,
-    1,
-    2,
-    3,
-    4
+    41,
+    42,
+    43,
+    44,
+    45
   ],
   "population_size": 10000,
-  "total_execution_time": 1404.5119071006775
+  "total_execution_time": 1438.2741949558258
 }

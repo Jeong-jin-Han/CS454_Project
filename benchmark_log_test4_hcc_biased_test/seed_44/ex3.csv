@@ -1,0 +1,15 @@
+function,lineno,outcome,convergence_speed,nfe,best_fitness,best_solution,success,num_trials,total_time,time_to_solution
+intersect,1,True,1,2,0.0,"[1, -7, 1, 6, 3, 4, 5, -8]",True,1,0.0042,0.0042
+intersect,1,False,2,258,0.0,"[1, -7, 1, 6, 4, 4, 4, -8]",True,1,0.0097,0.0097
+intersect,2,True,1,2,0.0,"[1, -7, 1, 6, 3, 4, 5, -8]",True,1,0.0040,0.0040
+intersect,2,False,6,770,0.0,"[4, -7, 3, 6, 0, 4, 4, -8]",True,1,0.0197,0.0197
+intersect,3,True,2,258,0.0,"[1, -7, 2, 6, 2, 4, 5, -8]",True,1,0.0115,0.0114
+intersect,3,False,1,2,0.0,"[1, -7, 1, 6, 3, 4, 5, -8]",True,1,0.0050,0.0050
+intersect,4,True,3,386,0.0,"[2, -7, 2, 6, 2, 4, 5, -8]",True,1,0.0191,0.0191
+intersect,4,False,2,258,0.0,"[1, -7, 2, 6, 2, 4, 5, -8]",True,1,0.0067,0.0067
+intersect,5,True,3,386,0.0,"[2, -7, 2, 6, 2, 4, 5, -8]",True,1,0.0082,0.0082
+intersect,5,False,8,17042,0.0,"[5, -9, -998, 6, 0, 4, 4, -8]",True,1,0.2003,0.2003
+intersect,6,True,5,642,0.0,"[4, -7, 4, 6, 4, 4, 4, -8]",True,1,0.0121,0.0121
+intersect,6,False,2,258,0.0,"[1, -7, 1, 6, 4, 4, 4, -8]",True,1,0.0053,0.0052
+intersect,7,True,11,1410,0.0,"[3, 0, 3, 0, 4, 4, 4, -8]",True,1,0.0156,0.0156
+intersect,7,False,2,258,0.0,"[1, -7, 1, 6, 4, 4, 4, -8]",True,1,0.0061,0.0061
