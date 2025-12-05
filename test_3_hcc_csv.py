@@ -7,6 +7,8 @@ from unittest import result
 import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
+import time
+import itertools
 
 from benchmark.test_3.fitness import (
     fitness_needle,
@@ -23,14 +25,14 @@ from test_3_plot import plot_fitness_landscape
 # N-D Hill-climb with Compression
 # ===============================
 def hill_climb_with_compression_nd_code(
-    fitness_fn,            # <---- 단순 callable((tuple))->float
+    fitness_fn,  # <---- 단순 callable((tuple))->float
     start_point,
     dim,
     max_iterations=10,
-    basin_max_search=100,
+    basin_max_search=1000,
     global_min_threshold=1e-6,
     verbose=False,
-    cm=None,               # Optional: compression manager reuse
+    cm=None,  # Optional: compression manager reuse
     time_limit=None,
     start_time=None,
 ):
@@ -42,9 +44,6 @@ def hill_climb_with_compression_nd_code(
       - fitness_fn(point) must return a non-negative scalar
       - Supports strict time-limit enforcement before every eval
     """
-
-    import time as time_module
-    import itertools
 
     # Wrap fitness to ensure integer and consistent calling
     def fitness_func_nd_code(x):
@@ -73,7 +72,8 @@ def hill_climb_with_compression_nd_code(
     # Time check BEFORE initial evaluation
     # -------------------------------------------------------
     if time_limit is not None and start_time is not None:
-        if time_module.time() - start_time >= time_limit:
+        if time.time() - start_time >= time_limit:
+            print("⏱️ Time limit reached before start → stop")
             point = tuple(int(x) for x in start_point)
             traj.append((point, float("inf"), False))
             return traj, cm
@@ -96,6 +96,7 @@ def hill_climb_with_compression_nd_code(
     # MAIN ITERATIONS
     # ============================================================
     for it in range(max_iterations):
+        # print(f"it={it}, point={point}, f={f}, active_dims={active_dims}")
         if not active_dims:
             if verbose:
                 print("All dimensions deactivated. Stopping.")
@@ -122,7 +123,7 @@ def hill_climb_with_compression_nd_code(
 
             # TIME CHECK
             if time_limit is not None and start_time is not None:
-                if time_module.time() - start_time >= time_limit:
+                if time.time() - start_time >= time_limit:
                     if verbose:
                         print("⏱️ Time limit reached inside climbing loop → stop")
                     return traj, cm
@@ -139,7 +140,7 @@ def hill_climb_with_compression_nd_code(
 
                 # time check
                 if time_limit is not None and start_time is not None:
-                    if time_module.time() - start_time >= time_limit:
+                    if time.time() - start_time >= time_limit:
                         return traj, cm
 
                 fixed = tuple(point[i] for i in range(dim) if i != d)
@@ -157,7 +158,7 @@ def hill_climb_with_compression_nd_code(
                     cand_t = tuple(cand)
 
                     # strict time check BEFORE eval
-                    if time_limit and (time_module.time() - start_time) >= time_limit:
+                    if time_limit and (time.time() - start_time) >= time_limit:
                         return traj, cm
 
                     cand_f = fitness_func_nd_code(cand_t)
@@ -170,7 +171,7 @@ def hill_climb_with_compression_nd_code(
                 for d1, d2 in itertools.combinations(active_dims, 2):
 
                     # time check
-                    if time_limit and (time_module.time() - start_time) >= time_limit:
+                    if time_limit and (time.time() - start_time) >= time_limit:
                         return traj, cm
 
                     # compression for d1
@@ -198,7 +199,7 @@ def hill_climb_with_compression_nd_code(
                             cand[d2] = v2
                             cand_t = tuple(cand)
 
-                            if time_limit and (time_module.time() - start_time) >= time_limit:
+                            if time_limit and (time.time() - start_time) >= time_limit:
                                 return traj, cm
 
                             cand_f = fitness_func_nd_code(cand_t)
@@ -233,19 +234,26 @@ def hill_climb_with_compression_nd_code(
                 point, f = best_point, best_f
                 used_comp = any(
                     cm.get_system(d, tuple(point[i] for i in range(dim) if i != d))
-                    is not None for d in range(dim)
+                    is not None
+                    for d in range(dim)
                 )
                 traj.append((point, f, used_comp))
                 step_count += 1
             else:
                 if verbose:
                     print(f"📍 Stuck after {step_count} steps at {point}, f={f:.6g}")
+                # print(
+                #     "📍 Stuck at {}, f={:.6g} after {} steps".format(
+                #         point, f, step_count
+                #     )
+                # )
                 break
 
         # After full climbing iteration:
         if abs(f) < global_min_threshold:
             if verbose:
                 print("🎉 SUCCESS after climbing")
+            # print("🎉 SUCCESS")
             break
 
         # -----------------------------------------------------------
@@ -256,8 +264,7 @@ def hill_climb_with_compression_nd_code(
 
         basins = {}
         for d in active_dims:
-
-            if time_limit and (time_module.time() - start_time) >= time_limit:
+            if time_limit and (time.time() - start_time) >= time_limit:
                 return traj, cm
 
             basin = detect_basin_along_dimension(
@@ -271,6 +278,7 @@ def hill_climb_with_compression_nd_code(
         if not basins:
             if verbose:
                 print("No basins found → stopping")
+            # print("❌ NO BASINS FOUND → STOP")
             break
 
         # -----------------------------------------------------------
@@ -280,7 +288,7 @@ def hill_climb_with_compression_nd_code(
 
         for d, (b_start, b_len) in basins.items():
 
-            if time_limit and (time_module.time() - start_time) >= time_limit:
+            if time_limit and (time.time() - start_time) >= time_limit:
                 return traj, cm
 
             b_end = b_start + b_len - 1
@@ -308,8 +316,8 @@ def hill_climb_with_compression_nd_code(
         if abs(f) < global_min_threshold:
             if verbose:
                 print("🎉 Restart hit goal")
+            # print("🎉 SUCCESS after restart")
             break
-
     return traj, cm
 
 
@@ -324,204 +332,96 @@ fitness_map = {
 }
 
 
-# ============================================================
-# Worker (single experiment, RANDOM INIT ONLY)
-# ============================================================
-def _hcc_worker_test3(args):
-    (
-        fitness_name,
-        num_args,
-        time_limit,
-        random_seed,
-        init_low,
-        init_high,
-        max_iterations,
-        basin_max_search,
-    ) = args
-
-    rng = random.Random(random_seed)
-    fitness_fn = fitness_map[fitness_name]
-
-    # Always RANDOM initialization
-    start_point = tuple(rng.randint(init_low, init_high) for _ in range(num_args))
-
+def test3_single_fitness_with_metrics(
+    fitness_fn,
+    num_args,
+    time_limit,
+    random_seed,
+    init_low,
+    init_high,
+    max_iterations,
+    basin_max_search,
+    success_threshold=0.0,
+):
     start_time = time.time()
 
-    traj, cm = hill_climb_with_compression_nd_code(
-        fitness_fn=fitness_rugged,
-        start_point=(5, -20),
-        dim=2,
-        time_limit=5.0,
-        start_time=time.time(),
-    )
+    random.seed(random_seed)
 
-    generations = len(traj)
-    best_point, best_fitness, _ = traj[-1]
+    # Create ONE CompressionManagerND
+    branch_cm = CompressionManagerND(num_args, steepness=5.0)
+
+    # Metrics to track
+    total_steps = 0  # Convergence speed
+    best_fitness = float("inf")
+    best_solution = None
+    success = False
+    time_to_solution = None  # Time when solution was found
+
+    history = []
+    trial = 0
+
+    while True:
+        elapsed_time = time.time() - start_time
+
+        if elapsed_time >= time_limit:
+            break
+
+        if success:
+            break
+
+        initial = tuple(random.randint(init_low, init_high) for _ in range(num_args))
+
+        init_fit = fitness_fn(initial)
+
+        try:
+            traj, branch_cm = hill_climb_with_compression_nd_code(
+                fitness_fn=fitness_fn,
+                start_point=initial,
+                dim=num_args,
+                max_iterations=max_iterations,
+                basin_max_search=basin_max_search,
+                time_limit=time_limit,
+                start_time=start_time,
+                cm=branch_cm,
+            )
+
+        except Exception as e:
+            print(f"Error during hill climbing: {e}")
+            break
+
+        history = history + [
+            (trial, gen_idx, pt, fitness_value)
+            for gen_idx, (pt, fitness_value, _) in enumerate(traj)
+        ]
+        final_point, final_f, used_comp = traj[-1]
+        steps_this_trial = len(traj)
+        total_steps += steps_this_trial
+
+        if final_f < best_fitness:
+            best_fitness = final_f
+            best_solution = list(final_point)
+
+        if final_f <= success_threshold:
+            time_to_solution = time.time() - start_time
+            success = True
+
+        if time.time() - start_time >= time_limit:
+            break
+        trial += 1
 
     total_time = time.time() - start_time
-    success = abs(best_fitness) < 1e-6
-
-    time_to_solution = None
-    if success:
-        for gen, (pt, f, _) in enumerate(traj):
-            if abs(f) < 1e-6:
-                time_to_solution = gen
-                break
 
     return {
-        "history": [(i, pt, f) for i, (pt, f, _) in enumerate(traj)],
-        "best_ind": best_point,
+        "history": history,
+        "convergence_speed": total_steps,
+        "nfe": total_steps,
         "best_fitness": best_fitness,
-        "generations": generations,
-        "nfe": generations,
+        "best_solution": best_solution,
         "success": success,
+        "num_trials_run": trial + 1,
         "total_time": total_time,
         "time_to_solution": time_to_solution,
     }
-
-
-# ============================================================
-# Plotting utilities
-# ============================================================
-def plot_landscape_and_path(fitness_name, num_args, history, out_png, value_range=(-150, 150)):
-    fitness_fn = fitness_map[fitness_name]
-
-    if num_args == 1:
-        lo, hi = value_range   # value_range = (-150, 150)
-        xs = np.linspace(lo, hi, 500)
-        ys = [fitness_fn((int(x),)) for x in xs]
-
-        plt.figure(figsize=(8, 5))
-        plt.plot(xs, ys, "gray", alpha=0.7)
-
-        traj_x = [pt[0] for (_, pt, ft) in history]
-        traj_f = [ft for (_, pt, ft) in history]
-        colors = np.linspace(0.3, 1.0, len(history))
-
-        for i in range(len(history)):
-            plt.scatter(traj_x[i], traj_f[i], c=[[0, 0, 0, colors[i]]], s=40)
-
-        plt.title(f"HC+C Trajectory: {fitness_name} ({num_args}D)")
-        plt.xlabel("x")
-        plt.ylabel("fitness")
-        plt.savefig(out_png, dpi=200)
-        plt.close()
-        print(f"Saved 1D plot: {out_png}")
-
-    elif num_args == 2:
-        fig = plt.figure(figsize=(10, 7))
-        ax = fig.add_subplot(111, projection="3d")
-
-        lo, hi = value_range
-        X = np.linspace(lo, hi, 100)
-        Y = np.linspace(lo, hi, 100)
-        Xg, Yg = np.meshgrid(X, Y)
-
-        Z = np.zeros_like(Xg)
-        for i in range(Xg.shape[0]):
-            for j in range(Xg.shape[1]):
-                Z[i, j] = fitness_fn((int(Xg[i, j]), int(Yg[i, j])))
-
-        ax.plot_surface(Xg, Yg, Z, cmap="viridis", alpha=0.7)
-
-        traj_x = [pt[0] for (_, pt, _) in history]
-        traj_y = [pt[1] for (_, pt, _) in history]
-        traj_z = [ft for (_, pt, ft) in history]
-
-        ax.plot(traj_x, traj_y, traj_z, color="red", marker="o")
-
-        ax.set_xlabel("x")
-        ax.set_ylabel("y")
-        ax.set_zlabel("fitness")
-        ax.set_title(f"HC+C Trajectory: {fitness_name} ({num_args}D)")
-
-        plt.savefig(out_png, dpi=200)
-        plt.close()
-        print(f"Saved 2D plot: {out_png}")
-
-    else:
-        print("Plotting only supported for 1D or 2D.")
-
-
-# ============================================================
-# run_single
-# ============================================================
-def run_parallel_test3_hcc(
-    fitness_name,
-    num_args,
-    output_dir,
-    time_limit=10.0,
-    random_seed=42,
-    init_low=-150,
-    init_high=150,
-    max_iterations=10,
-    basin_max_search=1000,
-):
-    args = (
-        fitness_name,
-        num_args,
-        time_limit,
-        random_seed,
-        init_low,
-        init_high,
-        max_iterations,
-        basin_max_search,
-    )
-
-    result = _hcc_worker_test3(args)
-
-    os.makedirs(output_dir, exist_ok=True)
-
-    tag = f"{fitness_name}_{num_args}d"
-    ind_csv = os.path.join(output_dir, f"{tag}_ind.csv")
-    res_csv = os.path.join(output_dir, f"{tag}_result.csv")
-    plot_png = os.path.join(output_dir, f"{tag}.png")
-
-    # Save ind.csv
-    with open(ind_csv, "w", newline="") as f:
-        writer = csv.writer(f)
-        writer.writerow(["generation", "best_ind", "best_fitness"])
-        for gen, pt, ft in result["history"]:
-            writer.writerow([gen, list(pt), ft])
-
-    # Save result.csv
-    with open(res_csv, "w", newline="") as f:
-        writer = csv.writer(f)
-        writer.writerow(
-            [
-                "convergence_speed",
-                "nfe",
-                "best_fitness",
-                "best_solution",
-                "success",
-                "num_trials",
-                "generations",
-                "total_time",
-                "time_to_solution",
-            ]
-        )
-        writer.writerow(
-            [
-                result["generations"],
-                result["nfe"],
-                result["best_fitness"],
-                list(result["best_ind"]),
-                result["success"],
-                result["nfe"],
-                result["generations"],
-                result["total_time"],
-                result["time_to_solution"],
-            ]
-        )
-    # Get value range for plotting
-    initial_low = init_low
-    initial_high = init_high
-    # Plot trajectory
-    # save path
-    # plot_fitness_landscape(fitness_name, num_args, result["history"], plot_png, value_range=(initial_low, initial_high))
-    fitness_fn = fitness_map[fitness_name]
-    plot_fitness_landscape(fitness_fn, result["history"], fitness_name, num_args, value_range=(initial_low, initial_high), save_path=plot_png)
-    return result
 
 
 # ============================================================
@@ -537,25 +437,96 @@ def run_directory_test3_hcc(
     basin_max_search=1000,
     random_seed=42,
 ):
-    output_base = f"benchmark_log_test3_hcc_test"
+    output_base = "benchmark_log_test3_hcc_test"
 
     for fname in fitness_list:
         for d in dims:
+            print(f"\n=== Test3: fitness={fname}, dim={d}D ===")
+
+            fitness_fn = fitness_map[fname]
             output_dir = f"{output_base}/{fname}_{d}D"
-            print(f"\n🚀 Running HC+C on {fname} ({d}D)")
-            result = run_parallel_test3_hcc(
-                fitness_name=fname,
+            os.makedirs(output_dir, exist_ok=True)
+
+            # ----- Run the multi-trial evaluation -----
+            result = test3_single_fitness_with_metrics(
+                fitness_fn=fitness_fn,
                 num_args=d,
-                output_dir=output_dir,
                 time_limit=time_limit,
                 random_seed=random_seed,
                 init_low=initial_low,
                 init_high=initial_high,
                 max_iterations=max_iterations,
                 basin_max_search=basin_max_search,
+                success_threshold=0.0,
             )
+
+            # ----- Save summary CSV -----
+            tag = f"{fname}_{d}d"
+            ind_csv = os.path.join(output_dir, f"{tag}_ind.csv")
+
+            with open(ind_csv, "w", newline="") as f:
+                writer = csv.writer(f)
+                writer.writerow(
+                    [
+                        "trial_id",
+                        "generation_index",
+                        "point",
+                        "fitness_value",
+                    ]
+                )
+                for record in result["history"]:
+                    writer.writerow(
+                        [
+                            record[0],
+                            record[1],
+                            record[2],
+                            record[3],
+                        ]
+                    )
+
+            res_csv = os.path.join(output_dir, f"{tag}_result.csv")
+
+            with open(res_csv, "w", newline="") as f:
+                writer = csv.writer(f)
+                writer.writerow(
+                    [
+                        "convergence_speed",
+                        "nfe",
+                        "best_fitness",
+                        "best_solution",
+                        "success",
+                        "num_trials_run",
+                        "total_time",
+                        "time_to_solution",
+                    ]
+                )
+                writer.writerow(
+                    [
+                        result["convergence_speed"],
+                        result["nfe"],
+                        result["best_fitness"],
+                        result["best_solution"],
+                        result["success"],
+                        result["num_trials_run"],
+                        f"{result['total_time']:.6f}",
+                        result["time_to_solution"],
+                    ]
+                )
+
+            # ----- Plot -----
+            plot_path = os.path.join(output_dir, f"{tag}.png")
+            plot_fitness_landscape(
+                fitness_fn,
+                result["history"],
+                fname,
+                d,
+                value_range=(initial_low, initial_high),
+                save_path=plot_path,
+                is_hcc=True,
+            )
+
             print(
-                f"   → Done. Success={result['success']}, Best Fit={result['best_fitness']}"
+                f" → Done. Success={result['success']}, Best Fit={result['best_fitness']}"
             )
 
 
