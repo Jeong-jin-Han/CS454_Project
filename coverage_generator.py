@@ -3,24 +3,74 @@ import os
 import subprocess
 import sys
 
+def validate_test_case(module_name: str, func_name: str, args_str: str) -> bool:
+    """
+    Test if a test case causes runtime errors (ZeroDivisionError, etc).
+    Returns True if valid (no errors), False if invalid (causes exceptions).
+    """
+    try:
+        import sys
+        import importlib
+        
+        # Add benchmark directory to path temporarily
+        benchmark_dir = os.path.abspath('benchmark')
+        if benchmark_dir not in sys.path:
+            sys.path.insert(0, benchmark_dir)
+        
+        # Import and reload to get fresh module
+        if module_name in sys.modules:
+            module = importlib.reload(sys.modules[module_name])
+        else:
+            module = __import__(module_name)
+        
+        func = getattr(module, func_name)
+        
+        # Parse and execute
+        args = eval(f"({args_str},)" if args_str else "()")
+        func(*args)
+        return True  # No exception = valid test
+        
+    except (ZeroDivisionError, ValueError, OverflowError, IndexError) as e:
+        # These are INVALID inputs - filter them out
+        print(f"  ⚠️  Invalid test: {func_name}({args_str}) → {type(e).__name__}")
+        return False
+        
+    except Exception as e:
+        # Other exceptions might be expected behavior
+        # Keep the test case
+        return True
+
+
 def main(dir_name: str):
     csv_files = [f for f in os.listdir(dir_name) if f.endswith(".csv")]
     os.makedirs("benchmark", exist_ok=True)
     os.makedirs("coverage_result", exist_ok=True)
 
     output_rows = []
+    total_invalid = 0
 
     for csv_file in csv_files:
         program_name = csv_file[:-4]   # remove .csv
         csv_path = os.path.join(dir_name, csv_file)
 
         tests = []
+        invalid_count = 0
+        
         with open(csv_path, newline="") as f:
             reader = csv.DictReader(f)
             for idx, row in enumerate(reader):
                 func = row["function"]
                 sol = row["best_solution"][1:-1]
-                tests.append((func, idx, sol))
+                
+                # ✅ Validate test case before adding
+                if validate_test_case(program_name, func, sol):
+                    tests.append((func, idx, sol))
+                else:
+                    invalid_count += 1
+                    total_invalid += 1
+        
+        if invalid_count > 0:
+            print(f"  🚫 Filtered {invalid_count} invalid test(s) from {program_name}")
 
         # Create temporary test script
         test_filename = f"./benchmark/test_{program_name}.py"
@@ -84,7 +134,13 @@ def main(dir_name: str):
     for (_, percentage, _, _, _) in output_rows:
         total += int(percentage[:-1])
     
+    print(f"\n{'='*80}")
+    print(f"📊 FINAL SUMMARY")
+    print(f"{'='*80}")
+    print(f"Total invalid tests filtered: {total_invalid}")
     print(f"Final coverage: {total}% / {len(output_rows) * 100}%")
+    print(f"Average coverage per file: {total / len(output_rows):.1f}%")
+    print(f"{'='*80}")
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
