@@ -1,0 +1,6 @@
+function,lineno,outcome,convergence_speed,nfe,best_fitness,best_solution,success,num_trials,total_time,time_to_solution
+needle1,1,True,1,2,0.0,"[1808, 145, 808]",True,1,0.087,0.087
+needle1,2,True,2,2039,0.0009990009990008542,"[1808, 145, 809]",False,1,66.300,N/A
+needle1,2,False,1,2,0.0,"[1808, 145, 808]",True,1,0.088,0.088
+needle1,3,True,1,2,0.0,"[1808, 145, 808]",True,1,0.063,0.063
+needle1,3,False,1,2,0.0,"[1808, 145, 808]",True,1,0.087,0.087
