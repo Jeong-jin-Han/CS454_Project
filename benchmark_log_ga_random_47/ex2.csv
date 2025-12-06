@@ -1,0 +1,7 @@
+function,lineno,outcome,convergence_speed,nfe,best_fitness,best_solution,success,num_trials,generations,total_time,time_to_solution
+testme,1,True,1,4,0.0,"(187, 190, 10)",True,4,1,0.064,0.064
+testme,1,False,1,1,0.0,"(170, 22, 210)",True,1,1,0.044,0.044
+testme,2,True,1,6,0.0,"(-10, 125, 236)",True,6,1,0.034,0.034
+testme,2,False,1,4,0.0,"(187, 190, 10)",True,4,1,0.046,0.046
+testme,3,True,1,4,0.0,"(187, 190, 10)",True,4,1,0.048,0.048
+testme,3,False,1,4,0.0,"(187, 190, 10)",True,4,1,0.054,0.054

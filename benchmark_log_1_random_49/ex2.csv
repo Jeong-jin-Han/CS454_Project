@@ -1,0 +1,7 @@
+function,lineno,outcome,convergence_speed,nfe,best_fitness,best_solution,success,num_trials,total_time,time_to_solution
+testme,1,True,1,2,0.0,"[24, 166, 201]",True,1,0.011,0.011
+testme,1,False,72,1298,0.0,"[95, 95, 201]",True,1,1.555,1.555
+testme,2,True,1,2,0.0,"[24, 166, 201]",True,1,0.011,0.011
+testme,2,False,84,1514,0.0,"[24, 166, 284]",True,1,3.449,3.449
+testme,3,True,27,488,0.0,"[-2, 166, 201]",True,1,1.205,1.205
+testme,3,False,1,2,0.0,"[24, 166, 201]",True,1,0.015,0.015

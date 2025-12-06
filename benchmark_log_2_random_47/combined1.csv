@@ -1,0 +1,15 @@
+function,lineno,outcome,convergence_speed,nfe,best_fitness,best_solution,success,num_trials,total_time,time_to_solution
+combined1,1,True,83140,498673,0.8928883193490668,"[7, 8194, 377]",False,42,20.000,N/A
+combined1,1,False,1,8,0.0,"[5754, 1014, 7038]",True,1,0.011,0.011
+combined1,2,True,1,8,0.0,"[5754, 1014, 7038]",True,1,0.012,0.012
+combined1,2,False,2,14,0.0,"[5754, 1014, 7037]",True,1,0.015,0.015
+combined1,3,True,9,60,0.0,"[5614, 4207, 8385]",True,3,0.014,0.014
+combined1,3,False,2,14,0.0,"[5754, 1014, 7037]",True,1,0.011,0.011
+combined1,4,True,3,20,0.0,"[5754, 1014, 7036]",True,1,0.013,0.013
+combined1,4,False,2,14,0.0,"[5754, 1014, 7037]",True,1,0.009,0.009
+combined1,5,True,5,36,0.0,"[5616, 4207, 8385]",True,3,0.008,0.008
+combined1,5,False,2,14,0.0,"[5754, 1014, 7037]",True,1,0.005,0.005
+combined1,6,True,4,30,0.0,"[5617, 4207, 8385]",True,3,0.006,0.006
+combined1,6,False,2,14,0.0,"[5754, 1014, 7037]",True,1,0.005,0.005
+combined1,7,True,1,8,0.0,"[5754, 1014, 7038]",True,1,0.004,0.004
+combined1,7,False,5,40,0.0,"[660, 6847, 377]",True,5,0.006,0.006
