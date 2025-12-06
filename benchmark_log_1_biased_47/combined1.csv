@@ -1,0 +1,15 @@
+function,lineno,outcome,convergence_speed,nfe,best_fitness,best_solution,success,num_trials,total_time,time_to_solution
+combined1,1,True,10113,187024,0.0,"[7, 10102, 50]",True,1,4.859,4.859
+combined1,1,False,1,2,0.0,"[-10, -10, 41]",True,1,0.012,0.012
+combined1,2,True,2,38,0.0,"[-10, -10, 40]",True,1,0.013,0.013
+combined1,2,False,1,2,0.0,"[-10, -10, 41]",True,1,0.010,0.010
+combined1,3,True,2,38,0.0,"[-11, -10, 41]",True,1,0.010,0.010
+combined1,3,False,1,2,0.0,"[-10, -10, 41]",True,1,0.012,0.012
+combined1,4,True,2,38,0.0,"[-11, -9, 41]",True,1,0.014,0.014
+combined1,4,False,1,2,0.0,"[-10, -10, 41]",True,1,0.009,0.009
+combined1,5,True,1,2,0.0,"[-10, -10, 41]",True,1,0.004,0.004
+combined1,5,False,2,38,0.0,"[-9, -10, 41]",True,1,0.006,0.006
+combined1,6,True,2,38,0.0,"[-10, -10, 42]",True,1,0.007,0.007
+combined1,6,False,2,38,0.0,"[-9, -10, 41]",True,1,0.005,0.005
+combined1,7,True,1,2,0.0,"[-10, -10, 41]",True,1,0.004,0.004
+combined1,7,False,23,416,0.0,"[-21, -20, 19]",True,1,0.024,0.024

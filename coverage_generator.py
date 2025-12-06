@@ -114,7 +114,7 @@ def main(dir_name: str):
 
         # Clean temp script
         print(test_filename)
-        # os.remove(test_filename)
+        os.remove(test_filename)
 
         # print(f"Complete coverage checking for {program_name}: miss / branch = {miss}{f"({missing_line})" if missing_line else ""} / {branch}")
         missing_part = f"({missing_line})" if missing_line else ""

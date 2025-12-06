@@ -1,0 +1,6 @@
+function,lineno,outcome,convergence_speed,nfe,best_fitness,best_solution,success,num_trials,total_time,time_to_solution
+needle1,1,True,1,8,0.0,"[-11, 48, 638]",True,1,0.324,0.324
+needle1,2,True,11,78,0.0,"[19, 19, 63]",True,6,3.088,3.088
+needle1,2,False,1,8,0.0,"[-11, 48, 638]",True,1,0.215,0.215
+needle1,3,True,1,8,0.0,"[-11, 48, 638]",True,1,0.326,0.326
+needle1,3,False,1,8,0.0,"[-11, 48, 638]",True,1,0.225,0.225

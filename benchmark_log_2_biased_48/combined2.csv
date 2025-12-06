@@ -1,0 +1,17 @@
+function,lineno,outcome,convergence_speed,nfe,best_fitness,best_solution,success,num_trials,total_time,time_to_solution
+disarm_doomsday,1,True,781,7796,0.0,"[2086, 579, 94, 1239]",True,774,0.149,0.149
+disarm_doomsday,1,False,1,10,0.0,"[-10, 65251, 57118, 14082]",True,1,0.015,0.015
+disarm_doomsday,2,True,164320,1641063,0.8875118873349708,"[2060, 51922, 98, 1055]",False,163253,20.000,N/A
+disarm_doomsday,2,False,781,7796,0.0,"[2086, 579, 94, 1239]",True,774,0.152,0.152
+disarm_doomsday,3,True,162745,1625336,1.8875118873349708,"[2060, 51922, 98, 1055]",False,161690,20.000,N/A
+disarm_doomsday,3,False,166791,1665755,1.8875118873349708,"[2060, 51922, 98, 1055]",False,165716,20.000,N/A
+disarm_doomsday,4,True,169793,1695742,2.8875118873349708,"[2060, 51922, 98, 1055]",False,168699,20.000,N/A
+disarm_doomsday,4,False,169753,1695339,2.8875118873349708,"[2060, 51922, 98, 1055]",False,168659,20.000,N/A
+fitness_doomsday,5,True,1,10,0.0,"[-10, -10, 5360, 8981]",True,1,0.008,0.008
+fitness_doomsday,5,False,192,1916,0.0,"[2132, 2511, 100334, 3385]",True,190,0.044,0.044
+fitness_doomsday,6,True,190,1900,0.0,"[2132, 2511, 100334, 3385]",True,190,0.041,0.041
+fitness_doomsday,6,False,156872,1567052,0.11036279925040637,"[2167, 396279, 174223, 4618]",False,156038,20.000,N/A
+fitness_doomsday,7,True,154474,1544734,1.0009990009990009,"[-10, -10, 5360, 8981]",False,154474,20.000,N/A
+fitness_doomsday,7,False,157281,1572805,1.0009990009990009,"[-10, -10, 5360, 8981]",False,157281,20.000,N/A
+fitness_doomsday,8,True,138904,1389040,1.0009990009990009,"[-10, -10, 5360, 8981]",False,138904,20.000,N/A
+fitness_doomsday,8,False,150819,1508184,1.0009990009990009,"[-10, -10, 5360, 8981]",False,150819,20.000,N/A

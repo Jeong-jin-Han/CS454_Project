@@ -1,0 +1,15 @@
+function,lineno,outcome,convergence_speed,nfe,best_fitness,best_solution,success,num_trials,total_time,time_to_solution
+combined1,1,True,10035,60192,0.0,"[7, 10102, 50]",True,6,2.307,2.307
+combined1,1,False,1,8,0.0,"[136, 75, -10]",True,1,0.011,0.011
+combined1,2,True,2,14,0.0,"[136, 76, -10]",True,1,0.010,0.010
+combined1,2,False,1,8,0.0,"[136, 75, -10]",True,1,0.011,0.011
+combined1,3,True,3,22,0.0,"[5234, -10, -9]",True,2,0.010,0.010
+combined1,3,False,1,8,0.0,"[136, 75, -10]",True,1,0.010,0.010
+combined1,4,True,1,8,0.0,"[136, 75, -10]",True,1,0.008,0.008
+combined1,4,False,2,14,0.0,"[135, 75, -10]",True,1,0.016,0.016
+combined1,5,True,2,14,0.0,"[136, 75, -9]",True,1,0.005,0.005
+combined1,5,False,2,14,0.0,"[135, 75, -10]",True,1,0.005,0.005
+combined1,6,True,2,14,0.0,"[136, 74, -10]",True,1,0.004,0.004
+combined1,6,False,2,14,0.0,"[135, 75, -10]",True,1,0.005,0.005
+combined1,7,True,76,458,0.0,"[135, 1, -10]",True,1,0.026,0.026
+combined1,7,False,1,8,0.0,"[136, 75, -10]",True,1,0.005,0.005

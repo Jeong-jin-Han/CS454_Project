@@ -1,0 +1,6 @@
+function,lineno,outcome,convergence_speed,nfe,best_fitness,best_solution,success,num_trials,total_time,time_to_solution
+sum_of_even,1,True,1,2,0.0,[0],True,1,0.007,0.007
+sum_of_even,1,False,2,6,0.0,[1],True,1,0.007,0.007
+sum_of_even,2,True,2,6,0.0,[1],True,1,0.009,0.009
+sum_of_even,3,True,2,6,0.0,[1],True,1,0.007,0.007
+sum_of_even,3,False,3,8,0.0,[2],True,1,0.007,0.007

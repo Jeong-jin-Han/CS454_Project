@@ -1,0 +1,13 @@
+function,lineno,outcome,convergence_speed,nfe,best_fitness,best_solution,success,num_trials,total_time,time_to_solution
+count_divisors_of_gcd,1,True,9,74,0.0,"[0, 3]",True,1,0.027,0.027
+count_divisors_of_gcd,1,False,1,2,0.0,"[8, 10]",True,1,0.012,0.012
+count_divisors_of_gcd,4,True,1,2,0.0,"[8, 10]",True,1,0.013,0.013
+count_divisors_of_gcd,4,False,210,436271,0.0009990009990008542,"[-10002, 1]",False,11,20.031,N/A
+count_divisors_of_gcd,5,True,1,2,0.0,"[8, 10]",True,1,0.009,0.009
+count_divisors_of_gcd,5,False,123,433570,0.001997003995005797,"[-9002, -991]",False,11,20.003,N/A
+count_divisors_of_gcd,6,True,1,2,0.0,"[8, 10]",True,1,0.017,0.017
+count_divisors_of_gcd,6,False,2,18,0.0,"[9, 9]",True,1,0.016,0.016
+count_divisors_of_gcd,7,True,62,117790,0.0,"[-1920, -1920]",True,7,6.533,6.533
+count_divisors_of_gcd,7,False,1,2,0.0,"[8, 10]",True,1,0.011,0.011
+count_divisors_of_gcd,8,True,9,13680,0.0,"[-992, -496]",True,1,0.886,0.886
+count_divisors_of_gcd,8,False,1,2,0.0,"[8, 10]",True,1,0.008,0.008

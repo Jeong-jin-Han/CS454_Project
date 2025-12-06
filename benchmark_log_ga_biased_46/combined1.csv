@@ -1,0 +1,15 @@
+function,lineno,outcome,convergence_speed,nfe,best_fitness,best_solution,success,num_trials,generations,total_time,time_to_solution
+combined1,1,True,6,56647,0.0,"(7, 10102, 50)",True,56647,6,2.990,2.990
+combined1,1,False,1,1,0.0,"(136, 75, -10)",True,1,1,0.082,0.082
+combined1,2,True,1,2,0.0,"(5234, -10, -10)",True,2,1,0.082,0.082
+combined1,2,False,1,1,0.0,"(136, 75, -10)",True,1,1,0.085,0.085
+combined1,3,True,1,5,0.0,"(9734, 56, 51)",True,5,1,0.084,0.084
+combined1,3,False,1,1,0.0,"(136, 75, -10)",True,1,1,0.084,0.084
+combined1,4,True,1,1,0.0,"(136, 75, -10)",True,1,1,0.059,0.059
+combined1,4,False,1,3,0.0,"(-10, -10, 101)",True,3,1,0.096,0.096
+combined1,5,True,1,3,0.0,"(-10, -10, 101)",True,3,1,0.053,0.053
+combined1,5,False,1,6,0.0,"(3, 10112, 65)",True,6,1,0.077,0.077
+combined1,6,True,1,7,0.0,"(79, 9166, 8670)",True,7,1,0.077,0.077
+combined1,6,False,1,6,0.0,"(3, 10112, 65)",True,6,1,0.079,0.079
+combined1,7,True,1,2,0.0,"(5234, -10, -10)",True,2,1,0.077,0.077
+combined1,7,False,1,1,0.0,"(136, 75, -10)",True,1,1,0.077,0.077
