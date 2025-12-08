@@ -1,4 +1,4 @@
-def intersect(line1_x1:int, line1_y1:int, line1_x2:int, line1_y2:int,
+def intersect(line1_x1:int, line1_y1:int, line1_x2:int, line1_y2:int, 
   line2_x1:int, line2_y1:int, line2_x2:int, line2_y2:int)->bool:
 
   u1t = (line2_x2 - line2_x1) * (line1_y1 - line2_y1) \
