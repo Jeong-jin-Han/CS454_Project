@@ -1,13 +1,7 @@
 import time
 "mult branch 동시 평가용도"
 
-# def busy_wait(duration_sec):
-#     end = time.time() + duration_sec
-#     while time.time() < end:
-#         pass  # 아무것도 안 하지만 CPU는 계속 사용됨
-
 def parallel(n: int):
-    # busy_wait(10)
 
     if n == 5:
         pass
@@ -24,7 +18,7 @@ def parallel(n: int):
     elif n == 35:
         pass
     elif n == 40:
-        pass 
+        pass
     elif n == 45:
         pass
     elif n == 50:

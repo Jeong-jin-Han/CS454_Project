@@ -1,0 +1,11 @@
+{
+  "algorithm": "Hill Climbing with Compression",
+  "initialization": "biased",
+  "source_directory": "./benchmark",
+  "output_directory": "benchmark_log_1_biased_44",
+  "time_limit_per_branch": 20.0,
+  "random_seed": 44,
+  "total_execution_time_seconds": 225.62,
+  "total_execution_time_formatted": "3m 45s",
+  "files_tested": 38
+}

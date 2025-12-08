@@ -1,3 +1,9 @@
-*.md
+__pycache__
+.DS_Store
+env/
+venv/
+*.pyc
+__pypackages__/
 tmp/
-__pycache__/
+*.md
+.coverage

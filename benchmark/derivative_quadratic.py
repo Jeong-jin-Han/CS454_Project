@@ -1,5 +1,4 @@
 def derivative_quadratic(a):
-    # approximate derivative of f(x)=x^2 using finite difference
     h = 1
     left = (a - h) * (a - h)
     right = (a + h) * (a + h)

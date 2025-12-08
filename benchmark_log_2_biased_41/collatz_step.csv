@@ -1,0 +1,13 @@
+function,lineno,outcome,convergence_speed,nfe,best_fitness,best_solution,success,num_trials,total_time,time_to_solution
+collatz_steps,1,True,6,14,0.0,[0],True,1,0.008,0.008
+collatz_steps,1,False,1,4,0.0,[5],True,1,0.010,0.010
+collatz_steps,2,True,1,4,0.0,[5],True,1,0.009,0.009
+collatz_steps,2,False,5,12,0.0,[1],True,1,0.008,0.008
+collatz_steps,3,True,1,4,0.0,[5],True,1,0.008,0.008
+collatz_steps,3,False,1,4,0.0,[5],True,1,0.006,0.006
+collatz_steps,4,True,94,280,0.0,[25],True,46,0.040,0.040
+collatz_steps,4,False,1,4,0.0,[5],True,1,0.006,0.006
+collatz_steps,5,True,3,8,0.0,[7],True,1,0.004,0.004
+collatz_steps,5,False,1,4,0.0,[5],True,1,0.004,0.004
+collatz_steps,6,True,90,272,0.0,[26],True,46,0.037,0.037
+collatz_steps,6,False,1,4,0.0,[5],True,1,0.004,0.004

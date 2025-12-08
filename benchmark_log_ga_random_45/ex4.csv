@@ -1,0 +1,5 @@
+function,lineno,outcome,convergence_speed,nfe,best_fitness,best_solution,success,num_trials,generations,total_time,time_to_solution
+tertiary,1,True,1,549,0.0,"(42, 448)",True,549,1,0.032,0.032
+tertiary,1,False,1,1,0.0,"(547, 846)",True,1,1,0.033,0.033
+tertiary,2,True,7,61254,0.0,"(42, 2007)",True,61254,7,0.923,0.923
+tertiary,2,False,1,549,0.0,"(42, 448)",True,549,1,0.036,0.036

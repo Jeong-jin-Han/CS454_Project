@@ -1,0 +1,14 @@
+{
+  "algorithm": "Genetic Algorithm (Continuous Evolution)",
+  "initialization": "biased",
+  "source_directory": "test",
+  "output_directory": "benchmark_log_ga",
+  "time_limit_per_branch": 20.0,
+  "random_seed": 42,
+  "population_size": 10000,
+  "max_generations": 10000,
+  "evolution_strategy": "continuous (no restarts, early stopping at fitness 0.0)",
+  "total_execution_time_seconds": 0.08,
+  "total_execution_time_formatted": "0m 0s",
+  "files_tested": 1
+}

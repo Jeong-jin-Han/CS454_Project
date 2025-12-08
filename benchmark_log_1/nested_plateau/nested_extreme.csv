@@ -1,0 +1,5 @@
+function,lineno,outcome,convergence_speed,nfe,best_fitness,best_solution,success,num_trials,total_time,time_to_solution
+nested_extreme,1,True,27,47393,0.0,[-1],True,3,0.445,0.445
+nested_extreme,1,False,1,2,0.0,[83801],True,1,0.007,0.007
+nested_extreme,2,True,1983,1990642,0.97308826130271,[-13821],False,168,20.000,N/A
+nested_extreme,2,False,27,47393,0.0,[-1],True,3,0.447,0.447

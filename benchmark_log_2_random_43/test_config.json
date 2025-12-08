@@ -1,0 +1,11 @@
+{
+  "algorithm": "Baseline Hill Climbing (No Compression)",
+  "initialization": "random",
+  "source_directory": "./benchmark",
+  "output_directory": "benchmark_log_2_random_43",
+  "time_limit_per_branch": 20.0,
+  "random_seed": 43,
+  "total_execution_time_seconds": 308.99,
+  "total_execution_time_formatted": "5m 8s",
+  "files_tested": 38
+}

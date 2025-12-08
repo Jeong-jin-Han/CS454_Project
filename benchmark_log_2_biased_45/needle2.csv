@@ -1,0 +1,5 @@
+function,lineno,outcome,convergence_speed,nfe,best_fitness,best_solution,success,num_trials,total_time,time_to_solution
+verify_system_state,1,True,267664,1671698,0.003990019965055436,"[32, 32, 32]",False,32858,20.000,N/A
+verify_system_state,1,False,1,8,0.0,"[0, 5, -1]",True,1,0.009,0.009
+fitness_coupled,2,True,289576,1841670,0.003990019965055436,"[32, 32, 32]",False,52109,20.000,N/A
+fitness_coupled,2,False,1,8,0.0,"[9995, 7924, 4640]",True,1,0.010,0.010

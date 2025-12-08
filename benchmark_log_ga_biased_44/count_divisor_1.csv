@@ -1,0 +1,13 @@
+function,lineno,outcome,convergence_speed,nfe,best_fitness,best_solution,success,num_trials,generations,total_time,time_to_solution
+count_divisors,1,True,1,26,0.0,"(0,)",True,26,1,0.041,0.041
+count_divisors,1,False,1,1,0.0,"(18,)",True,1,1,0.039,0.039
+count_divisors,2,True,1,8,0.0,"(-2,)",True,8,1,0.038,0.038
+count_divisors,2,False,1,1,0.0,"(18,)",True,1,1,0.038,0.038
+count_divisors,3,True,1,1,0.0,"(18,)",True,1,1,0.037,0.037
+count_divisors,3,False,4,30131,0.001997003995005797,"(1,)",False,30131,4,20.057,N/A
+count_divisors,4,True,1,1,0.0,"(18,)",True,1,1,0.039,0.039
+count_divisors,4,False,1,1,0.0,"(18,)",True,1,1,0.038,0.038
+count_divisors,5,True,4,30906,0.0860277142986774,"(60,)",False,30906,4,20.000,N/A
+count_divisors,5,False,1,1,0.0,"(18,)",True,1,1,0.032,0.032
+count_divisors,6,True,4,32022,0.006972083790460326,"(60,)",False,32022,4,20.061,N/A
+count_divisors,6,False,1,1,0.0,"(18,)",True,1,1,0.035,0.035

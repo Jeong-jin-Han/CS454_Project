@@ -1,0 +1,5 @@
+function,lineno,outcome,convergence_speed,nfe,best_fitness,best_solution,success,num_trials,total_time,time_to_solution
+check_schedule,1,True,27,47392,0.0,[-1],True,3,0.426,0.426
+check_schedule,1,False,1,2,0.0,[83800],True,1,0.006,0.006
+check_schedule,2,True,157,276373,0.0,[-32401],True,14,2.831,2.831
+check_schedule,2,False,27,47392,0.0,[-1],True,3,0.448,0.448

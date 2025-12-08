@@ -7,7 +7,6 @@ def triangle(a: int, b: int, c: int):
         print("Not a triangle")
         return
 
-    # actual triangle types with extra branches
     if a == b and b == c:
         print("Equilateral triangle")
     elif a == b or b == c or a == c:
