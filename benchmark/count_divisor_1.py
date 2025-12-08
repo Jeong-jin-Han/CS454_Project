@@ -1,6 +1,6 @@
 def count_divisors(n: int) -> int:
     if n == 0:
-        return 0  
+        return 0
     elif n < 0:
         n = -n
 
@@ -15,6 +15,5 @@ def count_divisors(n: int) -> int:
         print("More than hundred!")
     elif cnt == 19:
         print("Exactly 19 divisors!")
-    
-    return cnt
 
+    return cnt

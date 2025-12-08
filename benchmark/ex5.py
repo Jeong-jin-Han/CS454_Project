@@ -5,7 +5,7 @@ def collection(a: int, b: int, c: int)->bool:
 				return True
 			else:
 				return False
-		else: 
+		else:
 			return False
 	else:
 		return False

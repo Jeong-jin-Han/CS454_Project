@@ -10,7 +10,6 @@ def prime_check(n: int) -> int:
             break
         i += 1
 
-    # post-processing to create tricky branches
     if is_prime == 1:
         if n % 4 == 1:
             return 10
