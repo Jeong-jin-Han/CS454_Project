@@ -418,7 +418,7 @@ def test3_single_fitness_with_metrics(
         "best_fitness": best_fitness,
         "best_solution": best_solution,
         "success": success,
-        "num_trials_run": trial + 1,
+        "num_trials_run": trial,
         "total_time": total_time,
         "time_to_solution": time_to_solution,
     }
@@ -542,7 +542,7 @@ if __name__ == "__main__":
     parser.add_argument("--initial-low", type=int, default=-150)
     parser.add_argument("--initial-high", type=int, default=150)
     parser.add_argument("--max-iterations", type=int, default=10)
-    parser.add_argument("--basin-max-search", type=int, default=1000)
+    parser.add_argument("--basin-max-search", type=int, default=100)
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--dims", type=int, nargs="+", default=[1, 2])
     parser.add_argument(

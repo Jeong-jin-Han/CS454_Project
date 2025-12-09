@@ -1,2 +1,2 @@
 convergence_speed,nfe,best_fitness,best_solution,success,num_trials_run,total_time,time_to_solution
-372,372,0.0,"[60, 0]",True,2,0.001733,0.0017328262329101562
+846,846,0.0,"[60, 0]",True,8,0.005608,0.0056078433990478516

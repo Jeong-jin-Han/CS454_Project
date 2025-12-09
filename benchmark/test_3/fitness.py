@@ -64,7 +64,7 @@ def fitness_plateau(args: list[int]) -> float:
     gx, gy = 60, 0
     if x == gx and y == gy:
         return 0.0  # global minimum
-
+    
     return 0.01 * ((x - gx) ** 2 + (y - gy) ** 2)
 
 
@@ -141,14 +141,15 @@ def plot_1d(fitness_fn, fn_name, xmin=-20, xmax=20):
 
     plt.figure(figsize=(8, 5))
     plt.plot(xs, ys)
-    plt.title(f"{fn_name} (1D Landscape)")
+    # plt.title(f"{fn_name} (1D Landscape)")
     plt.xlabel("x")
     plt.ylabel("Fitness")
     plt.grid(True)
     # plt.show()
 
-    fname = f"fitness_{fn_name.lower()}_1d.png"
+    fname = f"landscape_{fn_name.lower()}_1d.png"
     plt.savefig(fname, dpi=200)
+    plt.savefig(f"landscape_{fn_name.lower()}_1d.pdf", dpi=200)
     plt.close()
 
 
@@ -168,7 +169,7 @@ def plot_2d(fitness_fn, fn_name, xmin=-20, xmax=20, ymin=-20, ymax=20):
 
     plt.figure(figsize=(7, 6))
     plt.imshow(Z, extent=(xmin, xmax, ymin, ymax), origin="lower", cmap="viridis")
-    plt.title(f"{fn_name} (2D Landscape)")
+    # plt.title(f"{fn_name} (2D Landscape)")
     plt.colorbar(label="Fitness")
     plt.xlabel("x")
     plt.ylabel("y")
@@ -194,15 +195,16 @@ def plot_3d(fitness_fn, fn_name, xmin=-20, xmax=20, ymin=-20, ymax=20):
 
     ax.plot_surface(X, Y, Z, cmap="viridis", edgecolor="none")
 
-    ax.set_title(f"{fn_name} (3D Surface)")
+    # ax.set_title(f"{fn_name} (3D Surface)")
     ax.set_xlabel("x")
     ax.set_ylabel("y")
     ax.set_zlabel("Fitness")
 
     # plt.show()
 
-    fname = f"fitness_{fn_name.lower()}_2d.png"
+    fname = f"landscape_{fn_name.lower()}_2d.png"
     plt.savefig(fname, dpi=200)
+    plt.savefig(f"landscape_{fn_name.lower()}_2d.pdf", dpi=200)
     plt.close()
 
 
@@ -211,7 +213,7 @@ def plot_3d(fitness_fn, fn_name, xmin=-20, xmax=20, ymin=-20, ymax=20):
 # -------------------------------------------
 if __name__ == "__main__":
     # 1D plots
-    plot_1d(fitness_needle, "Needle-in-the-Haystack")
+    plot_1d(fitness_needle, "Needle-in-the-Haystack", xmin=-150, xmax=150)
     plot_1d(fitness_plateau, "Plateau", xmin=-200, xmax=200)
     plot_1d(fitness_rugged, "Rugged")
     plot_1d(fitness_combined, "Combined")

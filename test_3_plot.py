@@ -120,10 +120,8 @@ def plot_fitness_landscape(
         ax.set_xlabel("x")
         ax.set_ylabel("y")
         ax.set_zlabel("fitness")
-        # ax.set_title(f"{fitness_name} Landscape Trajectory (2D)")
 
         plt.savefig(save_path, dpi=200)
-        # save pdf
         pdf_path = os.path.splitext(save_path)[0] + ".pdf"
         plt.savefig(pdf_path)
         plt.close()
@@ -194,15 +192,12 @@ def plot_fitness_landscape_projected(
         plt.plot(xs, ys, linewidth=2)
         plt.scatter(xs, ys, s=25, edgecolors="black")
 
-    # plt.legend()
     plt.xlabel("x")
     plt.ylabel("y")
-    # plt.title(f"{fitness_name} - 2D Trial Segmented Contour")
 
     root, ext = os.path.splitext(save_path)
     contour_path = f"{root}_contour{ext}"
     plt.savefig(contour_path, dpi=200)
-    # save pdf
     pdf_path = os.path.splitext(contour_path)[0] + ".pdf"
     plt.savefig(pdf_path)
     plt.close()
@@ -257,7 +252,6 @@ def plot_fitness_landscape_projected_last_trial(
     plt.legend()
     plt.xlabel("x")
     plt.ylabel("y")
-    # plt.title(f"{fitness_name} - 2D Trial Segmented Contour")
 
     root, ext = os.path.splitext(save_path)
     contour_path = f"{root}_contour_last_trial{ext}"
