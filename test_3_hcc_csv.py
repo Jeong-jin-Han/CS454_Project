@@ -59,11 +59,6 @@ def hill_climb_with_compression_nd_code(
     # ---------------------------
     if cm is None:
         cm = CompressionManagerND(dim, steepness=5.0)
-        if verbose:
-            print("📦 Created NEW CompressionManagerND for this search")
-    else:
-        if verbose:
-            print("♻️ REUSING existing CompressionManagerND with accumulated metadata")
 
     active_dims = list(range(dim))
     dim_stagnation = {d: 0 for d in range(dim)}
@@ -73,7 +68,6 @@ def hill_climb_with_compression_nd_code(
     # -------------------------------------------------------
     if time_limit is not None and start_time is not None:
         if time.time() - start_time >= time_limit:
-            print("⏱️ Time limit reached before start → stop")
             point = tuple(int(x) for x in start_point)
             traj.append((point, float("inf"), False))
             return traj, cm
@@ -83,34 +77,19 @@ def hill_climb_with_compression_nd_code(
     f = fitness_func_nd_code(point)
     traj.append((point, f, False))
 
-    if verbose:
-        print(f"\n🚀 {dim}D hill climbing start at {point}, f={f:.6g}\n")
-
     # Early success
     if abs(f) < global_min_threshold:
-        if verbose:
-            print("🎉 INITIAL POINT IS ALREADY A GOAL")
         return traj, cm
 
     # ============================================================
     # MAIN ITERATIONS
     # ============================================================
     for it in range(max_iterations):
-        # print(f"it={it}, point={point}, f={f}, active_dims={active_dims}")
         if not active_dims:
-            if verbose:
-                print("All dimensions deactivated. Stopping.")
             return traj, cm
-
-        if verbose:
-            print("=" * 80)
-            print(f"🔄 Iteration {it+1}/{max_iterations}")
-            print("=" * 80)
 
         # Check early
         if abs(f) < global_min_threshold:
-            if verbose:
-                print("🎉 SUCCESS at iteration start")
             break
 
         step_count = 0
@@ -124,8 +103,6 @@ def hill_climb_with_compression_nd_code(
             # TIME CHECK
             if time_limit is not None and start_time is not None:
                 if time.time() - start_time >= time_limit:
-                    if verbose:
-                        print("⏱️ Time limit reached inside climbing loop → stop")
                     return traj, cm
 
             best_point = point
@@ -226,8 +203,6 @@ def hill_climb_with_compression_nd_code(
             for d in list(active_dims):
                 if dim_stagnation[d] >= deactivation_patience:
                     active_dims.remove(d)
-                    if verbose:
-                        print(f"Deactivating dim {d} due to stagnation")
 
             # If no improvement → stop climb
             if best_f < f:
@@ -239,29 +214,15 @@ def hill_climb_with_compression_nd_code(
                 )
                 traj.append((point, f, used_comp))
                 step_count += 1
-            else:
-                if verbose:
-                    print(f"📍 Stuck after {step_count} steps at {point}, f={f:.6g}")
-
-
-
-
-
                 break
 
         # After full climbing iteration:
         if abs(f) < global_min_threshold:
-            if verbose:
-                print("🎉 SUCCESS after climbing")
-
             break
 
         # -----------------------------------------------------------
         # BASIN DETECTION
         # -----------------------------------------------------------
-        if verbose:
-            print(f"\n⚠️ Stuck at {point}, detecting basins…")
-
         basins = {}
         for d in active_dims:
             if time_limit and (time.time() - start_time) >= time_limit:
@@ -276,9 +237,6 @@ def hill_climb_with_compression_nd_code(
                 basins[d] = basin
 
         if not basins:
-            if verbose:
-                print("No basins found → stopping")
-
             break
 
         # -----------------------------------------------------------
@@ -307,16 +265,10 @@ def hill_climb_with_compression_nd_code(
 
         restart_point, restart_f = min(restart_candidates, key=lambda t: t[1])
 
-        if verbose:
-            print(f"➡️ Restarting from {restart_point}, f={restart_f:.6g}")
-
         point, f = restart_point, restart_f
         traj.append((point, f, True))
 
         if abs(f) < global_min_threshold:
-            if verbose:
-                print("🎉 Restart hit goal")
-
             break
     return traj, cm
 

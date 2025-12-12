@@ -339,7 +339,6 @@ def run_parallel_test3_ga(
         save_path=plot_png,
     )
 
-    print(f"Saved plot: {plot_png}")
     return result
 
 
@@ -352,7 +351,6 @@ def run_directory_test3_ga(
         for num_args in dims:
 
             output_dir = f"{output_base}/{fitness_name}_{num_args}D"
-            print(f"\n🚀 Running GA on {fitness_name} ({num_args}D)")
             result = run_parallel_test3_ga(
                 fitness_name,
                 num_args,
@@ -360,9 +358,6 @@ def run_directory_test3_ga(
                 time_limit,
                 pop_size,
                 random_seed,
-            )
-            print(
-                f"   → Done. Success={result['success']}, Best Fit={result['best_fitness']}"
             )
 
 
