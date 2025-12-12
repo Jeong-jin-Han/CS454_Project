@@ -140,11 +140,11 @@ def ga(
     # Evaluate initial population with early stopping and time limit checking
     fit_cache = []
     for ind in population:
-        # ⏱️ Check time limit before evaluating
+        # Check time limit before evaluating
         if time_limit is not None and start_time is not None:
             elapsed = time.time() - start_time
             if elapsed >= time_limit:
-                print(f"[GA] ⏱️ Time limit ({time_limit}s) reached during initialization after {len(fit_cache)} evaluations")
+                print(f"[GA]  Time limit ({time_limit}s) reached during initialization after {len(fit_cache)} evaluations")
                 # Return best so far
                 if fit_cache:
                     best_fitness_init = min(fit for fit, _ in fit_cache)
@@ -163,9 +163,9 @@ def ga(
         )
         fit_cache.append((fitness, ind))
         
-        # ✅ Early stop if solution found during initialization
+        # Early stop if solution found during initialization
         if fitness == 0.0:
-            print(f"[GA] ✅ Solution found during initialization after {len(fit_cache)} evaluations!")
+            print(f"[GA]  Solution found during initialization after {len(fit_cache)} evaluations!")
             best_ind, best_fit = ind, 0.0
             return best_ind, best_fit
     
@@ -187,7 +187,7 @@ def ga(
         # Check if solution already found from previous generation
         if ranked[0][1][0] == 0.0:
             best_ind, best_fit = ranked[0][0], 0.0
-            print(f"[GA] ✅ Solution found! Stopping at generation {gen}")
+            print(f"[GA]  Solution found! Stopping at generation {gen}")
             break
 
         # Next generation creation
@@ -203,11 +203,11 @@ def ga(
         fit_cache = []
         
         for ind in population:
-            # ⏱️ Check time limit before evaluating
+            # Check time limit before evaluating
             if time_limit is not None and start_time is not None:
                 elapsed = time.time() - start_time
                 if elapsed >= time_limit:
-                    print(f"[GA] ⏱️ Time limit ({time_limit}s) reached in Gen {gen} after {len(fit_cache)} evaluations in this generation")
+                    print(f"[GA]  Time limit ({time_limit}s) reached in Gen {gen} after {len(fit_cache)} evaluations in this generation")
                     print(f"[GA] Returning best solution found: fitness={best_fit:.6g}")
                     return best_ind, best_fit
             
@@ -226,9 +226,9 @@ def ga(
                 best_fit = fitness
                 best_ind = ind
             
-            # ✅ Early stop if solution found during generation evaluation
+            # Early stop if solution found during generation evaluation
             if fitness == 0.0:
-                print(f"[GA] ✅ Solution found in Gen {gen} after {len(fit_cache)} evaluations in this generation!")
+                print(f"[GA]  Solution found in Gen {gen} after {len(fit_cache)} evaluations in this generation!")
                 print(f"[GA] Total evaluations so far: {fitness_calc.evals}")
                 return best_ind, best_fit
 

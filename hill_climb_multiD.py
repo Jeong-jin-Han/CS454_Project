@@ -23,7 +23,7 @@ class SigmoidWarping:
         self.shift = self.length - 1  # how much right side is pulled left
 
     def forward(self, node):
-        """X → Z"""
+        """X -> Z"""
         node = np.atleast_1d(node).astype(float)
         position = np.zeros(len(node), dtype=float)
         for i, n in enumerate(node):
@@ -44,7 +44,7 @@ class SigmoidWarping:
         return position[0] if len(node) == 1 else position
 
     def inverse(self, position):
-        """Z → X"""
+        """Z -> X"""
         position = np.atleast_1d(position).astype(float)
         node = np.zeros(len(position), dtype=int)
         for i, pos in enumerate(position):
@@ -74,7 +74,7 @@ class SigmoidWarping:
             return np.vectorize(int)(node)
 
 class MetadataCompressionOriginalSpace:
-    """Metadata ALWAYS in ORIGINAL X-space."""
+    """Keep compression metadata in the original X-space."""
     def __init__(self, compressions_x_space=None, steepness=5.0):
         self.metadata_x = sorted(compressions_x_space or [], key=lambda x: x[0])
         self.steepness = float(steepness)
@@ -82,10 +82,10 @@ class MetadataCompressionOriginalSpace:
         self.z_positions = []
         if self.metadata_x:
             print(f"\n{'='*80}")
-            print(f"📦 METADATA (Original X-space): {self.metadata_x}")
+            print(f" METADATA (Original X-space): {self.metadata_x}")
             print(f"{'='*80}")
             self._build_warpings()
-            print(f"✅ Built {len(self.warpings)} compressions")
+            print(f" Built {len(self.warpings)} compressions")
             print(f"{'='*80}\n")
 
     def _build_warpings(self):
@@ -98,7 +98,7 @@ class MetadataCompressionOriginalSpace:
             z_start = x_start - cumulative_shift
             z_length = x_length
             print(f"  Compression #{i+1}:")
-            print(f"    Original X[{x_start}, {x_end}] → Z[{z_start}, {z_start + z_length}]")
+            print(f"    Original X[{x_start}, {x_end}] -> Z[{z_start}, {z_start + z_length}]")
             print(f"    Saves {z_length - 1} nodes")
             warping = SigmoidWarping(z_start, z_length, self.steepness)
             self.warpings.append(warping)
@@ -106,14 +106,14 @@ class MetadataCompressionOriginalSpace:
             cumulative_shift += (z_length - 1)
 
     def forward(self, node):
-        """X → Z"""
+        """X -> Z"""
         position = node
         for warping in self.warpings:
             position = warping.forward(position)
         return position
 
     def inverse(self, position):
-        """Z → X"""
+        """Z -> X"""
         node = position
         for warping in reversed(self.warpings):
             node = warping.inverse(node)
@@ -121,23 +121,23 @@ class MetadataCompressionOriginalSpace:
 
 
 # ===============================
-# Bidirectional Basin Detector (FIXED)
+# Bidirectional Basin Detector 
 # ===============================
 def detect_compression_basin(fitness_func, local_min_x, max_search=100, verbose = False):
     """
-    Bidirectional basin detection with CORRECT priority logic:
+    Bidirectional basin detection.
 
-    Rule 1: if current_fit == local_fit, continue to search (record farthest point)
-    Rule 2: if current_fit > local_fit, keep searching within limited length
-    Rule 3: if current_fit < local_fit, STOP (exited basin) - USE THIS EXIT POINT
+    Rules:
+    1) current_fit == local_fit: keep extending (track farthest equal-fitness point)
+    2) current_fit > local_fit: keep scanning (still inside basin/shoulder)
+    3) current_fit < local_fit: treat as exit boundary and stop
 
-    PRIORITY: Use Rule 3 exit point if found, otherwise use farthest equal-fitness point from Rule 1.
+    If an exit is found (Rule 3), use it. Otherwise, fall back to the farthest
+    equal-fitness point from Rule 1.
 
-    Search both LEFT and RIGHT from local_min_x.
 
     Returns:
-    --------
-    (start_x, length) or None if no compression needed
+        (start_x, length) or None
     """
     def debug_print(msg):
         if verbose:
@@ -146,7 +146,7 @@ def detect_compression_basin(fitness_func, local_min_x, max_search=100, verbose 
 
     local_min_fitness = fitness_func(local_min_x)
 
-    debug_print(f"  🔍 Detecting basin from local min: x={local_min_x}, fitness={local_min_fitness:.2f}")
+    debug_print(f"   Detecting basin from local min: x={local_min_x}, fitness={local_min_fitness:.2f}")
 
     # LEFT search
     left_boundary = local_min_x
@@ -174,10 +174,10 @@ def detect_compression_basin(fitness_func, local_min_x, max_search=100, verbose 
 
     # Priority: Use Rule 3 exit point if found, otherwise farthest equal-fitness
     if found_left_exit:
-        debug_print(f"    ✅ LEFT: Using Rule 3 exit boundary: x={left_boundary}")
+        debug_print(f"     LEFT: Using Rule 3 exit boundary: x={left_boundary}")
     elif found_left_equal:
         left_boundary = farthest_left_equal
-        debug_print(f"    ✅ LEFT: Using farthest equal-fitness point (no exit found): x={left_boundary}")
+        debug_print(f"     LEFT: Using farthest equal-fitness point (no exit found): x={left_boundary}")
 
     # RIGHT search
     right_boundary = local_min_x
@@ -205,22 +205,22 @@ def detect_compression_basin(fitness_func, local_min_x, max_search=100, verbose 
 
     # Priority: Use Rule 3 exit point if found, otherwise farthest equal-fitness
     if found_right_exit:
-        debug_print(f"    ✅ RIGHT: Using Rule 3 exit boundary: x={right_boundary}")
+        debug_print(f"     RIGHT: Using Rule 3 exit boundary: x={right_boundary}")
     elif found_right_equal:
         right_boundary = farthest_right_equal
-        debug_print(f"    ✅ RIGHT: Using farthest equal-fitness point (no exit found): x={right_boundary}")
+        debug_print(f"     RIGHT: Using farthest equal-fitness point (no exit found): x={right_boundary}")
 
     basin_length = right_boundary - left_boundary + 1
 
     if basin_length < 2:
-        debug_print(f"  ⚠️ No compression: basin too small (length={basin_length})")
+        debug_print(f"   No compression: basin too small (length={basin_length})")
         return None
 
     if not (found_left_equal or found_right_equal or found_left_exit or found_right_exit):
-        debug_print(f"  ⚠️ No compression: only Rule 2 exists")
+        debug_print(f"   No compression: only Rule 2 exists")
         return None
 
-    debug_print(f"  ✅ Basin detected: X[{left_boundary}, {right_boundary}], length={basin_length}")
+    debug_print(f"   Basin detected: X[{left_boundary}, {right_boundary}], length={basin_length}")
     return (left_boundary, basin_length)
 
 
@@ -253,7 +253,7 @@ def merge_overlapping_compressions(compressions):
             new_end = max(end, last_end)
             new_length = new_end - new_start + 1
             merged[-1] = (new_start, new_length)
-            print(f"  🔄 Merged: ({start},{length}) + ({last_start},{last_length}) → ({new_start},{new_length})")
+            print(f"   Merged: ({start},{length}) + ({last_start},{last_length}) -> ({new_start},{new_length})")
         else:
             merged.append((start, length))
 
@@ -279,9 +279,9 @@ class CompressionManagerND:
     def __init__(self, dim, steepness=5.0):
         self.dim = dim
         self.steepness = float(steepness)
-        # dim_compressions[i] = dict mapping fixed_coords → list of compressions
+        # dim_compressions[i] = dict mapping fixed_coords -> list of compressions
         self.dim_compressions = [{} for _ in range(dim)]
-        # dim_systems[i] = dict mapping fixed_coords → MetadataCompressionOriginalSpace
+        # dim_systems[i] = dict mapping fixed_coords -> MetadataCompressionOriginalSpace
         self.dim_systems = [{} for _ in range(dim)]
     
     def update_dimension(self, vary_dim, fixed_coords, basin):
@@ -387,11 +387,11 @@ def hill_climb_with_compression_nd(
     f = fitness_func_nd(point)
     traj.append((point, f, False))
 
-    print(f"\n🚀 {dim}D hill climbing start at {point}, f={f:.4f}\n")
+    print(f"\n {dim}D hill climbing start at {point}, f={f:.4f}\n")
 
     for it in range(max_iterations):
         print("="*80)
-        print(f"🔄 Iteration {it+1}/{max_iterations}")
+        print(f" Iteration {it+1}/{max_iterations}")
         print("="*80)
 
         step_count = 0
@@ -399,7 +399,7 @@ def hill_climb_with_compression_nd(
             # ----- Propose neighbors in all directions -----
             candidates = []
 
-            # 1) Axis-aligned neighbors (O(D))
+            # Axis neighbors
             for d in range(dim):
                 # Get compression system for this dimension
                 fixed_coords = tuple(point[i] for i in range(dim) if i != d)
@@ -426,7 +426,7 @@ def hill_climb_with_compression_nd(
                 cand_plus = tuple(point_plus)
                 candidates.append((cand_plus, fitness_func_nd(cand_plus)))
 
-            # 2) Diagonal neighbors (O(D^2))
+            # Diagonal neighbors
             if dim >= 2:
                 for d1, d2 in itertools.combinations(range(dim), 2):
                     # Compression system for d1
@@ -469,16 +469,16 @@ def hill_climb_with_compression_nd(
                 traj.append((point, f, used_comp))
                 step_count += 1
             else:
-                print(f"  📍 Climbed {step_count} steps, now at {point}, f={f:.6g}")
+                print(f"   Climbed {step_count} steps, now at {point}, f={f:.6g}")
                 break
 
         # Check convergence / global min
         if abs(f) < global_min_threshold:
-            print("\n🎉 SUCCESS: reached near-global minimum")
+            print("\n SUCCESS: reached near-global minimum")
             break
 
-        print(f"\n⚠️ STUCK at local minimum {point}, f={f:.6g}")
-        print(f"  🔍 Detecting basins along all {dim} dimensions...")
+        print(f"\n STUCK at local minimum {point}, f={f:.6g}")
+        print(f"   Detecting basins along all {dim} dimensions...")
 
         # ----- Detect basins along each dimension -----
         basins = {}  # dimension -> (start, length)
@@ -486,12 +486,12 @@ def hill_climb_with_compression_nd(
             basin = detect_basin_along_dimension(fitness_func_nd, point, d, max_search=basin_max_search)
             if basin:
                 fixed_coords = tuple(point[i] for i in range(dim) if i != d)
-                print(f"  ✅ Dim {d} basin: {basin}")
+                print(f"   Dim {d} basin: {basin}")
                 cm.update_dimension(d, fixed_coords, basin)
                 basins[d] = basin
 
         if not basins:
-            print("\n  ⚠️ No compressible basin found in any dimension. Stopping.")
+            print("\n   No compressible basin found in any dimension. Stopping.")
             break
 
         # ----- Choose restart point after compression -----
@@ -514,15 +514,15 @@ def hill_climb_with_compression_nd(
         # Pick best restart candidate
         if restart_candidates:
             restart_point, restart_f = min(restart_candidates, key=lambda t: t[1])
-            print(f"\n  ➡️ Restarting from {restart_point}, f={restart_f:.4f}")
+            print(f"\n   Restarting from {restart_point}, f={restart_f:.4f}")
             point, f = restart_point, restart_f
             traj.append((point, f, True))
         else:
-            print("\n  ⚠️ No valid restart candidate. Stopping.")
+            print("\n   No valid restart candidate. Stopping.")
             break
 
     print("\n" + "="*80)
-    print(f"🏁 FINAL {dim}D RESULTS")
+    print(f" FINAL {dim}D RESULTS")
     print("="*80)
     print(f"  Final position: {point}")
     print(f"  Final fitness: {f:.6g}")
@@ -637,22 +637,22 @@ def hill_climb_with_compression_nd_code(
     # Reuse existing compression manager if provided, otherwise create new one
     if cm is None:
         cm = CompressionManagerND(dim, steepness=5.0)
-        print("📦 Created NEW CompressionManagerND for this search")
+        print(" Created NEW CompressionManagerND for this search")
     else:
-        print("♻️ REUSING existing CompressionManagerND with accumulated metadata")
+        print(" REUSING existing CompressionManagerND with accumulated metadata")
 
     # Initialize point
     point = tuple(int(x) for x in start_point)
     f = fitness_func_nd_code(point)
     traj.append((point, f, False))
 
-    print(f"\n🚀 {dim}D hill climbing start at {point}, f={f:.4f}\n")
+    print(f"\n {dim}D hill climbing start at {point}, f={f:.4f}\n")
 
-    #  Early success check: if already at goal, return immediately
+    # Early success check: if already at goal, return immediately
     if abs(f) < global_min_threshold:
-        print("🎉 INITIAL POINT IS ALREADY AT GOAL! Returning immediately.")
+        print(" INITIAL POINT IS ALREADY AT GOAL! Returning immediately.")
         print("\n" + "="*80)
-        print(f"🏁 FINAL {dim}D RESULTS")
+        print(f" FINAL {dim}D RESULTS")
         print("="*80)
         print(f"  Final position: {point}")
         print(f"  Final fitness: {f:.6g}")
@@ -664,12 +664,12 @@ def hill_climb_with_compression_nd_code(
 
     for it in range(max_iterations):
         print("="*80)
-        print(f"🔄 Iteration {it+1}/{max_iterations}")
+        print(f" Iteration {it+1}/{max_iterations}")
         print("="*80)
         
-        #  Check if already at goal before starting this iteration
+        # Check if already at goal before starting this iteration
         if abs(f) < global_min_threshold:
-            print("🎉 SUCCESS: Already at goal at start of iteration!")
+            print(" SUCCESS: Already at goal at start of iteration!")
             break
 
         step_count = 0
@@ -679,7 +679,7 @@ def hill_climb_with_compression_nd_code(
             # ----- Propose neighbors in all directions -----
             candidates = []
 
-            # 1) Axis-aligned neighbors (O(D))
+            # Axis neighbors
             for d in range(dim):
                 # Get compression system for this dimension
                 fixed_coords = tuple(point[i] for i in range(dim) if i != d)
@@ -706,7 +706,7 @@ def hill_climb_with_compression_nd_code(
                 cand_plus = tuple(point_plus)
                 candidates.append((cand_plus, fitness_func_nd_code(cand_plus)))
 
-            # 2) Diagonal neighbors (O(D^2))
+            # Diagonal neighbors
             if dim >= 2:
                 for d1, d2 in itertools.combinations(range(dim), 2):
                     # Compression system for d1
@@ -749,20 +749,20 @@ def hill_climb_with_compression_nd_code(
                 traj.append((point, f, used_comp))
                 step_count += 1
             else:
-                print(f"  📍 Climbed {step_count} steps, now at {point}, f={f:.6g}")
+                print(f"   Climbed {step_count} steps, now at {point}, f={f:.6g}")
                 break
         
         # Safety check: warn if hit the step limit
         if step_count >= max_steps_per_iteration:
-            print(f"  ⚠️ WARNING: Hit maximum step limit ({max_steps_per_iteration}) in iteration {it+1}")
+            print(f"   WARNING: Hit maximum step limit ({max_steps_per_iteration}) in iteration {it+1}")
 
         # Check convergence / global min
         if abs(f) < global_min_threshold:
-            print("\n🎉 SUCCESS: reached near-global minimum")
+            print("\n SUCCESS: reached near-global minimum")
             break
 
-        print(f"\n⚠️ STUCK at local minimum {point}, f={f:.6g}")
-        print(f"  🔍 Detecting basins along all {dim} dimensions...")
+        print(f"\n STUCK at local minimum {point}, f={f:.6g}")
+        print(f"   Detecting basins along all {dim} dimensions...")
 
         # ----- Detect basins along each dimension -----
         basins = {}  # dimension -> (start, length)
@@ -770,16 +770,16 @@ def hill_climb_with_compression_nd_code(
             basin = detect_basin_along_dimension(fitness_func_nd_code, point, d, max_search=basin_max_search)
             if basin:
                 fixed_coords = tuple(point[i] for i in range(dim) if i != d)
-                print(f"  ✅ Dim {d} basin: {basin}")
+                print(f"   Dim {d} basin: {basin}")
                 cm.update_dimension(d, fixed_coords, basin)
                 basins[d] = basin
 
         if not basins:
-            print("\n  ⚠️ No compressible basin found in any dimension. Stopping.")
+            print("\n   No compressible basin found in any dimension. Stopping.")
             break
 
-        # ----- Choose restart point after compression -----
-        # Try both ends of each detected basin
+
+        # Restart: try basin boundaries (start-1, end+1)
         restart_candidates = []
         
         for d, (b_start, b_len) in basins.items():
@@ -798,20 +798,20 @@ def hill_climb_with_compression_nd_code(
         # Pick best restart candidate
         if restart_candidates:
             restart_point, restart_f = min(restart_candidates, key=lambda t: t[1])
-            print(f"\n  ➡️ Restarting from {restart_point}, f={restart_f:.4f}")
+            print(f"\n   Restarting from {restart_point}, f={restart_f:.4f}")
             point, f = restart_point, restart_f
             traj.append((point, f, True))
             
-            #  Check if restart point already reached the goal
+            # Check if restart point already reached the goal
             if abs(f) < global_min_threshold:
-                print("🎉 RESTART POINT IS ALREADY AT GOAL! Stopping iterations.")
+                print(" RESTART POINT IS ALREADY AT GOAL! Stopping iterations.")
                 break
         else:
-            print("\n  ⚠️ No valid restart candidate. Stopping.")
+            print("\n   No valid restart candidate. Stopping.")
             break
 
     print("\n" + "="*80)
-    print(f"🏁 FINAL {dim}D RESULTS")
+    print(f" FINAL {dim}D RESULTS")
     print("="*80)
     print(f"  Final position: {point}")
     print(f"  Final fitness: {f:.6g}")
@@ -850,7 +850,7 @@ def hill_climb_simple_nd_code(
         return np.abs(fitness_calc.fitness_for_candidate(func_obj, x, target_branch_node, target_outcome, subject_node, parent_map))
         # return fitness_calc.fitness_for_candidate(func_obj, x, target_branch_node, target_outcome, subject_node, parent_map)
 
-    #  Check time before initial evaluation
+    # Check time before initial evaluation
     if time_limit is not None and start_time is not None:
         if time.time() - start_time >= time_limit:
             return [(point, float('inf'))]  # Return immediately if time exceeded
@@ -859,7 +859,7 @@ def hill_climb_simple_nd_code(
     traj = [(point, f)]
 
     for _ in range(max_steps):
-        #  Check time limit before evaluating neighbors
+        # Check time limit before evaluating neighbors
         if time_limit is not None and start_time is not None:
             if time.time() - start_time >= time_limit:
                 return traj  # Return best found so far
@@ -867,7 +867,7 @@ def hill_climb_simple_nd_code(
         # Try 2*dim neighbors (±1 in each dimension)
         candidates = []
         for d in range(dim):
-            #  Check time before each evaluation
+            # Check time before each evaluation
             if time_limit is not None and start_time is not None:
                 if time.time() - start_time >= time_limit:
                     return traj
@@ -877,7 +877,7 @@ def hill_climb_simple_nd_code(
             neighbor[d] -= 1
             candidates.append((tuple(neighbor), fitness_func_nd_code(tuple(neighbor))))
             
-            #  Check time before next evaluation
+            # Check time before next evaluation
             if time_limit is not None and start_time is not None:
                 if time.time() - start_time >= time_limit:
                     return traj

@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+
 import os
 import csv
 import time
@@ -25,7 +25,7 @@ from test_3_plot import plot_fitness_landscape
 # N-D Hill-climb with Compression
 # ===============================
 def hill_climb_with_compression_nd_code(
-    fitness_fn,  # <---- 단순 callable((tuple))->float
+    fitness_fn,  # <---- # callable(point: tuple[int, ...]) -> float
     start_point,
     dim,
     max_iterations=10,
@@ -41,7 +41,7 @@ def hill_climb_with_compression_nd_code(
 
     This version:
       - DOES NOT use FitnessCalculator / branches / func_obj
-      - fitness_fn(point) must return a non-negative scalar
+      - fitness_fn(point) returns a scalar where lower is better (0.0 means success)
       - Supports strict time-limit enforcement before every eval
     """
 
@@ -49,7 +49,7 @@ def hill_climb_with_compression_nd_code(
     def fitness_func_nd_code(x):
         return float(fitness_fn(tuple(int(v) for v in x)))
 
-    # For dimension deactivation
+    # Dimension deactivation: if changing a dim rarely affects fitness, stop exploring it
     deactivation_patience = 20
 
     traj = []
@@ -100,7 +100,7 @@ def hill_climb_with_compression_nd_code(
         # -----------------------------------------------------------
         while step_count < max_steps_per_iteration:
 
-            # TIME CHECK
+            
             if time_limit is not None and start_time is not None:
                 if time.time() - start_time >= time_limit:
                     return traj, cm
@@ -108,14 +108,14 @@ def hill_climb_with_compression_nd_code(
             best_point = point
             best_f = f
             candidates = []
-            meaningful_dims = set()
+            meaningful_dims = set() # dims that produced ANY fitness change (not only improvements)
 
             # ------------------------
             # AXIS NEIGHBORS
             # ------------------------
             for d in active_dims:
 
-                # time check
+                
                 if time_limit is not None and start_time is not None:
                     if time.time() - start_time >= time_limit:
                         return traj, cm
@@ -147,7 +147,7 @@ def hill_climb_with_compression_nd_code(
             if len(active_dims) >= 2:
                 for d1, d2 in itertools.combinations(active_dims, 2):
 
-                    # time check
+                    
                     if time_limit and (time.time() - start_time) >= time_limit:
                         return traj, cm
 
@@ -204,7 +204,7 @@ def hill_climb_with_compression_nd_code(
                 if dim_stagnation[d] >= deactivation_patience:
                     active_dims.remove(d)
 
-            # If no improvement → stop climb
+            # If no improvement -> stop climb
             if best_f < f:
                 point, f = best_point, best_f
                 used_comp = any(
@@ -299,7 +299,7 @@ def test3_single_fitness_with_metrics(
 
     random.seed(random_seed)
 
-    # Create ONE CompressionManagerND
+    # Reuse ONE CompressionManagerND across trials to accumulate metadata (cross-trial learning)
     branch_cm = CompressionManagerND(num_args, steepness=5.0)
 
     # Metrics to track
@@ -478,7 +478,7 @@ def run_directory_test3_hcc(
             )
 
             print(
-                f" → Done. Success={result['success']}, Best Fit={result['best_fitness']}"
+                f" -> Done. Success={result['success']}, Best Fit={result['best_fitness']}"
             )
 
 

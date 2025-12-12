@@ -12,10 +12,10 @@ def plot_fitness_landscape(
     is_hc=False,
 ):
     """
-    Plot GA or HCC trajectory on top of the fitness landscape.
-    HISTORY FORMAT:
-        HCC → (trial_id, gen_idx, pt, fitness_value)
-        GA  → (gen_idx, pt, fitness_value)
+    Plot optimization trajectories (GA / HC / HCC) on top of the fitness landscape.
+    History format:
+        - HCC / HC : (trial_id, generation_index, point, fitness_value)
+        - GA       : (generation_index, point, fitness_value)
     """
 
     import numpy as np
@@ -25,20 +25,20 @@ def plot_fitness_landscape(
     lo, hi = value_range
     alphas = np.linspace(0.2, 1.0, len(history))
 
-    # --- Normalize history into uniform format ---
+    # --- Normalize history into a unified (trial_id, gen, pt, fitness) format ---
     if is_hcc or is_hc:
         # HCC: (trial_id, gen, pt, f)
         parsed = [(tid, gen, pt, f) for tid, gen, pt, f in history]
     else:
-        # GA or non-HCC:
-        # Allow both:
-        #   (gen, pt, f)  OR  (tid, gen, pt, f)
+        # GA or non-HCC cases:
+        # Support both formats:
+        #  (gen, pt, fitness) or (trial_id, gen, pt, fitness)
         parsed = []
         for entry in history:
             if len(entry) == 4:
                 tid, gen, pt, f = entry
             else:
-                # no trial_id → treat as single trial (id=0)
+                # no trial_id -> treat as single trial (id=0)
                 gen, pt, f = entry
                 tid = 0
             parsed.append((tid, gen, pt, f))
@@ -59,7 +59,7 @@ def plot_fitness_landscape(
         plt.figure(figsize=(8, 5))
         plt.plot(X, Y, color="lightgray", linewidth=2)
 
-        # trial segmentation
+        # Segment trajectory points by trial_id
         segments = {}
         for tid, gen, pt, f in parsed:
             segments.setdefault(tid, [[], []])
@@ -125,7 +125,7 @@ def plot_fitness_landscape(
         pdf_path = os.path.splitext(save_path)[0] + ".pdf"
         plt.savefig(pdf_path)
         plt.close()
-        print(f"Saved 2D→3D plot: {save_path}")
+        print(f"Saved 2D->3D plot: {save_path}")
 
         # contour version
         plot_fitness_landscape_projected(

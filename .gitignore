@@ -7,3 +7,6 @@ __pypackages__/
 tmp/
 *.md
 .coverage
+*_debug_*/
+*_debug.sh
+*_debug_*.csv

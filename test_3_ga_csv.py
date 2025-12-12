@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+
 """
 GA Testing for Arbitrary Fitness Landscapes (Test 3 Project)
 
@@ -92,7 +92,7 @@ def ga_test3(
 
     for _ in range(pop_size):
         if time_limit and (time.time() - start_time) >= time_limit:
-            # No individuals? → produce empty result
+            # No individuals? -> produce empty result
             if not population:
                 return None, float("inf"), []
             break
