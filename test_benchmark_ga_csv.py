@@ -93,10 +93,10 @@ def _ga_worker(args):
     import sys
     import time
     
-    # ⏱️ Start timer for this branch
+    #  Start timer for this branch
     branch_start_time = time.time()
     
-    # 🎲 Reset to same global seed for ALL branches (fairness)
+    #  Reset to same global seed for ALL branches (fairness)
     random.seed(random_seed)
     
     if worker_verbose:
@@ -148,7 +148,7 @@ def _ga_worker(args):
 
         nfe_before = fitness_calc.evals
 
-        # ✅ Run GA once with high max_gen and strict time limit enforcement
+        #  Run GA once with high max_gen and strict time limit enforcement
         # The ga() function has:
         # - Built-in early stopping at fitness 0.0
         # - Strict time limit checking (stops before exceeding time_limit)
@@ -171,8 +171,8 @@ def _ga_worker(args):
             use_biased_init=use_biased_init,
             var_constants=var_constants,
             total_constants=total_constants,
-            time_limit=time_limit,  # ⏱️ Strict time limit enforcement
-            start_time=branch_start_time,  # ⏱️ Start time for this branch
+            time_limit=time_limit,  #  Strict time limit enforcement
+            start_time=branch_start_time,  #  Start time for this branch
         )
 
         nfe_after = fitness_calc.evals
@@ -498,7 +498,7 @@ def run_directory_test(
     print(f"🔍 Found {len(py_files)} Python files in {source_dir}")
     print("="*80)
 
-    # ⏱️ Start overall timer
+    #  Start overall timer
     overall_start_time = time.time()
 
     for py_file in py_files:
@@ -529,10 +529,10 @@ def run_directory_test(
             print(f"❌ Error testing {py_file}: {e}")
             continue
     
-    # ⏱️ Calculate total execution time
+    #  Calculate total execution time
     total_execution_time = time.time() - overall_start_time
     
-    # 📝 Save test configuration to JSON
+    #  Save test configuration to JSON
     config_file = output_path / "test_config.json"
     config_data = {
         "algorithm": "Genetic Algorithm (Continuous Evolution)",

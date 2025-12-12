@@ -42,7 +42,7 @@ def validate_test_case(module_name: str, func_name: str, args_str: str) -> bool:
 
 
 def main(dir_name: str):
-    csv_files = sorted([f for f in os.listdir(dir_name) if f.endswith(".csv")])  # ✅ Sort alphabetically
+    csv_files = sorted([f for f in os.listdir(dir_name) if f.endswith(".csv")])  #  Sort alphabetically
     os.makedirs("benchmark", exist_ok=True)
     os.makedirs("coverage_result", exist_ok=True)
 
@@ -62,7 +62,7 @@ def main(dir_name: str):
                 func = row["function"]
                 sol = row["best_solution"][1:-1]
                 
-                # ✅ Validate test case before adding
+                #  Validate test case before adding
                 if validate_test_case(program_name, func, sol):
                     tests.append((func, idx, sol))
                 else:

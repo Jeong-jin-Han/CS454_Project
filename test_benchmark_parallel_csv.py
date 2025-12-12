@@ -48,10 +48,10 @@ def test_single_branch_with_metrics(args):
     # Reduce output verbosity in workers to prevent buffer overflow
     worker_verbose = os.environ.get('WORKER_VERBOSE', '0') == '1'
     
-    # ⏱️ Start timer for this branch (each thread has its own timer)
+    #  Start timer for this branch (each thread has its own timer)
     branch_start_time = time.time()
     
-    # 🎲 Reset to same global seed for ALL branches (fairness)
+    #  Reset to same global seed for ALL branches (fairness)
     random.seed(random_seed)
     
     if worker_verbose:
@@ -63,7 +63,7 @@ def test_single_branch_with_metrics(args):
     source = open(file_path).read()
     namespace, traveler, record, _ = instrument_and_load(source)
     
-    # ✅ Create new FitnessCalculator with its own eval counter
+    #  Create new FitnessCalculator with its own eval counter
     fitness_calc = FitnessCalculator(traveler, record, namespace)
     fitness_calc.evals = 0  # Reset counter
     
@@ -167,7 +167,7 @@ def test_single_branch_with_metrics(args):
     trial_results = []
     trial = 0  # Trial counter
     
-    # ⏱️ Run trials until time limit is reached
+    #  Run trials until time limit is reached
     while True:
         elapsed_time = time.time() - branch_start_time
         
@@ -224,8 +224,8 @@ def test_single_branch_with_metrics(args):
                 basin_max_search=basin_max_search,
                 global_min_threshold=1e-6,
                 cm=branch_cm,
-                time_limit=time_limit,  # ⏱️ Pass time limit
-                start_time=branch_start_time  # ⏱️ Pass start time
+                time_limit=time_limit,  #  Pass time limit
+                start_time=branch_start_time  #  Pass start time
             )
         finally:
             # Restore stdout
@@ -554,7 +554,7 @@ def run_directory_test(
     print(f"🔍 Found {len(py_files)} Python files in {source_dir}")
     print("="*80)
 
-    # ⏱️ Start overall timer
+    #  Start overall timer
     overall_start_time = time.time()
 
     for py_file in py_files:
@@ -588,10 +588,10 @@ def run_directory_test(
             print(f"❌ Error testing {py_file}: {e}")
             continue
     
-    # ⏱️ Calculate total execution time
+    #  Calculate total execution time
     total_execution_time = time.time() - overall_start_time
     
-    # 📝 Save test configuration to JSON
+    #  Save test configuration to JSON
     config_file = output_path / "test_config.json"
     config_data = {
         "algorithm": "Hill Climbing with Compression",

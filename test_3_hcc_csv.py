@@ -242,18 +242,18 @@ def hill_climb_with_compression_nd_code(
             else:
                 if verbose:
                     print(f"📍 Stuck after {step_count} steps at {point}, f={f:.6g}")
-                # print(
-                #     "📍 Stuck at {}, f={:.6g} after {} steps".format(
-                #         point, f, step_count
-                #     )
-                # )
+
+
+
+
+
                 break
 
         # After full climbing iteration:
         if abs(f) < global_min_threshold:
             if verbose:
                 print("🎉 SUCCESS after climbing")
-            # print("🎉 SUCCESS")
+
             break
 
         # -----------------------------------------------------------
@@ -278,7 +278,7 @@ def hill_climb_with_compression_nd_code(
         if not basins:
             if verbose:
                 print("No basins found → stopping")
-            # print("❌ NO BASINS FOUND → STOP")
+
             break
 
         # -----------------------------------------------------------
@@ -316,7 +316,7 @@ def hill_climb_with_compression_nd_code(
         if abs(f) < global_min_threshold:
             if verbose:
                 print("🎉 Restart hit goal")
-            # print("🎉 SUCCESS after restart")
+
             break
     return traj, cm
 

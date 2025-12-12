@@ -34,7 +34,7 @@ def hill_climb_simple_nd_code(
     def fitness_func_nd_code(x):
         return float(fitness_fn(tuple(int(v) for v in x)))
 
-    # ⏱️ Check time before initial evaluation
+    #  Check time before initial evaluation
     if time_limit is not None and start_time is not None:
         if time.time() - start_time >= time_limit:
             return [(point, float("inf"))]  # Return immediately if time exceeded
@@ -43,7 +43,7 @@ def hill_climb_simple_nd_code(
     traj = [(point, f)]
 
     for _ in range(max_steps):
-        # ⏱️ Check time limit before evaluating neighbors
+        #  Check time limit before evaluating neighbors
         if time_limit is not None and start_time is not None:
             if time.time() - start_time >= time_limit:
                 return traj  # Return best found so far
@@ -51,7 +51,7 @@ def hill_climb_simple_nd_code(
         # Try 2*dim neighbors (±1 in each dimension)
         candidates = []
         for d in range(dim):
-            # ⏱️ Check time before each evaluation
+            #  Check time before each evaluation
             if time_limit is not None and start_time is not None:
                 if time.time() - start_time >= time_limit:
                     return traj
@@ -61,7 +61,7 @@ def hill_climb_simple_nd_code(
             neighbor[d] -= 1
             candidates.append((tuple(neighbor), fitness_func_nd_code(tuple(neighbor))))
 
-            # ⏱️ Check time before next evaluation
+            #  Check time before next evaluation
             if time_limit is not None and start_time is not None:
                 if time.time() - start_time >= time_limit:
                     return traj

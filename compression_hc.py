@@ -6,8 +6,8 @@ from typing import List, Tuple, Optional
 from dataclasses import dataclass
 import itertools
 
-# print("✅ Imports loaded!")
-# print("📍 Focus: Hill climbing with adaptive compression")
+
+
 
 # ===============================
 # Warping
@@ -223,7 +223,7 @@ def detect_compression_basin(fitness_func, local_min_x, max_search=100, verbose 
     debug_print(f"  ✅ Basin detected: X[{left_boundary}, {right_boundary}], length={basin_length}")
     return (left_boundary, basin_length)
 
-# print("✅ Bidirectional basin detection defined (WITH PRIORITY FIX!)")
+
 
 # ===============================
 # Metadata Overlap Handler
@@ -651,7 +651,7 @@ def hill_climb_with_compression_nd_code(
     # dim_stagnation: 각 변수가 얼마나 오랫동안 Fitness에 기여하지 못했는지 카운트
     dim_stagnation = {d: 0 for d in range(dim)}
 
-    # ⏱️ Check time before initial evaluation
+    #  Check time before initial evaluation
     if time_limit is not None and start_time is not None:
         if time_module.time() - start_time >= time_limit:
             # Time exceeded before starting
@@ -666,7 +666,7 @@ def hill_climb_with_compression_nd_code(
 
     print(f"\n🚀 {dim}D hill climbing start at {point}, f={f:.4f}\n")
 
-    # ✅ Early success check: if already at goal, return immediately
+    #  Early success check: if already at goal, return immediately
     if abs(f) < global_min_threshold:
         print("🎉 INITIAL POINT IS ALREADY AT GOAL! Returning immediately.")
         print("\n" + "="*80)
@@ -688,7 +688,7 @@ def hill_climb_with_compression_nd_code(
         print(f"🔄 Iteration {it+1}/{max_iterations}")
         print("="*80)
         
-        # ✅ Check if already at goal before starting this iteration
+        #  Check if already at goal before starting this iteration
         if abs(f) < global_min_threshold:
             print("🎉 SUCCESS: Already at goal at start of iteration!")
             break
@@ -697,7 +697,7 @@ def hill_climb_with_compression_nd_code(
         max_steps_per_iteration = 10000  # Safety limit to prevent infinite loops
         
         while step_count < max_steps_per_iteration:
-            # ⏱️ Check time limit before next step
+            #  Check time limit before next step
             if time_limit is not None and start_time is not None:
                 if time_module.time() - start_time >= time_limit:
                     print(f"⏱️ Time limit reached during iteration {it+1}, stopping")
@@ -710,7 +710,7 @@ def hill_climb_with_compression_nd_code(
 
             # 1) Axis-aligned neighbors (O(D))
             for d in active_dims:
-                # ⏱️ Check time before evaluating this dimension
+                #  Check time before evaluating this dimension
                 if time_limit is not None and start_time is not None:
                     if time_module.time() - start_time >= time_limit:
                         print(f"⏱️ Time limit reached, stopping")
@@ -735,7 +735,7 @@ def hill_climb_with_compression_nd_code(
             # 2) Diagonal neighbors (O(D^2))
             if len(active_dims) >= 2:
                 for d1, d2 in itertools.combinations(active_dims, 2):
-                    # ⏱️ Check time before diagonal evaluations
+                    #  Check time before diagonal evaluations
                     if time_limit is not None and start_time is not None:
                         if time_module.time() - start_time >= time_limit:
                             print(f"⏱️ Time limit reached during diagonal evaluation, stopping")
@@ -816,7 +816,7 @@ def hill_climb_with_compression_nd_code(
         # ----- Detect basins along each dimension -----
         basins = {}  # dimension -> (start, length)
         for d in active_dims:
-            # ⏱️ Check time before basin detection
+            #  Check time before basin detection
             if time_limit is not None and start_time is not None:
                 if time_module.time() - start_time >= time_limit:
                     print(f"⏱️ Time limit reached during basin detection, stopping")
@@ -838,7 +838,7 @@ def hill_climb_with_compression_nd_code(
         restart_candidates = []
         
         for d, (b_start, b_len) in basins.items():
-            # ⏱️ Check time before restart candidate evaluation
+            #  Check time before restart candidate evaluation
             if time_limit is not None and start_time is not None:
                 if time_module.time() - start_time >= time_limit:
                     print(f"⏱️ Time limit reached during restart evaluation, stopping")
@@ -863,7 +863,7 @@ def hill_climb_with_compression_nd_code(
             point, f = restart_point, restart_f
             traj.append((point, f, True))
             
-            # ✅ Check if restart point already reached the goal
+            #  Check if restart point already reached the goal
             if abs(f) < global_min_threshold:
                 print("🎉 RESTART POINT IS ALREADY AT GOAL! Stopping iterations.")
                 break
@@ -911,7 +911,7 @@ def hill_climb_simple_nd_code(
         # Fitness should already be non-negative (AL >= 0, BD >= 0)
         return fitness_calc.fitness_for_candidate(func_obj, x, target_branch_node, target_outcome, subject_node, parent_map)
 
-    # ⏱️ Check time before initial evaluation
+    #  Check time before initial evaluation
     if time_limit is not None and start_time is not None:
         if time.time() - start_time >= time_limit:
             return [(point, float('inf'))]  # Return immediately if time exceeded
@@ -920,7 +920,7 @@ def hill_climb_simple_nd_code(
     traj = [(point, f)]
 
     for _ in range(max_steps):
-        # ⏱️ Check time limit before evaluating neighbors
+        #  Check time limit before evaluating neighbors
         if time_limit is not None and start_time is not None:
             if time.time() - start_time >= time_limit:
                 return traj  # Return best found so far
@@ -928,7 +928,7 @@ def hill_climb_simple_nd_code(
         # Try 2*dim neighbors (±1 in each dimension)
         candidates = []
         for d in range(dim):
-            # ⏱️ Check time before each evaluation
+            #  Check time before each evaluation
             if time_limit is not None and start_time is not None:
                 if time.time() - start_time >= time_limit:
                     return traj
@@ -938,7 +938,7 @@ def hill_climb_simple_nd_code(
             neighbor[d] -= 1
             candidates.append((tuple(neighbor), fitness_func_nd_code(tuple(neighbor))))
             
-            # ⏱️ Check time before next evaluation
+            #  Check time before next evaluation
             if time_limit is not None and start_time is not None:
                 if time.time() - start_time >= time_limit:
                     return traj

@@ -44,10 +44,10 @@ def test_single_branch_baseline_with_metrics(args):
     # Reduce output verbosity
     worker_verbose = os.environ.get('WORKER_VERBOSE', '0') == '1'
     
-    # ⏱️ Start timer for this branch (each thread has its own timer)
+    #  Start timer for this branch (each thread has its own timer)
     branch_start_time = time.time()
     
-    # 🎲 Reset to same global seed for ALL branches (fairness)
+    #  Reset to same global seed for ALL branches (fairness)
     random.seed(random_seed)
     
     if worker_verbose:
@@ -59,7 +59,7 @@ def test_single_branch_baseline_with_metrics(args):
     source = open(file_path).read()
     namespace, traveler, record, _ = instrument_and_load(source)
     
-    # ✅ Create new FitnessCalculator with its own eval counter
+    #  Create new FitnessCalculator with its own eval counter
     fitness_calc = FitnessCalculator(traveler, record, namespace)
     fitness_calc.evals = 0
     
@@ -131,7 +131,7 @@ def test_single_branch_baseline_with_metrics(args):
     trial_results = []
     trial = 0  # Trial counter
     
-    # ⏱️ Run trials until time limit is reached
+    #  Run trials until time limit is reached
     while True:
         elapsed_time = time.time() - branch_start_time
         
@@ -177,8 +177,8 @@ def test_single_branch_baseline_with_metrics(args):
             subject_node, parent_map,
             initial, dim,
             max_steps=max_steps,
-            time_limit=time_limit,  # ⏱️ Pass time limit
-            start_time=branch_start_time  # ⏱️ Pass start time
+            time_limit=time_limit,  #  Pass time limit
+            start_time=branch_start_time  #  Pass start time
         )
         
         # Extract results
@@ -494,7 +494,7 @@ def run_directory_test_baseline(
     print(f"🔍 Found {len(py_files)} Python files in {source_dir}")
     print("="*80)
 
-    # ⏱️ Start overall timer
+    #  Start overall timer
     overall_start_time = time.time()
 
     for py_file in py_files:
@@ -527,10 +527,10 @@ def run_directory_test_baseline(
             print(f"❌ Error testing {py_file}: {e}")
             continue
     
-    # ⏱️ Calculate total execution time
+    #  Calculate total execution time
     total_execution_time = time.time() - overall_start_time
     
-    # 📝 Save test configuration to JSON
+    #  Save test configuration to JSON
     config_file = output_path / "test_config.json"
     config_data = {
         "algorithm": "Baseline Hill Climbing (No Compression)",
