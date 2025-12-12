@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+
 """
 GA Testing for Arbitrary Fitness Landscapes (Test 3 Project)
 
@@ -92,7 +92,7 @@ def ga_test3(
 
     for _ in range(pop_size):
         if time_limit and (time.time() - start_time) >= time_limit:
-            # No individuals? → produce empty result
+            # No individuals? -> produce empty result
             if not population:
                 return None, float("inf"), []
             break
@@ -352,7 +352,7 @@ def run_directory_test3_ga(
         for num_args in dims:
 
             output_dir = f"{output_base}/{fitness_name}_{num_args}D"
-            print(f"\n🚀 Running GA on {fitness_name} ({num_args}D)")
+            print(f"\n Running GA on {fitness_name} ({num_args}D)")
             result = run_parallel_test3_ga(
                 fitness_name,
                 num_args,
@@ -362,7 +362,7 @@ def run_directory_test3_ga(
                 random_seed,
             )
             print(
-                f"   → Done. Success={result['success']}, Best Fit={result['best_fitness']}"
+                f"   -> Done. Success={result['success']}, Best Fit={result['best_fitness']}"
             )
 
 

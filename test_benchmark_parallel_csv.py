@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+
 """
 Parallel branch testing with CSV output for evaluation metrics.
 
@@ -48,10 +48,10 @@ def test_single_branch_with_metrics(args):
     # Reduce output verbosity in workers to prevent buffer overflow
     worker_verbose = os.environ.get('WORKER_VERBOSE', '0') == '1'
     
-    #  Start timer for this branch (each thread has its own timer)
+    # Start timer for this branch (each thread has its own timer)
     branch_start_time = time.time()
     
-    #  Reset to same global seed for ALL branches (fairness)
+    # Reset to same global seed for allbranches (fairness)
     random.seed(random_seed)
     
     if worker_verbose:
@@ -63,7 +63,7 @@ def test_single_branch_with_metrics(args):
     source = open(file_path).read()
     namespace, traveler, record, _ = instrument_and_load(source)
     
-    #  Create new FitnessCalculator with its own eval counter
+    # Create new FitnessCalculator with its own eval counter
     fitness_calc = FitnessCalculator(traveler, record, namespace)
     fitness_calc.evals = 0  # Reset counter
     
@@ -167,7 +167,7 @@ def test_single_branch_with_metrics(args):
     trial_results = []
     trial = 0  # Trial counter
     
-    #  Run trials until time limit is reached
+    # Run trials until time limit is reached
     while True:
         elapsed_time = time.time() - branch_start_time
         
@@ -224,8 +224,8 @@ def test_single_branch_with_metrics(args):
                 basin_max_search=basin_max_search,
                 global_min_threshold=1e-6,
                 cm=branch_cm,
-                time_limit=time_limit,  #  Pass time limit
-                start_time=branch_start_time  #  Pass start time
+                time_limit=time_limit,  # Pass time limit
+                start_time=branch_start_time  # Pass start time
             )
         finally:
             # Restore stdout
@@ -258,8 +258,8 @@ def test_single_branch_with_metrics(args):
         if final_f <= success_threshold:
             time_to_solution = time.time() - branch_start_time
             if worker_verbose:
-                print(f"[Worker {worker_pid}] 🎉 Branch {lineno} ({outcome_str}) succeeded at trial {trial+1}")
-                print(f"[Worker {worker_pid}] ⏱️  Time to solution: {time_to_solution:.3f}s")
+                print(f"[Worker {worker_pid}]  Branch {lineno} ({outcome_str}) succeeded at trial {trial+1}")
+                print(f"[Worker {worker_pid}]   Time to solution: {time_to_solution:.3f}s")
                 sys.stdout.flush()
             branch_success = True
         
@@ -271,7 +271,7 @@ def test_single_branch_with_metrics(args):
     total_time = time.time() - branch_start_time
     
     if worker_verbose:
-        print(f"\n[Worker {worker_pid}] ✅ Branch {lineno} ({outcome_str}) completed:")
+        print(f"\n[Worker {worker_pid}]  Branch {lineno} ({outcome_str}) completed:")
         print(f"  Total time: {total_time:.3f}s")
         print(f"  Trials run: {len(trial_results)}")
         print(f"  Convergence speed (total steps): {total_steps}")
@@ -279,7 +279,7 @@ def test_single_branch_with_metrics(args):
         print(f"  Best fitness: {best_fitness:.6g}")
         print(f"  Best solution: {best_solution}")
         if time_to_solution is not None:
-            print(f"  ⏱️  Time to solution: {time_to_solution:.3f}s")
+            print(f"    Time to solution: {time_to_solution:.3f}s")
         sys.stdout.flush()
     
     return {
@@ -317,7 +317,7 @@ def run_parallel_test_with_csv(
     Run parallel branch testing and save metrics to CSV.
     Tests both True and False outcomes for each branch.
     
-    Each branch is tested with the SAME global random seed for fairness.
+    Each branch is tested with the same global random seed for fairness.
     The seed is reset at the start of each branch test.
     
     CSV columns:
@@ -335,12 +335,12 @@ def run_parallel_test_with_csv(
     
     Args:
         time_limit_per_branch: Time limit in seconds for each branch (default: 20.0)
-        random_seed: Global random seed applied to ALL branches for fairness (default: 42)
+        random_seed: Global random seed applied to allbranches for fairness (default: 42)
         skip_for_false: If True, skip for-loop and while-True False branches (unreachable)
     """
     
     print("\n" + "="*80)
-    print("🚀 PARALLEL BRANCH TESTING WITH CSV OUTPUT")
+    print(" PARALLEL BRANCH TESTING WITH CSV OUTPUT")
     print("="*80)
     print(f"File: {file_path}")
     print(f"Output CSV: {output_csv}")
@@ -359,10 +359,10 @@ def run_parallel_test_with_csv(
         branches = traveler.branches.get(func_name, {})
         
         if not branches:
-            print(f"⏭️  Skipping {func_name} (no branches)")
+            print(f"  Skipping {func_name} (no branches)")
             continue
         
-        print(f"📝 Function: {func_name}")
+        print(f" Function: {func_name}")
         print(f"   Branches: {list(branches.keys())}")
         
         # Use function's range if it's wide enough (difference >= 10)
@@ -386,12 +386,12 @@ def run_parallel_test_with_csv(
             for target_outcome in [True, False]:
                 # Skip while-True False branches (never exit) - unreachable
                 if skip_for_false and is_while_true and target_outcome is False:
-                    print(f"   ⏭️  Skipping while-True False: line {lineno} (unreachable)")
+                    print(f"     Skipping while-True False: line {lineno} (unreachable)")
                     continue
                 
                 # Skip for-loop False branches (not entering loop) - usually unreachable
                 if skip_for_false and is_for_loop and target_outcome is False:
-                    print(f"   ⏭️  Skipping for-loop False: line {lineno} (often unreachable)")
+                    print(f"     Skipping for-loop False: line {lineno} (often unreachable)")
                     continue
                 
                 task = (
@@ -404,12 +404,12 @@ def run_parallel_test_with_csv(
                 )
                 branch_tasks.append(task)
     
-    print(f"\n📊 Total branches to test: {len(branch_tasks)}\n")
+    print(f"\n Total branches to test: {len(branch_tasks)}\n")
     
     if num_workers is None:
         num_workers = cpu_count()
     
-    print(f"🔧 Starting {num_workers} worker processes...")
+    print(f" Starting {num_workers} worker processes...")
     print("="*80 + "\n")
     sys.stdout.flush()
     
@@ -424,13 +424,13 @@ def run_parallel_test_with_csv(
         pool.close()
         pool.join()
     except KeyboardInterrupt:
-        print("\n⚠️  Interrupted by user")
+        print("\n  Interrupted by user")
         if pool:
             pool.terminate()
             pool.join()
         raise
     except Exception as e:
-        print(f"\n❌ Error during parallel execution: {e}")
+        print(f"\n Error during parallel execution: {e}")
         if pool:
             pool.terminate()
             pool.join()
@@ -444,15 +444,15 @@ def run_parallel_test_with_csv(
     
     # Print summary
     print("\n" + "="*80)
-    print("✅ ALL BRANCHES COMPLETED")
+    print(" ALL BRANCHES COMPLETED")
     print("="*80)
-    print(f"⏱️  Total time: {elapsed_time:.2f} seconds ({elapsed_time/60:.2f} minutes)")
-    print(f"📊 Total branches: {len(branch_results)}")
+    print(f"  Total time: {elapsed_time:.2f} seconds ({elapsed_time/60:.2f} minutes)")
+    print(f" Total branches: {len(branch_results)}")
     print("="*80 + "\n")
     sys.stdout.flush()
     
     # Write to CSV
-    print(f"📝 Writing results to {output_csv}...")
+    print(f" Writing results to {output_csv}...")
     
     with open(output_csv, 'w', newline='') as csvfile:
         fieldnames = [
@@ -479,19 +479,19 @@ def run_parallel_test_with_csv(
                 'time_to_solution': f"{result['time_to_solution']:.3f}" if result['time_to_solution'] is not None else "N/A"
             })
     
-    print(f"✅ Results written to {output_csv}\n")
+    print(f" Results written to {output_csv}\n")
     sys.stdout.flush()
     
     # Print summary table
     print("="*120)
-    print("📈 RESULTS SUMMARY")
+    print(" RESULTS SUMMARY")
     print("="*120)
     print(f"{'Function':<20} {'Line':<6} {'Out':<5} {'InitPts':<8} {'Time(s)':<10} {'Time2Sol':<10} "
           f"{'NFE':<10} {'Best Fitness':<15} {'Success'}")
     print("-"*120)
     
     for result in branch_results:
-        success_mark = "✅" if result['success'] else "❌"
+        success_mark = "P" if result['success'] else "F"
         outcome_str = "T" if result['outcome'] else "F"
         time2sol_str = f"{result['time_to_solution']:.2f}s" if result['time_to_solution'] is not None else "N/A"
         print(f"{result['function']:<20} {result['lineno']:<6} {outcome_str:<5} "
@@ -506,7 +506,7 @@ def run_parallel_test_with_csv(
     total_init_points = sum(r['num_trials_run'] for r in branch_results)
     successes = sum(1 for r in branch_results if r['success'])
     
-    print("📊 OVERALL STATISTICS")
+    print(" OVERALL STATISTICS")
     print("-"*80)
     print(f"Total convergence speed: {total_convergence}")
     print(f"Total NFE: {total_nfe}")
@@ -551,10 +551,10 @@ def run_directory_test(
                 if "__pycache__" not in str(f)]
     
     print("\n" + "="*80)
-    print(f"🔍 Found {len(py_files)} Python files in {source_dir}")
+    print(f" Found {len(py_files)} Python files in {source_dir}")
     print("="*80)
 
-    #  Start overall timer
+    # Start overall timer
     overall_start_time = time.time()
 
     for py_file in py_files:
@@ -565,8 +565,8 @@ def run_directory_test(
         # Create output directory if needed
         csv_file.parent.mkdir(parents=True, exist_ok=True)
         
-        print(f"\n📝 Testing: {py_file}")
-        print(f"📊 Output: {csv_file}")
+        print(f"\n Testing: {py_file}")
+        print(f" Output: {csv_file}")
         
         # Run test on this file
         try:
@@ -585,13 +585,13 @@ def run_directory_test(
                 use_biased_init=use_biased_init
             )
         except Exception as e:
-            print(f"❌ Error testing {py_file}: {e}")
+            print(f" Error testing {py_file}: {e}")
             continue
     
-    #  Calculate total execution time
+    # Calculate total execution time
     total_execution_time = time.time() - overall_start_time
     
-    #  Save test configuration to JSON
+    # Save test configuration to JSON
     config_file = output_path / "test_config.json"
     config_data = {
         "algorithm": "Hill Climbing with Compression",
@@ -609,10 +609,10 @@ def run_directory_test(
         json.dump(config_data, f, indent=2)
     
     print("\n" + "="*80)
-    print(f"⏱️  TOTAL EXECUTION TIME: {total_execution_time:.2f} seconds ({total_execution_time/60:.2f} minutes)")
+    print(f"  TOTAL EXECUTION TIME: {total_execution_time:.2f} seconds ({total_execution_time/60:.2f} minutes)")
     print("="*80)
-    print(f"✅ ALL FILES TESTED! Results saved to {output_dir}/")
-    print(f"📋 Test configuration saved to {config_file}")
+    print(f" ALL FILES TESTED! Results saved to {output_dir}/")
+    print(f" Test configuration saved to {config_file}")
     print("="*80)
 
 
@@ -665,7 +665,7 @@ Examples:
     # Print configuration
     init_type = "RANDOM" if args.random_init else "BIASED"
     print(f"\n{'='*80}")
-    print(f"🔧 CONFIGURATION: Hill Climbing with Compression (Time-based)")
+    print(f" CONFIGURATION: Hill Climbing with Compression (Time-based)")
     print(f"{'='*80}")
     print(f"Initialization:      {init_type}")
     print(f"Time limit/branch:   {args.time_limit}s")

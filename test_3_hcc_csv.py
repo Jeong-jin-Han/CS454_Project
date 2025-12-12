@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+
 import os
 import csv
 import time
@@ -25,7 +25,7 @@ from test_3_plot import plot_fitness_landscape
 # N-D Hill-climb with Compression
 # ===============================
 def hill_climb_with_compression_nd_code(
-    fitness_fn,  # <---- 단순 callable((tuple))->float
+    fitness_fn,  # <---- # callable(point: tuple[int, ...]) -> float
     start_point,
     dim,
     max_iterations=10,
@@ -41,7 +41,7 @@ def hill_climb_with_compression_nd_code(
 
     This version:
       - DOES NOT use FitnessCalculator / branches / func_obj
-      - fitness_fn(point) must return a non-negative scalar
+      - fitness_fn(point) returns a scalar where lower is better (0.0 means success)
       - Supports strict time-limit enforcement before every eval
     """
 
@@ -49,7 +49,7 @@ def hill_climb_with_compression_nd_code(
     def fitness_func_nd_code(x):
         return float(fitness_fn(tuple(int(v) for v in x)))
 
-    # For dimension deactivation
+    # Dimension deactivation: if changing a dim rarely affects fitness, stop exploring it
     deactivation_patience = 20
 
     traj = []
@@ -60,10 +60,10 @@ def hill_climb_with_compression_nd_code(
     if cm is None:
         cm = CompressionManagerND(dim, steepness=5.0)
         if verbose:
-            print("📦 Created NEW CompressionManagerND for this search")
+            print(" Created NEW CompressionManagerND for this search")
     else:
         if verbose:
-            print("♻️ REUSING existing CompressionManagerND with accumulated metadata")
+            print(" REUSING existing CompressionManagerND with accumulated metadata")
 
     active_dims = list(range(dim))
     dim_stagnation = {d: 0 for d in range(dim)}
@@ -73,7 +73,7 @@ def hill_climb_with_compression_nd_code(
     # -------------------------------------------------------
     if time_limit is not None and start_time is not None:
         if time.time() - start_time >= time_limit:
-            print("⏱️ Time limit reached before start → stop")
+            print(" Time limit reached before start -> stop")
             point = tuple(int(x) for x in start_point)
             traj.append((point, float("inf"), False))
             return traj, cm
@@ -84,12 +84,12 @@ def hill_climb_with_compression_nd_code(
     traj.append((point, f, False))
 
     if verbose:
-        print(f"\n🚀 {dim}D hill climbing start at {point}, f={f:.6g}\n")
+        print(f"\n {dim}D hill climbing start at {point}, f={f:.6g}\n")
 
     # Early success
     if abs(f) < global_min_threshold:
         if verbose:
-            print("🎉 INITIAL POINT IS ALREADY A GOAL")
+            print(" INITIAL POINT IS ALREADY A GOAL")
         return traj, cm
 
     # ============================================================
@@ -104,13 +104,13 @@ def hill_climb_with_compression_nd_code(
 
         if verbose:
             print("=" * 80)
-            print(f"🔄 Iteration {it+1}/{max_iterations}")
+            print(f" Iteration {it+1}/{max_iterations}")
             print("=" * 80)
 
         # Check early
         if abs(f) < global_min_threshold:
             if verbose:
-                print("🎉 SUCCESS at iteration start")
+                print(" SUCCESS at iteration start")
             break
 
         step_count = 0
@@ -121,24 +121,24 @@ def hill_climb_with_compression_nd_code(
         # -----------------------------------------------------------
         while step_count < max_steps_per_iteration:
 
-            # TIME CHECK
+            
             if time_limit is not None and start_time is not None:
                 if time.time() - start_time >= time_limit:
                     if verbose:
-                        print("⏱️ Time limit reached inside climbing loop → stop")
+                        print(" Time limit reached inside climbing loop -> stop")
                     return traj, cm
 
             best_point = point
             best_f = f
             candidates = []
-            meaningful_dims = set()
+            meaningful_dims = set() # dims that produced ANY fitness change (not only improvements)
 
             # ------------------------
             # AXIS NEIGHBORS
             # ------------------------
             for d in active_dims:
 
-                # time check
+                
                 if time_limit is not None and start_time is not None:
                     if time.time() - start_time >= time_limit:
                         return traj, cm
@@ -170,7 +170,7 @@ def hill_climb_with_compression_nd_code(
             if len(active_dims) >= 2:
                 for d1, d2 in itertools.combinations(active_dims, 2):
 
-                    # time check
+                    
                     if time_limit and (time.time() - start_time) >= time_limit:
                         return traj, cm
 
@@ -229,7 +229,7 @@ def hill_climb_with_compression_nd_code(
                     if verbose:
                         print(f"Deactivating dim {d} due to stagnation")
 
-            # If no improvement → stop climb
+            # If no improvement -> stop climb
             if best_f < f:
                 point, f = best_point, best_f
                 used_comp = any(
@@ -241,7 +241,7 @@ def hill_climb_with_compression_nd_code(
                 step_count += 1
             else:
                 if verbose:
-                    print(f"📍 Stuck after {step_count} steps at {point}, f={f:.6g}")
+                    print(f" Stuck after {step_count} steps at {point}, f={f:.6g}")
 
 
 
@@ -252,7 +252,7 @@ def hill_climb_with_compression_nd_code(
         # After full climbing iteration:
         if abs(f) < global_min_threshold:
             if verbose:
-                print("🎉 SUCCESS after climbing")
+                print(" SUCCESS after climbing")
 
             break
 
@@ -260,7 +260,7 @@ def hill_climb_with_compression_nd_code(
         # BASIN DETECTION
         # -----------------------------------------------------------
         if verbose:
-            print(f"\n⚠️ Stuck at {point}, detecting basins…")
+            print(f"\n Stuck at {point}, detecting basins…")
 
         basins = {}
         for d in active_dims:
@@ -277,7 +277,7 @@ def hill_climb_with_compression_nd_code(
 
         if not basins:
             if verbose:
-                print("No basins found → stopping")
+                print("No basins found -> stopping")
 
             break
 
@@ -315,7 +315,7 @@ def hill_climb_with_compression_nd_code(
 
         if abs(f) < global_min_threshold:
             if verbose:
-                print("🎉 Restart hit goal")
+                print(" Restart hit goal")
 
             break
     return traj, cm
@@ -347,7 +347,7 @@ def test3_single_fitness_with_metrics(
 
     random.seed(random_seed)
 
-    # Create ONE CompressionManagerND
+    # Reuse ONE CompressionManagerND across trials to accumulate metadata (cross-trial learning)
     branch_cm = CompressionManagerND(num_args, steepness=5.0)
 
     # Metrics to track
@@ -526,7 +526,7 @@ def run_directory_test3_hcc(
             )
 
             print(
-                f" → Done. Success={result['success']}, Best Fit={result['best_fitness']}"
+                f" -> Done. Success={result['success']}, Best Fit={result['best_fitness']}"
             )
 
 

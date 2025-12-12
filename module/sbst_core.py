@@ -356,7 +356,7 @@ class BranchProbe:
             iter(iterable)
         except TypeError:
             self._record_iter_entry(bid, False, None)
-        
+            return iter(())
 
         def iter_gen():
             yielded = False
@@ -690,8 +690,8 @@ class BoolToProbe(ast.NodeTransformer):
                 return False if all_known_false else None
 
         # 5) 컬렉션 리터럴의 truthiness
-        #    - Tuple/List/Set: 모든 요소가 상수일 때만 길이로 판단
-        #    - Dict: 키/값이 전부 상수(키는 None 허용)일 때만 길이로 판단
+        #   - Tuple/List/Set: 모든 요소가 상수일 때만 길이로 판단
+        #   - Dict: 키/값이 전부 상수(키는 None 허용)일 때만 길이로 판단
 
         if isinstance(node, (ast.Tuple, ast.List, ast.Set, ast.Dict)):
             # 비어있으면 False, 아니면 True (단, 요소가 전부 상수일 때만)
@@ -955,8 +955,8 @@ class BoolToProbe(ast.NodeTransformer):
             )
         
         # eqenv로부터 부등식 lifting:
-        #   x (rel) K   →  OR_{v op K} cond(x==v)
-        #   cond 들이 여러 개면 OR로 조립, 하나도 없으면 False (도달 불가 판단)
+        #  x (rel) K   ->  OR_{v op K} cond(x==v)
+        #  cond 들이 여러 개면 OR로 조립, 하나도 없으면 False (도달 불가 판단)
         def _lift_rel_from_eqenv_Compare(var_node, const_node, op_str):
             if not isinstance(var_node, ast.Name):
                 return None
@@ -982,7 +982,7 @@ class BoolToProbe(ast.NodeTransformer):
                     chosen.append(ast.fix_missing_locations(ast.copy_location(cond_ast, cond_ast)))
 
             if not chosen:
-                # eqenv 지식상 절대 참이 될 수 없음 → False (조건 컨텍스트에서 안전)
+                # eqenv 지식상 절대 참이 될 수 없음 -> False (조건 컨텍스트에서 안전)
                 return ast.Constant(False)
 
             # OR로 결합: __probe.bool_or(a, b)
@@ -1019,7 +1019,7 @@ class BoolToProbe(ast.NodeTransformer):
             op_obj = node.ops[0]
             right = node.comparators[0]
             left = node.left
-            # (1-a) membership 처리: in / not in → __probe.membership 위임
+            # (1-a) membership 처리: in / not in -> __probe.membership 위임
             # - 전개(OR/AND) 대신 런타임 membership이 직접 거리(d_true/d_false)를 계산
             # - 큰/비연속/동적 컨테이너에도 스케일 좋음
             if isinstance(op_obj, ast.In) or isinstance(op_obj, ast.NotIn):
@@ -1029,7 +1029,7 @@ class BoolToProbe(ast.NodeTransformer):
                                     attr="membership", ctx=ast.Load()),
                     args=[left, right], keywords=[]
                 )
-                # not in → bool_not(membership(...))
+                # not in -> bool_not(membership(...))
                 return memb_call if isinstance(op_obj, ast.In) else ast.Call(
                     func=ast.Attribute(value=ast.Name(id="__probe", ctx=ast.Load()),
                                     attr="bool_not", ctx=ast.Load()),
@@ -1042,8 +1042,8 @@ class BoolToProbe(ast.NodeTransformer):
                 op_str = op_map[op_name]
 
                 # == / != : eqenv 리프팅 우선
-                #   x==K  → cond(x==K)
-                #   x!=K  → not cond(x==K)
+                #  x==K  -> cond(x==K)
+                #  x!=K  -> not cond(x==K)
                 if op_str in ("==", "!="):
 
                     # 좌/우 교차 시도 (x==K 또는 K==x)
@@ -1054,23 +1054,23 @@ class BoolToProbe(ast.NodeTransformer):
                         # 단순화 결과 내부에도 비교가 있을 수 있으니 '조건 컨텍스트'로 재방문하여 추가 변환 허용
                         return self._visit_in_cond(simp) if self._in_cond() else self.visit(simp)
 
-                    # 리프팅 실패 → 원자 비교로 폴백
+                    # 리프팅 실패 -> 원자 비교로 폴백
                     return _mk_cmp(left, right, op_str)
 
                 # >, >=, <, <= : eqenv 부등식 리프팅
                 if op_str in (">", ">=", "<", "<="):
                     simp = _lift_rel_from_eqenv_Compare(left, right, op_str)
                     if simp is None:
-                        # K (rel) x 형태면 역관계로 뒤집어 재시도:  K < x  →  x > K
+                        # K (rel) x 형태면 역관계로 뒤집어 재시도:  K < x  ->  x > K
                         simp = _lift_rel_from_eqenv_Compare(right, left, rev_rel[op_str])
                     if simp is not None:
                         simp = ast.copy_location(simp, node)
                         return self._visit_in_cond(simp) if self._in_cond() else self.visit(simp)
 
-                    # 리프팅 실패 → 원자 비교로 폴백
+                    # 리프팅 실패 -> 원자 비교로 폴백
                     return _mk_cmp(left, right, op_str)
 
-            # 지원 밖(알 수 없는 비교자) → 원본 유지
+            # 지원 밖(알 수 없는 비교자) -> 원본 유지
             return node
 
         # 2. chain compariosn: a < b <c 
@@ -1162,7 +1162,7 @@ class BoolToProbe(ast.NodeTransformer):
 
         self._guard_stack.append((bid, True))
         self._push_env()
-        self.body = [self.visit(n) for n in node.body]
+        node.body = [self.visit(n) for n in node.body]
         self._pop_env()
         self._guard_stack.pop()
 
@@ -1182,7 +1182,7 @@ class BoolToProbe(ast.NodeTransformer):
             # test를 '조건 컨텍스트'로 방문하여 비교/부울들을 계측 가능한 형태로 변환
             test_v   = self._visit_in_cond(rng.test)
 
-            # test 자체도 분기 하나로 계측: cond_bid 할당 → record_If(test, cond_bid)
+            # test 자체도 분기 하나로 계측: cond_bid 할당 -> record_If(test, cond_bid)
             cond_bid = self._alloc()
             test_rec = ast.Call(
                 func=ast.Attribute(value=ast.Name(id="__probe", ctx=ast.Load()),
@@ -1200,13 +1200,13 @@ class BoolToProbe(ast.NodeTransformer):
 
             # 어느 쪽이 non-empty인지에 따라 가드 극성 결정
             if (body_len >= 1) and (orelse_len == 0):
-                extra_guards.append((cond_bid, True))    # test True → non-empty
+                extra_guards.append((cond_bid, True))    # test True -> non-empty
             elif (body_len == 0) and (orelse_len >= 1):
-                extra_guards.append((cond_bid, False))   # test False → non-empty
+                extra_guards.append((cond_bid, False))   # test False -> non-empty
             rng = node.iter  # 이후 흐름에서 (B) 검사 등에 동일 변수 사용
 
         # (B) iter가 Name이면, assign 등에서 저장해 둔 non-empty 가드를 붙인다
-        #     - 예: if xs: xs_nonempty_guard 기록 → 이후 for x in xs: 진입 가드로 활용
+        #    - 예: if xs: xs_nonempty_guard 기록 -> 이후 for x in xs: 진입 가드로 활용
         if isinstance(rng, ast.Name):
             nm = rng.id
             if nm in self._name_to_nonempty_guard:
@@ -1276,8 +1276,8 @@ class BoolToProbe(ast.NodeTransformer):
     def visit_Match(self, node: ast.Match):
         def _withloc(n: ast.AST, ref: ast.AST):
             ast.copy_location(n, ref)
-            ast.fix_missing_locations(n)
-            return n
+
+            return ast.fix_missing_locations(n)
 
         # (1) subject 캡처: 한 번만 평가되도록 임시 변수에 저장
         tmp_name  = f"_match_tmp_{self._alloc()}"
@@ -1336,7 +1336,7 @@ class BoolToProbe(ast.NodeTransformer):
             ce = _const_expr_from_subpat(pat)
             if ce is not None:
                 return [ce]
-            return None  # 위 규칙으로는 전개 불가 → fallback
+            return None  # 위 규칙으로는 전개 불가 -> fallback
 
         # 여러 비교식을 OR로 연결
         def _or_chain(nodes):
@@ -1360,7 +1360,7 @@ class BoolToProbe(ast.NodeTransformer):
             # 패턴을 값 비교로 모델링 가능해야만 진행
             vals = _value_nodes_from_pattern(cs.pattern)
             if vals is None:
-                # 지원 불가 패턴 포함 → 원본 노드로 돌려보냄 (일반 방문으로 처리)
+                # 지원 불가 패턴 포함 -> 원본 노드로 돌려보냄 (일반 방문으로 처리)
                 self.generic_visit(node)
                 return node
 
@@ -1417,10 +1417,10 @@ class BoolToProbe(ast.NodeTransformer):
         return rec(ife)
 
     def _replace_name_in_ifexp_tests(self, ife: ast.IfExp, old: str, new: str):
-        # [유틸] IfExp 트리 안에서 'test' 부분에만 한정해 Name(old) → Name(new) 치환.
+        # [유틸] IfExp 트리 안에서 'test' 부분에만 한정해 Name(old) -> Name(new) 치환.
         # - body/orelse 내부 IfExp도 재귀 처리(깊은 복사로 원본 훼손 방지)
         # - 목적: x = (A if x>0 else B)처럼, test에서 '자기 자신'을 참조하는 경우
-        #         대입 전 값(pre-state)으로 test를 평가할 수 있게 만들기 위함.
+        #        대입 전 값(pre-state)으로 test를 평가할 수 있게 만들기 위함.
         def rec(n):
             if isinstance(n, ast.IfExp):
                 n = copy.deepcopy(n)
@@ -1455,7 +1455,7 @@ class BoolToProbe(ast.NodeTransformer):
         return out
 
     def _replace_name_in_ifexp_tests(self, ife: ast.IfExp, old: str, new: str):
-        # (중복 정의: 위 함수와 동일) IfExp test 안에서만 old→new 치환
+        # (중복 정의: 위 함수와 동일) IfExp test 안에서만 old->new 치환
         def rec(n):
             if isinstance(n, ast.IfExp):
                 n = copy.deepcopy(n)
@@ -1488,7 +1488,7 @@ class BoolToProbe(ast.NodeTransformer):
 
             if isinstance(val, ast.IfExp):
                 # 1) (선행) IfExp가 '상수 컬렉션 선택'이면 test를 계측(record_If)하고
-                #    어떤 극성에서 non-empty인지 가드를 기록해둔다.
+                #   어떤 극성에서 non-empty인지 가드를 기록해둔다.
                 is_const_coll = _is_const_collection(val.body) and _is_const_collection(val.orelse)
                 test_rec = None
                 if is_const_coll:
@@ -1508,7 +1508,7 @@ class BoolToProbe(ast.NodeTransformer):
                         self._name_to_nonempty_guard[name] = (cond_bid, True)
                     elif (body_len == 0) and (orelse_len >= 1):
                         self._name_to_nonempty_guard[name] = (cond_bid, False)
-                    # 둘 다 비거나 둘 다 비비면 non-empty 보장X → 기록 생략
+                    # 둘 다 비거나 둘 다 비비면 non-empty 보장X -> 기록 생략
 
                 # 2) test에 자기 자신(name)이 쓰였는지 판단
                 need_pre = self._name_used_in_ifexp_tests(val, name)
@@ -1522,7 +1522,7 @@ class BoolToProbe(ast.NodeTransformer):
                     )
                     ast.copy_location(pre_assign, node)
 
-                    # 2-2) eqenv 경로 수집: test 내부 name→pre_name으로 치환 후, 각 정수 leaf 경로 수집
+                    # 2-2) eqenv 경로 수집: test 내부 name->pre_name으로 치환 후, 각 정수 leaf 경로 수집
                     val_for_paths = self._replace_name_in_ifexp_tests(val, name, pre_name)
                     paths = self._collect_ifexp_const_paths(val_for_paths)
                     if paths:
@@ -1533,8 +1533,8 @@ class BoolToProbe(ast.NodeTransformer):
                                                     # (= eqenv와 충돌 방지)
 
                     # 2-3) 실제 대입식 구성
-                    #      - 상수 컬렉션 IfExp면 test를 test_rec(record_If로 감싼 것)으로 교체
-                    #      - 그 뒤 test 안의 name → pre_name 치환
+                    #     - 상수 컬렉션 IfExp면 test를 test_rec(record_If로 감싼 것)으로 교체
+                    #     - 그 뒤 test 안의 name -> pre_name 치환
                     new_value = val
                     if test_rec is not None:
                         new_value = ast.IfExp(test=test_rec, body=val.body, orelse=val.orelse)
@@ -1975,7 +1975,7 @@ def make_targets_for_func(tx: BoolToProbe, func_name: str, want="both", skip_for
             # for-헤더였고, minlen>=1이 확정이면 False는 UNSAT
             if is_for_loop and tx.loop_minlen[bid] is not None:
                 if (tx.loop_minlen[bid] >= 1) and (w is False):
-                    continue  # UNSAT → 스킵
+                    continue  # UNSAT -> 스킵
         
             targets.append((depth, bid, w))
 
